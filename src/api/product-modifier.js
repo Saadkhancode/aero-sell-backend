@@ -5,14 +5,17 @@ export const getProductModifier=async(req,res)=>{
     res.send(modifierData)
 }
 export const postProductModifier=async(req,res)=>{
-     const {unitOfMeasrements,shots,cups}=req.body
-      const modifier=new productModifierModel({unitOfMeasrements,shots,cups})
+     const {Size,Caffein,Espresso,Flavors,userId,productId}=req.body
+      const modifier=new productModifierModel({Size,Caffein,Espresso,Flavors,userId,productId})
       await modifier.save().then(results=>{
         rconsole.log("modifier data send to database")
         res.json({
-            unitOfMeasrements:results.unitOfMeasrements,
-            shots:results.shots,
-            cups:results.cups
+            Size:results.Size,
+            Caffein:results.Caffein,
+            Espresso:results.Espresso,
+            Flavors:results.Flavors,
+            userId:results.userId,
+            productId:results.productId
         })
       }).catch(err=>{
         res.status(400).send('unable to save modifier data to database')
