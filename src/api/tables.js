@@ -34,7 +34,6 @@ export const postTables= async (req, res) => {
 }
 export const updateTables= async (req, res) => {
     const tableimg=req.file ? req.file.location : null
-    console.log('tableimg: ', tableimg);
     console.log(req.params)
     let data = await tables.findByIdAndUpdate(
         {_id: req.params._id},{

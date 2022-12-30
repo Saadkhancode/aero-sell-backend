@@ -7,6 +7,9 @@ const muSchema = new mongoose.Schema({
     name: {
         type: String
     },
+    active:{
+        type:Boolean
+    },
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,

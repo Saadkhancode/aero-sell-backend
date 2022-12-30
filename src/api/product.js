@@ -68,7 +68,6 @@ export const postProduct = async (req, res) => {
 }
 export const updateProduct = async (req, res) => {
     const Product_pic = req.file ? req.file.location : null
-    console.log('Product_pic: ',  req.file.location );
     console.log(req.params._id)
     let data = await product.findByIdAndUpdate(
         { _id: req.params._id }, {
