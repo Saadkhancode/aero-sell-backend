@@ -1,14 +1,19 @@
 import productModifierModel from "../models/productmodifier.js";
 export const getProductModifier=async(req,res)=>{
-    console.log(req.params);
-    let modifierData=await productModifierModel.find(req.params)
+    let filter={}
+    if(req.query.userId){
+        filter={userId:req.query.userId.split(',')}
+    }else if (req.query.productId){
+        filter={productId:req.query.productId.split(',')}
+    }
+    let modifierData=await productModifierModel.find(filter).populate("Size").populate("productId",'name')
     res.send(modifierData)
 }
 export const postProductModifier=async(req,res)=>{
      const {Size,Caffein,Espresso,Flavors,userId,productId}=req.body
       const modifier=new productModifierModel({Size,Caffein,Espresso,Flavors,userId,productId})
       await modifier.save().then(results=>{
-        rconsole.log("modifier data send to database")
+        console.log("modifier data send to database")
         res.json({
             Size:results.Size,
             Caffein:results.Caffein,

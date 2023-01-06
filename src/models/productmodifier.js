@@ -4,7 +4,7 @@ const productModifierSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'mu'
     }],
-    Caffein: {
+    Caffein: [{
         name: {
             type: String
         },
@@ -12,8 +12,8 @@ const productModifierSchema = new mongoose.Schema({
             type: Boolean,
             deafult: false
         }
-    },
-    Espresso: {
+    }],
+    Espresso:[{
         name: {
             type: String
         },
@@ -21,8 +21,8 @@ const productModifierSchema = new mongoose.Schema({
             type: Boolean,
             deafult: false
         }
-    },
-    Flavors: {
+    }],
+    Flavors: [{
         name: {
             type: String
         },
@@ -33,7 +33,7 @@ const productModifierSchema = new mongoose.Schema({
         price: {
             type: Number
         }
-    },
+    }],
     productId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'product'

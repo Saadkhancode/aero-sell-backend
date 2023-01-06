@@ -31,6 +31,7 @@ import tableReservation from './api-routes/reservation&waitingList-route.js'
 import Loyaltyoffers from './api-routes/loaylty-offers-route.js'
 import customization from './api-routes/customization-route.js'
 import logo from './api-routes/logo-route.js'
+import blog from './api-routes/blog-route.js'
 import './config/config.js';
 import path from 'path'
 import { fileURLToPath } from 'url';
@@ -63,7 +64,7 @@ app.use('/api/v1/activate-account',userRegisterWithEmailVerification)
 //user forgot and reset-password Endpoints
 app.use('/api/v1/reset-password',passwordreset)
 //All APi's Endponits
-app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo)
+app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo,blog)
 
 
 app.use('*', (req, res) => {
