@@ -6,7 +6,7 @@ export const getBlog = async (req, res) => {
 }
 export const postBlog = async (req, res) => {
     const {title,shortDescription,longDescription,footer} = req.body;
-    const blog_img=req.files ? req.files.location : null
+    const blog_img=req.file ? req.file.location : null
     let data = await new blog({title,shortDescription,longDescription,footer,blog_img});
     await data.save().then(result => {
         console.log(result, "Blog data save to database")
@@ -23,7 +23,7 @@ export const postBlog = async (req, res) => {
     });
 }
 export const updateBlog = async (req, res) => {
-    const blog_img=req.files ? req.files.location :null
+    const blog_img=req.file ? req.file.location :null
     let data = await blog.findByIdAndUpdate(
         { _id: req.params._id }, {
         $set: req.body,blog_img:blog_img
