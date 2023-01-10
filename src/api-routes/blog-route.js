@@ -11,7 +11,7 @@ import {getBlog,
 routes.get('/blog', getBlog )
 
 routes.post('/blog',awsupload.single("blog_img"), postBlog )
-routes.put('/blog/:_id',awsupload.array("blog_img",4), updateBlog )
+routes.put('/blog/:_id',awsupload.single("blog_img"), updateBlog )
 routes.delete('/blog/:_id', deleteBlog )
 
 
