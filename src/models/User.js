@@ -22,9 +22,9 @@ const UserSchema = new Schema({
   isActive:{
     type:Boolean,
     default:true
-  }
+  } 
+},{timestamps:true})
 
-})
 const superUserSchema = new Schema({
   name:{
     type: String,

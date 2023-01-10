@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
         if (!token) {
             token = await new Token({
                 userId: user._id,
-                token: jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+                token: jwt.sign({ id: user._id }, process.env.JWT_SECRET,{expiresIn:'20min'})
             }).save();
         }
 
