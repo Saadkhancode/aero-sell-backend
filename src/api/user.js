@@ -26,9 +26,10 @@ export const login = async (req, res) => {
   }
   const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
   const userId = { _id: user._id }
-  const role=user.role
+  const role=user.role;
+  const loginDate=user.createdDate
   console.log('role: ', role);
-  res.send({ message: "user login successfully", token, userId,role });
+  res.send({ message: "user login successfully", token, userId,role,loginDate });
 
 }
 

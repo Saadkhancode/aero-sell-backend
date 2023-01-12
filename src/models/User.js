@@ -1,6 +1,10 @@
 import mongoose from 'mongoose'
 import Joi from 'joi';
 
+var current = new Date();
+const timeStamp = new Date(Date.UTC(current.getFullYear(), 
+current.getMonth(),current.getDate(),current.getHours(), 
+current.getMinutes(),current.getSeconds(), current.getMilliseconds()));
 const Schema = mongoose.Schema
 const UserSchema = new Schema({
   name:{
@@ -22,7 +26,12 @@ const UserSchema = new Schema({
   isActive:{
     type:Boolean,
     default:true
-  } 
+  } ,
+  createdDate:{
+    type:Date,
+    default:timeStamp
+  }
+
 },{timestamps:true})
 
 const superUserSchema = new Schema({
