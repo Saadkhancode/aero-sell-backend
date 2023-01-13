@@ -9,7 +9,7 @@ export const postRecieveEmail = async (req, res) => {
         const recieverData = recievemail.save();
         await recieveMail(email,`<h4>${fullName}</h4><h4> ${phone}</h4>
         <p>${message}</p> `);
-        return res.json({ message: `link send to patronworks email` })
+        return res.json({ message: `link send to patronworks email ${recieverData}` })
 
     } catch (error) {
         res.send("An error occured");
