@@ -24,6 +24,6 @@ const employeeSchema = new mongoose.Schema({
         type:String,
         default:'employee'
     }
-})
+},{timestamps:true})
 const employee = mongoose.model("employee", employeeSchema);
 export default employee;
