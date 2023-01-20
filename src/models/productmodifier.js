@@ -8,27 +8,24 @@ const productModifierSchema = new mongoose.Schema({
         name: {
             type: String
         },
-        active: {
-            type: Boolean,
-            deafult: false
+        quantity: {
+            type:Number
         }
     }],
     Espresso:[{
         name: {
             type: String
         },
-        active: {
-            type: Boolean,
-            deafult: false
+        quantity: {
+            type:Number
         }
     }],
     Flavors: [{
         name: {
             type: String
         },
-        active: {
-            type: Boolean,
-            deafult: false
+        quantity: {
+            type:Number
         },
         price: {
             type: Number

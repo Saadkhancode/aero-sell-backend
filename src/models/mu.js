@@ -10,6 +10,9 @@ const muSchema = new mongoose.Schema({
     active:{
         type:Boolean
     },
+    value:{
+        type:String
+    },
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
