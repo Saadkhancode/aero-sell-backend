@@ -19,8 +19,8 @@ export const getEmployeeById = async (req, res) => {
 
 }
 export const postEmployee = async (req, res) => {
-    const { userName, firstName, lastName, email, password,  userId,role } = req.body;
-    const data = await new employee({ userName, firstName, lastName, email, password, userId,role});
+    const { userName, firstName, lastName, email, password,confirmPassword,  userId,role } = req.body;
+    const data = await new employee({ userName, firstName, lastName,confirmPassword, email, password, userId,role});
     await data.save().then(result => {
         console.log(result, "Employee data save to database")
         res.json({
@@ -30,6 +30,7 @@ export const postEmployee = async (req, res) => {
             email: result.email,
             password: result.password,
             userId:result.userId,
+            confirmPassword:result.confirmPassword,
             role:result.role
         })
     }).catch(err => {
