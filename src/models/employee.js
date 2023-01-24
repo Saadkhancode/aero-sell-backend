@@ -20,6 +20,9 @@ const employeeSchema = new mongoose.Schema({
     password: {
         type: Number
     },
+    confirmPassword: {
+        type: Number
+    },
     role:{
         type:String,
         default:'employee'

@@ -5,10 +5,11 @@ import {getEmployee,
     postEmployee,
     updateEmployee,
     deleteEmployee,
-    employeeLogin
+    employeeLogin,getEmployeeById
 } from "../api/employee.js"
 
 routes.get('/employee', getEmployee )
+routes.get('/employee/:_id', getEmployeeById )
 
 routes.post('/employee', postEmployee )
 routes.post('/employeeLogin', employeeLogin )
