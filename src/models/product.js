@@ -63,9 +63,7 @@ const productSchema = new mongoose.Schema({
         type: String
     },
     hasPicture:{
-     type: String,
-     default:'false',
-     enum:['true','false']
+     type: Boolean
     }
 
 })
