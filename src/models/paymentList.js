@@ -29,7 +29,8 @@ const paymentlistSchema = new mongoose.Schema({
         ref:'user'
     },
     updatedAt: {
-        type: timeStamp
+        type:Date,
+        default:timeStamp
 
     }
 })

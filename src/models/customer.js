@@ -67,7 +67,8 @@ const customerSchema = new mongoose.Schema({
         default: timeStamp
     },
     ExpiresIn: {
-        type: timeStamp
+        type: Date,
+        default:timeStamp
     },
     creditLimits:{
         type:Number
