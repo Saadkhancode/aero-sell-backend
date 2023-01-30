@@ -1,4 +1,8 @@
 import mongoose from 'mongoose';
+var current = new Date();
+const timeStamp = new Date(Date.UTC(current.getFullYear(),
+    current.getMonth(), current.getDate(), current.getHours(),
+    current.getMinutes(), current.getSeconds(), current.getMilliseconds()));
 const deivceSchema = new mongoose.Schema({
     name: {
         type: String
@@ -10,7 +14,7 @@ const deivceSchema = new mongoose.Schema({
     },
     createdDate: {
         type: Date,
-        default: Date.now()
+        default: timeStamp
     }
 })
 const device = mongoose.model("device", deivceSchema);

@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
-
+var current = new Date();
+const timeStamp = new Date(Date.UTC(current.getFullYear(),
+    current.getMonth(), current.getDate(), current.getHours(),
+    current.getMinutes(), current.getSeconds(), current.getMilliseconds()));
 const tablesSchema = new mongoose.Schema({
     tableNo: {
         type: String
@@ -25,7 +28,7 @@ const tablesSchema = new mongoose.Schema({
     },
     RecordDate: {
         type: Date,
-        default: Date.now
+        default: timeStamp
     }
 })
 const tables = mongoose.model("tables", tablesSchema);

@@ -1,4 +1,8 @@
 import mongoose from 'mongoose';
+var current = new Date();
+const timeStamp = new Date(Date.UTC(current.getFullYear(),
+    current.getMonth(), current.getDate(), current.getHours(),
+    current.getMinutes(), current.getSeconds(), current.getMilliseconds()));
 const orderSchema = new mongoose.Schema({
     tableNo: {
         type:Number
@@ -23,11 +27,11 @@ const orderSchema = new mongoose.Schema({
     },
     orderDate: {
         type: Date,
-        default:Date.now
+        default:timeStamp
     },
     startDate: {
         type: Date,
-        default:Date.now
+        default:timeStamp
     },
     currentOrderId: {
         type: String,

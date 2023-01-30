@@ -1,4 +1,8 @@
 import mongoose from 'mongoose';
+var current = new Date();
+const timeStamp = new Date(Date.UTC(current.getFullYear(),
+    current.getMonth(), current.getDate(), current.getHours(),
+    current.getMinutes(), current.getSeconds(), current.getMilliseconds()));
 const checkSchema = new mongoose.Schema({
   
     checkNo: {
@@ -16,10 +20,10 @@ const checkSchema = new mongoose.Schema({
     amount: {
         type: Number
     },
-    order:[{
+    orderStatus:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'order'
-    }],
+    },
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
@@ -31,7 +35,7 @@ const checkSchema = new mongoose.Schema({
     },
     checkDate: {
         type: Date,
-        default: Date.now
+        default: timeStamp
     }
 });
 
