@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
-
+var current = new Date();
+const timeStamp = new Date(Date.UTC(current.getFullYear(),
+    current.getMonth(), current.getDate(), current.getHours(),
+    current.getMinutes(), current.getSeconds(), current.getMilliseconds()));
 const customerSchema = new mongoose.Schema({
     CustomerId: {
         type: Number
@@ -61,10 +64,10 @@ const customerSchema = new mongoose.Schema({
     },
     StartDate: {
         type: Date,
-        default: Date.now
+        default: timeStamp
     },
     ExpiresIn: {
-        type: Date
+        type: timeStamp
     },
     creditLimits:{
         type:Number
@@ -78,7 +81,8 @@ const customerSchema = new mongoose.Schema({
         }
     },
     BirthDate: {
-        type: Date
+        type: Date,
+        default:timeStamp
     },
     Points:{
       type:Number
@@ -88,7 +92,7 @@ const customerSchema = new mongoose.Schema({
     },
     LastVisit:{
          type:Date,
-         default:Date
+         default:timeStamp
     },
     Purchases:{
       type:Number

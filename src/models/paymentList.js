@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
-
+var current = new Date();
+const timeStamp = new Date(Date.UTC(current.getFullYear(),
+    current.getMonth(), current.getDate(), current.getHours(),
+    current.getMinutes(), current.getSeconds(), current.getMilliseconds()));
 const paymentlistSchema = new mongoose.Schema({
     name: {
         type: String
@@ -18,7 +21,7 @@ const paymentlistSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now
+        default: timeStamp
     },
     userId:{
         type:mongoose.Schema.Types.ObjectId,
@@ -26,7 +29,7 @@ const paymentlistSchema = new mongoose.Schema({
         ref:'user'
     },
     updatedAt: {
-        type: Date
+        type: timeStamp
 
     }
 })

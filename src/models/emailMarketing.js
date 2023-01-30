@@ -15,6 +15,6 @@ const emailMarketingSchema = new mongoose.Schema({
         required:true,
         ref:'user'
     },
-})
+},{timestamps:true})
 const emailMarketing = mongoose.model("emailMarketing", emailMarketingSchema);
 export default emailMarketing;

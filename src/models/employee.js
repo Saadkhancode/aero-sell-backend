@@ -1,4 +1,8 @@
 import mongoose from 'mongoose';
+var current = new Date();
+const timeStamp = new Date(Date.UTC(current.getFullYear(),
+    current.getMonth(), current.getDate(), current.getHours(),
+    current.getMinutes(), current.getSeconds(), current.getMilliseconds()));
 const employeeSchema = new mongoose.Schema({
     userName: {
         type: String
@@ -11,11 +15,11 @@ const employeeSchema = new mongoose.Schema({
     },
     email: {
         type: String
-    },  
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:'user'
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
     },
     password: {
         type: Number
@@ -23,10 +27,14 @@ const employeeSchema = new mongoose.Schema({
     confirmPassword: {
         type: Number
     },
-    role:{
-        type:String,
-        default:'employee'
+    role: {
+        type: String,
+        default: 'employee'
+    },
+    startDate: {
+        type: Date,
+        default: timeStamp
     }
-},{timestamps:true})
+}, { timestamps: true })
 const employee = mongoose.model("employee", employeeSchema);
 export default employee;
