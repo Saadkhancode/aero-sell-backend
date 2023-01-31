@@ -33,6 +33,7 @@ import customization from './api-routes/customization-route.js'
 import logo from './api-routes/logo-route.js'
 import blog from './api-routes/blog-route.js'
 import contactus from './api-routes/contactUs-route.js'
+import employeTimeStamp from './api-routes/employeetime-route.js'
 import './config/config.js';
 import path from 'path'
 import { fileURLToPath } from 'url';
