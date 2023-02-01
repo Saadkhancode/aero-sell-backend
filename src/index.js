@@ -66,7 +66,7 @@ app.use('/api/v1/activate-account',userRegisterWithEmailVerification)
 //user forgot and reset-password Endpoints
 app.use('/api/v1/reset-password',passwordreset)
 //All APi's Endponits
-app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo,blog,contactus)
+app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo,blog,contactus,employeTimeStamp)
 
     
 app.use('*', (req, res) => {
