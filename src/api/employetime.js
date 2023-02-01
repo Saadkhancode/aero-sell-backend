@@ -1,4 +1,4 @@
-import emplyeeTime from '../models/employeetime.js'
+import emplyeeTime from "../models/employeetime.js"
 
 export const getEmployeeTime = async (req, res) => {
     let filter={}
@@ -18,7 +18,7 @@ export const postEmployeeTime = async (req, res) => {
         console.log(result, "EmployeeTime data save to database")
         res.json({
           startDate:result.startDate,
-          endDate:resultDate,
+          endDate:result.endDate,
           employeeId:result.employeeId
         })
     }).catch(err => {

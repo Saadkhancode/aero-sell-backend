@@ -47,7 +47,7 @@ export const employeeLogin=async(req,res)=>{
       if (employe.password !== password) {
         return res.status(400).send({ message: "wrong password" });
       }
-     res.status(200).json({ message: "Employee Login Successfully",userId:employe.userId,starDate:employe.startDate,employeId:employe._id});
+     res.status(200).json({ message: "Employee Login Successfully",userId:employe.userId,startDate:employe.startDate,employeId:employe._id,employefirstName:employe.firstName,lastName:employe.lastName});
 
 }
 export const updateEmployee = async (req, res) => {
