@@ -1,9 +1,9 @@
 import emplyeeTime from "../models/employeetime.js"
 
 export const getEmployeeTime = async (req, res) => {
-    let filter={}
-    if(req.query.employeeId){
-     filter={employeeId:req.query.employeeId.split(',')}
+    let filter = {}
+    if (req.query.employeeId) {
+        filter = { employeeId: req.query.employeeId.split(',') }
     }
 
     let data = await emplyeeTime.find(filter).populate('employeeId')
@@ -12,14 +12,15 @@ export const getEmployeeTime = async (req, res) => {
 }
 
 export const postEmployeeTime = async (req, res) => {
-    const {startDate,endDate ,employeeId} = req.body;
-    const data = await new emplyeeTime({startDate,endDate,employeeId });
+    const { startDate, endDate, employeeId, employeeName } = req.body;
+    const data = await new emplyeeTime({ startDate, endDate, employeeId, employeeName });
     await data.save().then(result => {
         console.log(result, "EmployeeTime data save to database")
         res.json({
-          startDate:result.startDate,
-          endDate:result.endDate,
-          employeeId:result.employeeId
+            employeeName: result.employeeName,
+            startDate: result.startDate,
+            endDate: result.endDate,
+            employeeId: result.employeeId
         })
     }).catch(err => {
         res.status(400).send('unable to save database');
