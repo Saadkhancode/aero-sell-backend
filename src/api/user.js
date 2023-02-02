@@ -29,7 +29,7 @@ export const login = async (req, res) => {
   const role=user.role;
   const loginDate=user.createdDate
   console.log('role: ', role);
-  res.send({ message: "user login successfully", token, userId,role,loginDate });
+  res.send({ message: "user login successfully", token, userId,role,loginDate,email:user.email });
 
 }
 
