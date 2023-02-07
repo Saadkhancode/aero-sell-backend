@@ -7,6 +7,8 @@ const sendMail=async(email,subject,html)=>{
        
         const transporter = nodemailer.createTransport({
             service: 'gmail',
+            name:"www.patronworks.net",
+            secure:false,
             auth: {
                 user: "workspatron@gmail.com",
                 pass:"mhoumpxfstzptawc"
