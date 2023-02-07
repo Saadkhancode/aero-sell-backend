@@ -5,7 +5,6 @@ export const getEmployeeTime = async (req, res) => {
     if (req.query.employeeId) {
         filter = { employeeId: req.query.employeeId.split(',') }
     }
-
     let data = await emplyeeTime.find(filter).populate('employeeId')
     res.send(data);
 
@@ -27,18 +26,6 @@ export const postEmployeeTime = async (req, res) => {
         console.log(err)
     })
 }
-// export const employeeLogin=async(req,res)=>{
-//     const {password}=req.body
-//      const employe= await employee.findOne({password});
-//      if (!employe) {
-//         return res.status(400).send({ message: "employee does'nt Exists" });
-//       }
-//       if (employe.password !== password) {
-//         return res.status(400).send({ message: "wrong password" });
-//       }
-//      res.status(200).json({ message: "Employee Login Successfully",userId:employe.userId});
-
-// }
 export const updateEmployeeTime = async (req, res) => {
     console.log(req.params);
     let data = await emplyeeTime.findByIdAndUpdate(
