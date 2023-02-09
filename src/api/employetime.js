@@ -11,20 +11,40 @@ export const getEmployeeTime = async (req, res) => {
 }
 
 export const postEmployeeTime = async (req, res) => {
-    const { startDate, endDate, employeeId, employeeName } = req.body;
-    const data = await new emplyeeTime({ startDate, endDate, employeeId, employeeName });
-    await data.save().then(result => {
-        console.log(result, "EmployeeTime data save to database")
-        res.json({
-            employeeName: result.employeeName,
-            startDate: result.startDate,
-            endDate: result.endDate,
-            employeeId: result.employeeId
+    if (!req.params._id) {
+        const { employees ,employeeId} = req.body;
+        const data = await new emplyeeTime({ employees,employeeId });
+        await data.save().then(result => {
+            console.log(result, "EmployeeTime data save to database")
+            res.json({
+                employees: result.employees,
+                employeeId:result.employeeId
+            })
+        }).catch(err => {
+            res.status(400).send('unable to save database');
+            console.log(err)
         })
-    }).catch(err => {
-        res.status(400).send('unable to save database');
-        console.log(err)
-    })
+    } else {
+        await emplyeeTime.findByIdAndUpdate(
+            { employeeId: req.query.employeeId },
+            {
+                $push: {
+                    employees: { empName, startDate, starthour, endDate, endHour},employeeId
+                },
+            },
+            { new: true },
+            (err, updatedEmployees) => {
+                if (err) {
+                    res.status(500).json({ message: "Error pushing employeeTime" });
+                } else {
+                    res.status(200).json({
+                        message: "new EmployeeTime Data Saved Successfully",
+                        updatedEmployees,
+                    });
+                }
+            }
+        );
+    }
 }
 export const updateEmployeeTime = async (req, res) => {
     console.log(req.params);

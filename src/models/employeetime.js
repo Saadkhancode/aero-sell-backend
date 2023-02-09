@@ -4,29 +4,29 @@ const timeStamp = new Date(Date.UTC(current.getFullYear(),
     current.getMonth(), current.getDate(), current.getHours(),
     current.getMinutes(), current.getSeconds(), current.getMilliseconds()));
 const employeeTimeSchema = new mongoose.Schema({
-    employees:[{
-        name:{
-          type:String  
+    employees: [{
+        empName: {
+            type: String
         },
         startDate: {
             type: Date,
             default: timeStamp
         },
-        startHour:{
-         type:String 
+        startHour: {
+            type: String
         },
         endDate: {
             type: Date,
             default: timeStamp
         },
-        endHour:{
-            type:String
+        endHour: {
+            type: String
         },
-        employeeId:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'employee'
-        }
-    }  ]
+    }],
+    employeeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'employee'
+    }
 })
 const emplyeeTime = new mongoose.model('emplyeeTime', employeeTimeSchema)
 export default emplyeeTime;
