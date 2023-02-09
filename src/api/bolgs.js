@@ -5,12 +5,12 @@ export const getBlog = async (req, res) => {
     res.send(data);
 }
 export const postBlog = async (req, res) => {
-    const {blogContent} = req.body;
-    let data = await new blog({blogContent});
+    const { blogsContent } = req.body;
+    let data = await new blog({ blogsContent});
     await data.save().then(result => {
         console.log(result, "Blog data save to database")
         res.json({
-            blogContent:result.blogContent
+            blogsContent:result.blogsContent
         });
     }).catch(err => {
         res.status(400).send("unable to save to database");

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+
 const blogSchema = new mongoose.Schema({
- blogContent:{
+ blogsContent:{
     type:String
  }
 }, { timestamps: true })
