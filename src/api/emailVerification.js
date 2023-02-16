@@ -11,7 +11,7 @@ router.post('/', async (req, res) => {
       return res.status(400).send({ message: "User with this email already exists." })
     }else if (!user) {
       const token = jwt.sign({ name, email, password, role }, process.env.JWT_SECRET, { expiresIn: '20min' })
-      const link = `http://www.patronworks.net/activate-account/${token}`;
+      const link = `http://www.patronworks.net/auth/activate-account/${token}`;
       await sendMail(email, "Account Activation Link", `<h2>please click on given link to activate ur account.</h2>
       ${link} `)
       return res.status(200).json({ message: "Account Verification Link Send To Ur Account" })

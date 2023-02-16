@@ -7,7 +7,7 @@ export const getOrderItemByUserId = async (req, res) => {
         filter = { userId: req.query.userId.split(',') }
     else if (req.query.orderId)
         filter = { orderId: req.query.orderId.split(',') }
-    let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId')
+    let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers")
 
     res.send(data);
 }
@@ -19,8 +19,8 @@ export const getOrderItemById = async (req, res) => {
 }
 
 export const postOrderItem = async (req, res) => {
-    const { orderId, product, points, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text,customerId,dueamount, userId } = req.body;
-    const data = await new orderitem({ orderId, product, points, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text,customerId, dueamount, userId });
+    const { orderId, product, selectedModifiers,points, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text,customerId,dueamount, userId } = req.body;
+    const data = await new orderitem({ orderId, product,selectedModifiers, points, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text,customerId, dueamount, userId });
     await data.save().then(async (result) => {
         const customerPoints =priceExclTax / 5;
         console.log("customerpoints:",customerPoints);
@@ -32,6 +32,7 @@ export const postOrderItem = async (req, res) => {
             res.json({
                 orderId: result.orderId,
                 product: result.product,
+                selectedModifiers:result.selectedModifiers,
                 dueamount: result.dueamount,
                 points: result.points,
                 taxValue: result.taxValue,
