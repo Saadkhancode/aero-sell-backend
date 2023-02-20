@@ -4,6 +4,10 @@ export const getBlog = async (req, res) => {
     let data = await blog.find(req.params)
     res.send(data);
 }
+export const getBlogById = async (req, res) => {
+    let data = await blog.findOne(req.params)
+    res.send(data);
+}
 export const postBlog = async (req, res) => {
     const { blogsContent } = req.body;
     let data = await new blog({ blogsContent});

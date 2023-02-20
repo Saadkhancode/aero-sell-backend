@@ -11,48 +11,30 @@ export const getEmployeeTime = async (req, res) => {
 }
 
 export const postEmployeeTime = async (req, res) => {
-    if (!req.params._id) {
-        const { employees ,employeeId} = req.body;
-        const data = await new emplyeeTime({ employees,employeeId });
-        await data.save().then(result => {
-            console.log(result, "EmployeeTime data save to database")
-            res.json({
-                employees: result.employees,
-                employeeId:result.employeeId
-            })
-        }).catch(err => {
-            res.status(400).send('unable to save database');
-            console.log(err)
+    const { empName, startDate, startHour, endDate, endHour, employeeId } = req.body;
+    const data = await new emplyeeTime({ empName, startDate, startHour, endDate, endHour, employeeId });
+    await data.save().then(result => {
+        console.log(result, "EmployeeTime data save to database")
+        res.json({
+            empName: result.empName,
+            startDate: result.startDate,
+            startHour: result.startHour,
+            endHour: result.endHour,
+            endDate: result.endDate,
+            employeeId: result.employeeId
         })
-    } else {
-        await emplyeeTime.findByIdAndUpdate(
-            { employeeId: req.query.employeeId },
-            {
-                $push: {
-                    employees: { empName, startDate, starthour, endDate, endHour},employeeId
-                },
-            },
-            { new: true },
-            (err, updatedEmployees) => {
-                if (err) {
-                    res.status(500).json({ message: "Error pushing employeeTime" });
-                } else {
-                    res.status(200).json({
-                        message: "new EmployeeTime Data Saved Successfully",
-                        updatedEmployees,
-                    });
-                }
-            }
-        );
-    }
+    }).catch(err => {
+        res.status(400).send('unable to save database');
+        console.log(err)
+    })
 }
 export const updateEmployeeTime = async (req, res) => {
     console.log(req.params);
-    let data = await emplyeeTime.findByIdAndUpdate(
+    let data = await emplyeeTime.updateMany(
         { _id: req.params._id }, {
         $set: req.body
     },
-        { new: true }
+        { multi: true }
     )
     if (data) {
         res.send({ message: "employeeTime data updated successfully" });

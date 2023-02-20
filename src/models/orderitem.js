@@ -46,6 +46,9 @@ const orderItemSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "product",
     }],
+    selectedModifiers:{
+          type:Array
+    },
     priceExclTax: {
         type: Number
     },
