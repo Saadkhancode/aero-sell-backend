@@ -3,7 +3,6 @@ const routes=express.Router();
 
 import {getParentCategories,
     getParentCategoriesById,
-    getParentCategoryByKey,
     postParentCategories,
     updateParentCategories,
     deleteParentCategories,
@@ -11,7 +10,7 @@ import {getParentCategories,
 
 routes.get('/parentcategory', getParentCategories )
 routes.get('/parentcategory/:_id', getParentCategoriesById )
-routes.get('/parentcategory/:key',getParentCategoriesById)
+// routes.get('/parentcategory/:key',getParentCategoriesById)
 
 routes.post('/parentcategory', postParentCategories )
 routes.put('/parentcategory/:_id', updateParentCategories )
