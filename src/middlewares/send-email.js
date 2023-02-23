@@ -10,8 +10,8 @@ const sendMail=async(email,subject,html)=>{
             name:"www.patronworks.net",
             secure:false,
             auth: {
-                user: "workspatron@gmail.com",
-                pass:"mhoumpxfstzptawc"
+                user: "patronworksnotiify@gmail.com",
+                pass:"eoktktcwnphjzdwo"
             }
         })
         await transporter.sendMail({
