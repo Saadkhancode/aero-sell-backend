@@ -10,8 +10,8 @@ const recieveMail = async (email, html) => {
             name:"www.patronworks.com",
             secure:false,
             auth: {
-                user: "workspatron@gmail.com",
-                pass: "mhoumpxfstzptawc"
+                user: "patronworksnotiify@gmail.com",
+                pass: "eoktktcwnphjzdwo"
             }
         })
         await transporter.sendMail({
