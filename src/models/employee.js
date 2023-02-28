@@ -22,10 +22,10 @@ const employeeSchema = new mongoose.Schema({
         ref: 'user'
     },
     password: {
-        type: Number
+        type: String
     },
     confirmPassword: {
-        type: Number
+        type: String
     },
     role: {
         type: String,
