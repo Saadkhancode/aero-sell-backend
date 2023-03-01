@@ -10,13 +10,13 @@ export const getLoyalty = async (req, res) => {
 }
 
 export const postLoyalty = async (req, res) => {
-    const { name,productQty,description,userId} = req.body;
-    const data = await new loyalty({ name,productQty,description,userId });
+    const { productName,offerQty,description,userId} = req.body;
+    const data = await new loyalty({ productName,offerQty,description,userId });
     await data.save().then(result => {
         console.log(result, "loyalty data save to database")
         res.json({
-            name: result.name,
-            productQty:result.productQty,
+            productName: result.productName,
+            offerQty:result.offerQty,
             description:result.description,
             userId:result.userId
         })
