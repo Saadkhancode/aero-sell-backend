@@ -1,11 +1,15 @@
-import loyalty from '../models/loyalty-offers.js';
+import loyalty from '../models/loyalty-offers.js'
 
 export const getLoyalty = async (req, res) => {
     let filter={}
     if(req.query.userId){
      filter={userId:req.query.userId.split(',')}
     }
-    let data = await loyalty.find(filter);
+    let data = await loyalty.find(filter).populate('productName')
+    res.send(data);
+}
+export const getLoyaltyById = async (req, res) => {
+    let data = await loyalty.find(req.params).populate('productName');
     res.send(data);
 }
 
