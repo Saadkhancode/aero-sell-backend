@@ -7,7 +7,7 @@ export const getCategories = async (req, res) => {
     } else if (req.query.userId) {
         filter = { userId: req.query.userId.split(',') }
     }
-    let data = await category.find(filter).populate('parentId','_id').populate('displayManagerId', 'name').populate('userId','_id')
+    let data = await category.find(filter).populate('parentId','name').populate('displayManagerId', 'name').populate('userId','_id')
 
     res.send(data);
 }

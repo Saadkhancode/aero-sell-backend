@@ -28,10 +28,10 @@ const categorySchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'display' 
     },
-    parentId: [{
+    parentId: {
         type: mongoose.Schema.Types.ObjectId,
         ref:'parentcategory'
-    }],
+    },
     lampixIcon: {
         type: String
     },
