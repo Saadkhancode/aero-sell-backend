@@ -1,4 +1,8 @@
 import mongoose from 'mongoose';
+var current = new Date();
+const timeStamp = new Date(Date.UTC(current.getFullYear(),
+    current.getMonth(), current.getDate(), current.getHours(),
+    current.getMinutes(), current.getSeconds(), current.getMilliseconds()));
 const orderItemSchema = new mongoose.Schema({
     points: {
         type: Number
@@ -79,6 +83,14 @@ const orderItemSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         required:true,
         ref:'user'
+    },
+    createdAt: {
+        type: Date,
+        default: timeStamp
+    },
+    updatedAt: {
+        type:Date,
+        default:timeStamp
     }
 })
 const orderitem = mongoose.model('orderitem', orderItemSchema);
