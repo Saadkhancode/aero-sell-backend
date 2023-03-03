@@ -84,6 +84,10 @@ const orderItemSchema = new mongoose.Schema({
         required:true,
         ref:'user'
     },
+    paymentType:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'paymentlist'
+    },
     createdAt: {
         type: Date,
         default: timeStamp
