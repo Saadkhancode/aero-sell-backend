@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-let stripe = Stripe('sk_test_51MhRsBSCuFBKzU4Ys3lReEF2JrFrZvzQMovT0BC0AIRgGSS22MEAjJvzB6PAYtoiEhp9v63aVBnvgUB0U48yHHey00RPayJhTa');
+let stripe = Stripe('sk_test_51MhWxKHJ9BPMo71ST6mGiBJPG6XLx3qqDOt05T97NLuq4mRd94gffLyHoMaeuJBzYFApW5mJFRwhDiTM2In8J3dY00VB4LeP0D');
 export const Checkout = async (req, res) => {
   try {
     const customer = await stripe.customers.create({
