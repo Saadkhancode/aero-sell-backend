@@ -6,10 +6,12 @@ getWaitingTables,
 getReservationAndWaitingListbyId,
 postReservationAndWaitingList,
 updateReservationAndWaitingList,
-deleteReservationAndWaitingList
+deleteReservationAndWaitingList,
+getReservationAndWaitingListById
 } from '../api/tables-reservation&waitingList.js'
 router.get('/reserved',getReservedTables)
 router.get('/waiting',getWaitingTables)
+router.get('/table-operator/:_id',getReservationAndWaitingListById)
 router.post('/table-operator',postReservationAndWaitingList)
 router.get('/table-operator/:_id',getReservationAndWaitingListbyId)
 router.put('/table-operator/:_id',updateReservationAndWaitingList)

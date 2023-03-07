@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const loyaltySchema = new mongoose.Schema({
     productName: {
         type: mongoose.Schema.Types.ObjectId,
@@ -16,5 +17,6 @@ const loyaltySchema = new mongoose.Schema({
         ref: 'user'
     }
 })
-const loyaltyModel = new mongoose.model("loyalty", loyaltySchema)
+const loyaltyModel = mongoose.model("loyalty", loyaltySchema)
+
 export default loyaltyModel;

@@ -20,6 +20,10 @@ export const getReservationAndWaitingListbyId=async(req,res)=>{
     const tableByid=await tableSelect.find(req.params);
     res.send(tableByid);
 }
+export const getReservationAndWaitingListById=async(req,res)=>{
+    const ReservationAndWaitingList=await tableSelect(req.params);
+    res.send(ReservationAndWaitingList)
+}
 export const postReservationAndWaitingList=async(req,res)=>{
     const {PartyName,Guests,Email,Phone,Note,Private,Smoking,window,Booth,Boys,HighChairs,WheelChairs,btnStatus,table}=req.body;
     const ReservationAndWaitingList=await new tableSelect({PartyName,Guests,Email,Phone,Note,Private,Smoking,window,Booth,Boys,HighChairs,WheelChairs,btnStatus,table})
