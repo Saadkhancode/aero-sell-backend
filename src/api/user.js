@@ -19,6 +19,8 @@ export const getSuperUser = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email }) || await superUser.findOne({ email }) || await employee.findOne({ email })
+  console.log('user: ', user);
+  // return
   if (!user) {
     return res.status(400).send({ message: "User not found" });
   }
