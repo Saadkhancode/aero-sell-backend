@@ -1,4 +1,5 @@
 import product from '../models/product.js';
+import sendMail from '../middlewares/send-email.js'
 
 export const getProduct = async (req, res) => {
     let filter = {}
@@ -10,24 +11,34 @@ export const getProduct = async (req, res) => {
         filter = { userId: req.query.userId.split(',') }
     }
     let productData = await product.find(filter, filter2).populate('categoryId').populate('categoryParents', 'name').populate('userId').populate('order')
+    let filteredProductsName = []
+    let userEmail = productData[0].userId.email
+    productData?.filter((item) => {
+        if (item.totalQuantity <= 5) {
+            filteredProductsName.push(item.name)
+        }
+    })
+
+    sendMail(userEmail, "Low Stock Alerts", `<h2 style="background-color: #f1f1f1; padding: 20px;width:50%">These Products Are  Low  In  Stock</h2><br><h3 style="background-color: #f1f1f1; width:60%">${filteredProductsName}</h3>`)
 
     res.send(productData);
 
 }
-export const getFilteredProduct=async(req,res)=>{
+export const getFilteredProduct = async (req, res) => {
     let productData = await product.find().populate('categoryId').populate('categoryParents', 'name').populate('userId').populate('order')
     let ActiveProduct = productData?.filter((item) => item.userId.isActive === true)
     res.send(ActiveProduct);
 }
 export const getProductById = async (req, res) => {
     let productData = await product.findOne(req.params).populate('categoryId', 'name').populate('order').populate('categoryParents', 'name')
+
     res.send(productData);
 
 }
 export const getProductByKey = async (req, res) => {
     let productData = await product.find({
-        "$or":[{
-        name:{$regex:req.params.key}
+        "$or": [{
+            name: { $regex: req.params.key }
         }]
     }).populate('categoryId', 'name').populate('order').populate('categoryParents', 'name')
     res.send(productData);
