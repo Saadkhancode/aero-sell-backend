@@ -1,5 +1,6 @@
 import orderitem from '../models/orderitem.js'
 import customer from '../models/customer.js'
+import Product from '../models/product.js'
 
 export const getOrderItemByUserId = async (req, res) => {
     let filter = {}
@@ -26,6 +27,12 @@ export const postOrderItem = async (req, res) => {
         console.log("customerpoints:",customerPoints);
         const customerById=await customer.findById(customerId)
         console.log("customerBeforeAddedPoints",customerById);
+        // const selectedProds=result.product?.filter((item=> item._id) )
+        // const filter=Object.assign({},selectedProds)
+        // console.log('filter: ', filter);
+        // const productsById=await Product.find().populate('product')
+        // console.log('productById: ', productsById);
+        
         if(customerById){
             const  customerdata=  await customer.findByIdAndUpdate(customerById, { $set: { "CustomerLoyalty.Points": customerById.CustomerLoyalty.Points + customerPoints } })
             console.log("customerAfterAddedPoints",customerdata);
