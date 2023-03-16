@@ -28,14 +28,16 @@ export const postOrderItem = async (req, res) => {
         const customerById = await customer.findById(customerId)
         const products = await Product.find({userId}).populate('userId')
         let filteredProductsName = []
-        let userEmail = products[0].userId.email
+        let userEmail = products[0]?.userId.email
         products?.filter((item) => {
             if (item.totalQuantity <= 5) {
                 filteredProductsName.push(item.name)
             }
         })
         // console.log('filterProduct: ', filteredProductsName);
-        sendMail(userEmail, "Low Stock Alerts", `<h2 style="background-color: #f1f1f1; padding: 20px;width:50%">These Products Are  Low  In  Stock</h2><br><h3 style="background-color: #f1f1f1; width:60%">${filteredProductsName}</h3>`)
+        if(products && userEmail && filteredProductsName){
+            sendMail(userEmail, "Low Stock Alerts", `<h2 style="background-color: #f1f1f1; padding: 20px;width:50%">These Products Are  Low  In  Stock</h2><br><h3 style="background-color: #f1f1f1; width:60%">${filteredProductsName}</h3>`)
+        }
         if (customerById) {
             const customerdata = await customer.findByIdAndUpdate(customerById, { $set: { "CustomerLoyalty.Points": customerById.CustomerLoyalty.Points + customerPoints } })
             console.log("customerAfterAddedPoints", customerdata);
