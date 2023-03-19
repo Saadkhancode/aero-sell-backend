@@ -23,21 +23,23 @@ export const getOrderItemById = async (req, res) => {
 export const postOrderItem = async (req, res) => {
     const { orderId, table, product, selectedModifiers, points, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType } = req.body;
     const data = await new orderitem({ orderId, table, product, selectedModifiers, points, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType });
+    let prod = []
+    prod = product
     await data.save().then(async (result) => {
         const customerPoints = priceExclTax / 5;
         const customerById = await customer.findById(customerId)
-        const products = await Product.find({userId}).populate('userId')
-        let filteredProductsName = []
-        let userEmail = products[0]?.userId.email
-        products?.filter((item) => {
-            if (item.totalQuantity <= 5) {
-                filteredProductsName.push(item.name)
+        prod.map(async (item) => {
+            const products = await Product.findOne({ _id: item._id }).populate('userId')
+            await Product.findOneAndUpdate({_id:products._id}, { $set: { "totalQuantity": products.totalQuantity - item.quantity } })
+            let filteredProductsName = []
+            let userEmail = products.userId.email
+            if (products.totalQuantity <= 5) {
+                filteredProductsName.push(products.name)
+            }
+            if (products && userEmail && filteredProductsName) {
+                sendMail(userEmail, "Low Stock Alerts", `<h2 style="background-color: #f1f1f1; padding: 20px;width:50%">These Products Are  Low  In  Stock</h2><br><h3 style="background-color: #f1f1f1; width:60%">${filteredProductsName}</h3>`)
             }
         })
-        // console.log('filterProduct: ', filteredProductsName);
-        if(products && userEmail && filteredProductsName){
-            sendMail(userEmail, "Low Stock Alerts", `<h2 style="background-color: #f1f1f1; padding: 20px;width:50%">These Products Are  Low  In  Stock</h2><br><h3 style="background-color: #f1f1f1; width:60%">${filteredProductsName}</h3>`)
-        }
         if (customerById) {
             const customerdata = await customer.findByIdAndUpdate(customerById, { $set: { "CustomerLoyalty.Points": customerById.CustomerLoyalty.Points + customerPoints } })
             console.log("customerAfterAddedPoints", customerdata);
