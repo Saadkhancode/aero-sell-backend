@@ -20,9 +20,15 @@ export const getOrderItemById = async (req, res) => {
     res.send(data);
 }
 
+export const getOrderItems = async (req, res) => {
+
+    let data = await orderitem.find(req.params).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate('paymentType').populate('table').populate({ path: "product", populate: { path: "userId", model: "user"}})
+    res.send(data);
+}
+
 export const postOrderItem = async (req, res) => {
-    const { orderId, table, product, selectedModifiers, points, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType } = req.body;
-    const data = await new orderitem({ orderId, table, product, selectedModifiers, points, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType });
+    const { orderId, table, product, selectedModifiers, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType } = req.body;
+    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, points, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType });
     let prod = []
     prod = product
     await data.save().then(async (result) => {
@@ -63,7 +69,8 @@ export const postOrderItem = async (req, res) => {
                 customerId: result.customerId,
                 paymentType: result.paymentType,
                 createdAt: result.createdAt,
-                updatedAt: result.updatedAt
+                updatedAt: result.updatedAt,
+                orderStatus:result.orderStatus
             })
         } else {
             res.json({
@@ -84,7 +91,8 @@ export const postOrderItem = async (req, res) => {
                 customerId: result.customerId,
                 paymentType: result.paymentType,
                 createdAt: result.createdAt,
-                updatedAt: result.updatedAt
+                updatedAt: result.updatedAt,
+                orderStatus:result.orderStatus
             })
         }
 

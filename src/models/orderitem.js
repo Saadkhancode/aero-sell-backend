@@ -21,6 +21,10 @@ const orderItemSchema = new mongoose.Schema({
          type:mongoose.Schema.Types.ObjectId,
          ref:'tables'
     },
+    orderStatus:{
+        type:String,
+        enum:['physical','online']
+    },
     productWithQty: [{
         productId: {
             type: String,//stringt
