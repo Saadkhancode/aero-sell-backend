@@ -9,20 +9,20 @@ export const getOrderItemByUserId = async (req, res) => {
         filter = { userId: req.query.userId.split(',') }
     else if (req.query.orderId)
         filter = { orderId: req.query.orderId.split(',') }
-    let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers").populate('paymentType').populate('table')
+    let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers").populate('paymentType').populate('table').populate('orderId')
 
     res.send(data);
 }
 
 export const getOrderItemById = async (req, res) => {
 
-    let data = await orderitem.findOne(req.params).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate('paymentType').populate('table')
+    let data = await orderitem.findOne(req.params).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate('paymentType').populate('table').populate('orderId')
     res.send(data);
 }
 
 export const getOrderItems = async (req, res) => {
 
-    let data = await orderitem.find(req.params).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate('paymentType').populate('table').populate({ path: "product", populate: { path: "userId", model: "user"}})
+    let data = await orderitem.find(req.params).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate('paymentType').populate('table').populate({ path: "product", populate: { path: "userId", model: "user"}}).populate('orderId')
     res.send(data);
 }
 
@@ -34,6 +34,7 @@ export const postOrderItem = async (req, res) => {
     await data.save().then(async (result) => {
         const customerPoints = priceExclTax / 5;
         const customerById = await customer.findById(customerId)
+        console.log("prod",prod);
         prod.map(async (item) => {
             const products = await Product.findOne({ _id: item._id }).populate('userId')
             await Product.findOneAndUpdate({_id:products._id}, { $set: { "totalQuantity": products.totalQuantity - item.quantity } })
