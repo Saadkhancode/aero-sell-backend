@@ -16,6 +16,7 @@ export const postEmployeeTime = async (req, res) => {
     await data.save().then(result => {
         console.log(result, "EmployeeTime data save to database")
         res.json({
+            _id: result._id,
             empName: result.empName,
             startDate: result.startDate,
             startHour: result.startHour,
