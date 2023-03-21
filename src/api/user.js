@@ -46,7 +46,7 @@ export const updateUser = async (req, res) => {
   let data = await User.findByIdAndUpdate(
     { _id: req.params._id }, {
     $set: req.body
-  }, {}, { new: true }
+  }, { new: true }
   );
   if (data) {
     res.send({ message: "User data updated successfully" });

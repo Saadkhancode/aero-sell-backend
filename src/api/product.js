@@ -26,7 +26,8 @@ export const getProduct = async (req, res) => {
 }
 export const getFilteredProduct = async (req, res) => {
     let productData = await product.find().populate('categoryId').populate('categoryParents', 'name').populate('userId').populate('order')
-    let ActiveProduct = productData?.filter((item) => item.userId.isActive === true)
+    
+    let ActiveProduct = productData?.filter((item) => item.userId?.isActive === true)
     res.send(ActiveProduct);
 }
 export const getProductById = async (req, res) => {
