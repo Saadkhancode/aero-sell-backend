@@ -9,14 +9,13 @@ const employeeTimeSchema = new mongoose.Schema({
         },
         startDate: {
             type: Date,
-            default: timeStamp
+           
         },
         startHour: {
             type: String
         },
         endDate: {
             type: Date,
-            default: timeStamp
         },
         endHour: {
             type: String
