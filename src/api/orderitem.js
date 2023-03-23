@@ -27,8 +27,8 @@ export const getOrderItems = async (req, res) => {
 }
 
 export const postOrderItem = async (req, res) => {
-    const { orderId, table, product, selectedModifiers, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType } = req.body;
-    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, points, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType });
+    const { orderId, table, product, selectedModifiers,loyalityOffer, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType } = req.body;
+    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,points, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType });
     let prod = []
     prod = product
     await data.save().then(async (result) => {
@@ -55,6 +55,7 @@ export const postOrderItem = async (req, res) => {
                 product: result.product,
                 table: result.table,
                 selectedModifiers: result.selectedModifiers,
+                loyalityOffer:result.loyalityOffer,
                 dueamount: result.dueamount,
                 points: result.points,
                 taxValue: result.taxValue,
@@ -78,6 +79,7 @@ export const postOrderItem = async (req, res) => {
                 orderId: result.orderId,
                 product: result.product,
                 dueamount: result.dueamount,
+                loyalityOffer:result.loyalityOffer,
                 points: result.points,
                 taxValue: result.taxValue,
                 productWithQty: result.productWithQty,
