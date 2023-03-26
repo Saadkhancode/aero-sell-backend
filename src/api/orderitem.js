@@ -5,10 +5,13 @@ import sendMail from '../middlewares/send-email.js'
 
 export const getOrderItemByUserId = async (req, res) => {
     let filter = {}
-    if (req.query.userId)
+    if (req.query.userId){
         filter = { userId: req.query.userId.split(',') }
-    else if (req.query.orderId)
+    } else if (req.query.orderId){
         filter = { orderId: req.query.orderId.split(',') }
+    } else if (req.query.orderStatus){
+        filter = { orderStatus: req.query.orderStatus.split(',') }
+    }
     let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers").populate('paymentType').populate('table').populate('orderId')
 
     res.send(data);
