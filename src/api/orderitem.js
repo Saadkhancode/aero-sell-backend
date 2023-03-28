@@ -16,6 +16,15 @@ export const getOrderItemByUserId = async (req, res) => {
 
     res.send(data);
 }
+export const getOrderItemOrderStatus = async (req,res)=>{
+    let filter = {}
+    if (req.query.orderStatus){
+        filter = { orderStatus: req.query.orderStatus.split(',') }
+    }
+    let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers").populate('paymentType').populate('table').populate('orderId')
+
+    res.send(data);
+}
 
 export const getOrderItemById = async (req, res) => {
 
