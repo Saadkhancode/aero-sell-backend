@@ -14,14 +14,15 @@ export const getTableById= async (req, res) => {
 }
 
 export const postTables= async (req, res) => {
-    const { tableNo, tableName,description, hasLampixDevice ,userId} = req.body;
+    const { tableNo, tableName,location,description, hasLampixDevice ,userId} = req.body;
     const tableimg=req.file ? req.file.location : null
-    let data = new tables({ tableNo, tableName,description, hasLampixDevice ,userId,tableimg});
+    let data = new tables({ tableNo, tableName,location,description, hasLampixDevice ,userId,tableimg});
     await data.save().then(result => {
         console.log(result, "Tables data save to database")
          res.json({
             tableNo: result.tableNo,
             tableName: result.tableName,
+            location:result.location,
             description: result.description,
             hasLampixDevice: result.hasLampixDevice,
             userId:result.userId,
