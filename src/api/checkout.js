@@ -2,11 +2,7 @@ import Stripe from 'stripe';
 let stripe = Stripe('sk_test_51MiZTVF1YkHoz4Y5AsHfg9ovHa5zsRFHCfVrHSy5XKvxKtdKSMHpzQ5V0wEfcGHVfoEQ50NjXhCP0aF2aC1Mc05300eCAJlRxu');
 export const Checkout = async (req, res) => {
   try {
-    const customer = await stripe.customers.create({
-      email: req.body.token.email,
-      // email: "saad@gmail.com",
-      source: req.body.token.id
-    }).then((customer) => {
+    const customer = await stripe.accounts.create({type: 'express'}).then((customer) => {
       return stripe.charges.create({
         amount: 1000,
         description: "Test Purchase using express and Node",
