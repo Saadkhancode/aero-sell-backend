@@ -68,6 +68,10 @@ const orderSchema = new mongoose.Schema({
     operator:{
         type:String
     },
+    employeeId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'employee'
+    },
     customerId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'customer'
