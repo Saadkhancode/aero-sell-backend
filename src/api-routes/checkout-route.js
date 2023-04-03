@@ -3,10 +3,14 @@ const routes=express.Router();
 
 import {Checkout
 } from "../api/checkout.js"
-import { createAccount } from "../api/stripeConnet.js"
+import { createSellerAccount,
+    authorizeSeller,
+     getSellerBalance
+} from "../api/stripeConnet.js"
 
+routes.get('/sellerbalance/:account_id',getSellerBalance)
+routes.get('/authorize-seller', authorizeSeller )
 routes.post('/credit', Checkout )
-routes.post('/create-account', createAccount )
-
+routes.post('/create-account', createSellerAccount )
 
 export default routes
