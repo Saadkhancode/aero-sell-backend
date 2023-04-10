@@ -103,14 +103,18 @@ export const authorizeSeller=async (req, res) => {
 
     // Save the access token and refresh token to your database
     const { access_token, refresh_token, stripe_user_id } = response;
-    var connected_account_id = response.stripe_user_id;
-    // Redirect the seller to a page confirming their account has been connected 
-    // res.redirect('/confirm-account-linked');
-    res.send({connected_account_id})
 
+    res.json({
+      success: true,
+      access_token,
+      refresh_token,
+      stripe_user_id,
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).send({ error: err.message });
+    res.status(500).json({
+      error: err.message,
+    });
   }
 };
 export const getSellerBalance= async (req, res) => {
