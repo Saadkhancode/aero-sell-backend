@@ -51,27 +51,30 @@ let stripe = Stripe('sk_test_51MiZTVF1YkHoz4Y5AsHfg9ovHa5zsRFHCfVrHSy5XKvxKtdKSM
 // }
 // Create a custom account for a new seller
 export const createSellerAccount = async (req, res) => {
-  const { email, country, account_type } = req.body;
+  // const { email, country} = req.body;
 
   try {
     const account = await stripe.accounts.create({
-      type: account_type || 'custom',
-      country,
-      email,
-      capabilities: {
-        // Enable these capabilities in your account:
-        card_payments: { requested: true },
-        transfers: { requested: true },
-      },
-      // account_token: 'SOME_SECRET_TOKEN',
-      // business_type: account_type,
+      type: 'express',
+      // country,
+      // email,
+      // capabilities: {
+      //   card_payments: { requested: true },
+      //   transfers: { requested: true },
+      // },
     });
     console.log('account: ', account);
-
-    // Store the account ID in your database
     const accountID = account.id;
     console.log('accountID: ', accountID);
 
+    // const accountLink = await stripe.accountLinks.create({
+    //   account: account.id,
+    //   refresh_url: 'http://localhost:18020/stripe-connect',
+    //   return_url: 'http://localhost:18020/stripe-connect',
+    //   type: 'account_onboarding',
+    // });
+    
+    // console.log('accountLink: ', accountLink);
     // Set the account type (i.e. individual or business) and the seller's internal ID in metadata
     // await stripe.accounts.update(accountID, {
     //   metadata: {
@@ -80,6 +83,7 @@ export const createSellerAccount = async (req, res) => {
     //   },
     // });
 
+    // res.json({ accountLink: accountLink.url });
     res.send({ account_id: accountID });
   } catch (err) {
     console.error(err);
@@ -100,11 +104,17 @@ export const authorizeSeller=async (req, res) => {
     // Save the access token and refresh token to your database
     const { access_token, refresh_token, stripe_user_id } = response;
 
-    // Redirect the seller to a page confirming their account has been connected 
-    res.redirect('/confirm-account-linked');
+    res.json({
+      success: true,
+      access_token,
+      refresh_token,
+      stripe_user_id,
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).send({ error: err.message });
+    res.status(500).json({
+      error: err.message,
+    });
   }
 };
 export const getSellerBalance= async (req, res) => {
