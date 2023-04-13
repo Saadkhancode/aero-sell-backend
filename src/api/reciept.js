@@ -1,7 +1,7 @@
 import reciept from '../models/reciept.js'
 
 export const getReciept = async (req, res) => {
-    let data = await reciept.findOne(req.params);
+    let data = await reciept.find(req.params);
     res.send(data);
     console.log(data);
 

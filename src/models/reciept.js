@@ -5,10 +5,10 @@ const timeStamp = new Date(Date.UTC(current.getFullYear(),
     current.getMinutes(), current.getSeconds(), current.getMilliseconds()));
 const recieptSchema = new mongoose.Schema({
     recieptNo: {
-        type: String,
+        type: Number,
     },
     tableNo: {
-        type:String,
+        type:Number,
     },
     date: {
         type: Date,
@@ -17,9 +17,7 @@ const recieptSchema = new mongoose.Schema({
     customer: {
         type: String,
     },
-    operator: {
-        type: String,
-    },
+  
     product: [{
         name: {
             type: String,
@@ -29,6 +27,7 @@ const recieptSchema = new mongoose.Schema({
             type: Number,
         },
         amount: {
+            type: Number,
         }
 
     }],

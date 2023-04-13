@@ -15,9 +15,9 @@ export const getOrder = async (req, res) => {
 }
 
 export const postOrder = async (req, res) => {
-    const { tableNo, tableName, currentOrderId, startDate, orderDate,orderValueExclTax, orderValueTax, orderValue, parentOrderNo, orderStatus, orderType, isHold, userId, operator, discount,loyalty,dueamount , distype , employeeId, customerId } = req.body;
+    const { tableNo, tableName, currentOrderId, startDate, orderDate,orderValueExclTax, orderValueTax, orderValue, parentOrderNo, orderStatus, orderType, isHold, userId, operator, discount,loyalty,dueamount ,recieptId, distype , employeeId, customerId } = req.body;
 
-    const data = await new order({ tableNo, tableName, currentOrderId, startDate, orderDate,  orderValueExclTax, orderValueTax, orderValue, parentOrderNo, orderStatus, orderType, isHold, userId, operator, discount,dueamount,loyalty, distype, employeeId, customerId });
+    const data = await new order({ tableNo, tableName, currentOrderId, startDate, orderDate,  orderValueExclTax, orderValueTax, orderValue, parentOrderNo, orderStatus, orderType, isHold, userId, operator,recieptId, discount,dueamount,loyalty, distype, employeeId, customerId });
     await data.save().then(async (result) => {
         const customerData = await customer.findById(customerId)
         if(customerData){
