@@ -9,7 +9,7 @@ export const getOrder = async (req, res) => {
     else if (req.query.customerId)
         filter = { customerId: req.query.customerId.split(',') }
 
-    let data = await order.find(filter).populate('customerId').populate('employeeId')
+    let data = await order.find(filter).populate('customerId').populate('employeeId').populate('recieptId')
     res.send(data);
 
 }

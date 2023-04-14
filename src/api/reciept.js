@@ -1,9 +1,13 @@
 import reciept from '../models/reciept.js'
 
 export const getReciept = async (req, res) => {
-    let data = await reciept.find(req.params);
+    let filter={}
+    if(req.query.userId){
+        filter = { userId: req.query.userId.split(',') }
+    }
+    let data = await reciept.find(filter);
     res.send(data);
-    console.log(data);
+    
 
 }
 
