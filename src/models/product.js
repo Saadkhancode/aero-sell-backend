@@ -15,12 +15,12 @@ const productSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "parentcategory"
     }],
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:'user'
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
     },
-    totalQuantity:{
+    totalQuantity: {
         type: Number
     },
     barCode: {
@@ -35,6 +35,10 @@ const productSchema = new mongoose.Schema({
     retailPrice: {
         type: Number
     },
+    isLock: {
+        type: Boolean,
+        default: false
+    },
     shortDescription: {
         type: String
     },
@@ -42,8 +46,8 @@ const productSchema = new mongoose.Schema({
         type: String
     },
     order: {
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'order'
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'order'
     },
     active: {
         type: String
@@ -53,7 +57,7 @@ const productSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'category'
         }],
-   Product_pic: {
+    Product_pic: {
         type: String,
     },
     productPictureId: {
@@ -62,8 +66,8 @@ const productSchema = new mongoose.Schema({
     productType: {
         type: String
     },
-    hasPicture:{
-     type: Boolean
+    hasPicture: {
+        type: Boolean
     }
 
 })
