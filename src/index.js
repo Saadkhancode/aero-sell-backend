@@ -79,14 +79,16 @@ app.use('*', (req, res) => {
 
 
 //Port
-if (process.env.NODE_ENV === 'production') {
-    const port = process.env.PROD_PORT;
-    app.listen(port, () => {
-        console.log(`Server is running on port: ${port}`);
-    });
-} else if (process.env.NODE_ENV === 'development') {
-    const port = process.env.DEV_PORT;
-    app.listen(port, () => {
-        console.log(`Server is running on port: ${port}`);
-    });
-}
+const port = process.env.PORT || 3333;
+app.listen(port, () => {
+    console.log(`Server is running on port: ${port}`);
+});
+// if (process.env.NODE_ENV === 'production') {
+// } else if (process.env.NODE_ENV === 'development') {
+//     const port = process.env.DEV_PORT;
+//     app.listen(port, () => {
+//         console.log(`Server is running on port: ${port}`);
+//     });
+// }
+// "start": "NODE_ENV=production node src/index.js",
+    // "dev": "NODE_ENV=development nodemon src/index.js",
