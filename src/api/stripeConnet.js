@@ -105,7 +105,6 @@ export const authorizeSeller=async (req, res) => {
     const { access_token, refresh_token, stripe_user_id } = response;
 
     res.json({
-      success: true,
       access_token,
       refresh_token,
       stripe_user_id,
