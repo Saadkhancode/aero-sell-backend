@@ -30,11 +30,12 @@ deploy:
   stage: deploy
   # Config to use our Runner with Executor Shell
   variables:
-    PROD_PORT: 3333
+    PORT: 3333
     JWT_SECRET: secret
-    PROD_DB_NAME: patronworks
-    PROD_MONGODB_URI: "mongodb+srv://saadk4474:CnxwMdQTG7ey9nMr@patronworks.2voqycm.mongodb.net/patronworks?retryWrites=true&w=majority"
+    DB_NAME: patronworks
+    MONGODB_URI: "mongodb+srv://saadk4474:CnxwMdQTG7ey9nMr@patronworks.2voqycm.mongodb.net/patronworks?retryWrites=true&w=majority"
     BASE_URL: "http://www.patronworks.net"
+    CLOUD_NAME: djm945kfs
   tags:
     - my-shell-runner
   script:
