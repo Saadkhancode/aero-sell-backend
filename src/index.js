@@ -43,8 +43,8 @@ import { fileURLToPath } from 'url';
 const app = express();
 dotenv.config();
 //path
-// const __filename=fileURLToPath(import.meta.url)
-// const __dirname=path.dirname(__filename)
+const __filename=fileURLToPath(import.meta.url)
+const __dirname=path.dirname(__filename)
 //middelwares
 
 app.use(bodyParser.urlencoded({ extended: false }))
