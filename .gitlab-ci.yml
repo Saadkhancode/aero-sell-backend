@@ -123,7 +123,7 @@ deploy-prod:
     - npm install
     # Restart NodeJS service with forever for npm start
     - forever stop $PROJECT_DIR/src/index.js || true
-    - forever start src/index.js
+    - NODE_ENV=production forever start src/index.js
   only:
     - main
     # Only deploy for npm start
