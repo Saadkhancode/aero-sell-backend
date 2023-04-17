@@ -51,8 +51,8 @@
 # We have 2 stage Test and Deploy
 stages:
   - test
-  - deployprod
-  - deploydev
+  - deploy-prod
+  - deploy-dev
 
 # Config cache
 cache:
@@ -75,8 +75,10 @@ test:
   only:
     - div-saad
 
+# Deploy to development server
+deploy-dev:
   # Attach Deploy job to Deploy stage
-  stage: deploydev
+  stage: deploy-dev
   # Config to use our Runner with Executor Shell
   variables:
     DEV_PORT: 4444
@@ -96,12 +98,14 @@ test:
     - forever stop $PROJECT_DIR/src/index.js || true
     - NODE_ENV=development forever start src/index.js
   only:
-    - div-saad
+    - master
     # Only deploy for npm run dev
     - $CI_COMMIT_BRANCH == "main" && $CI_COMMIT_TAG == null && $CI_COMMIT_MESSAGE =~ /npm run dev/
 
+# Deploy to production server
+deploy-prod:
   # Attach Deploy job to Deploy stage
-  stage: deployprod
+  stage: deploy-prod
   # Config to use our Runner with Executor Shell
   variables:
     PORT: 3333
@@ -124,4 +128,3 @@ test:
     - main
     # Only deploy for npm start
     - $CI_COMMIT_BRANCH == "main" && $CI_COMMIT_TAG == null && $CI_COMMIT_MESSAGE =~ /npm start/
-
