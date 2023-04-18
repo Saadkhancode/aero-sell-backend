@@ -110,6 +110,7 @@ deploy-dev:
     # Only copy changed files to project folder
     - cp -r -u * $PROJECT_DIR
     - cd $PROJECT_DIR
+    - cp -r -u * /home/gitlab-runner/
     - npm install
     # Restart NodeJS service with forever for npm run dev
     - forever stop $PROJECT_DIR/src/index.js || true
