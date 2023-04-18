@@ -89,7 +89,7 @@ test2:
     - npm run test
   # Defines the names of branches and tags the job runs for
   only:
-    - div-saad
+    - dev-iht
 
 
 # Deploy to development server
