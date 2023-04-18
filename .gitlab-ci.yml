@@ -51,6 +51,7 @@
 # We have 2 stage Test and Deploy
 stages:
   - test
+  - test2
   - deploy-prod
   - deploy-dev
 
@@ -74,6 +75,22 @@ test:
   # Defines the names of branches and tags the job runs for
   only:
     - div-saad
+    # Test job
+test2:
+  # Docker image
+  image: node:latest
+  # Attach Test job to Test stage
+  stage: test
+  # Config to use GitLab Shared Runner with Executor Docker
+  tags:
+    - my-dev-runner
+  script:
+    - npm install
+    - npm run test
+  # Defines the names of branches and tags the job runs for
+  only:
+    - div-saad
+
 
 # Deploy to development server
 deploy-dev:
