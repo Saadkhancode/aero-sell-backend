@@ -12,7 +12,7 @@ export const getTableById= async (req, res) => {
     const data = await tables.findOne(req.params);
     res.send(data);
 }
-//tetsing
+
 export const postTables= async (req, res) => {
     const { tableNo, tableName,location,description, hasLampixDevice ,userId} = req.body;
     const tableimg=req.file ? req.file.location : null
