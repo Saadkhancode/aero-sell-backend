@@ -57,6 +57,7 @@ deploy-dev:
     - my-dev-runner
   script:
     # Only copy changed files to project folder
+    - sudo chmod -R 777 $PROJECT_DIR
     - ls -la $PROJECT_DIRsss
     - cp -r -u * $PROJECT_DIR
     - cd $PROJECT_DIR
