@@ -57,7 +57,6 @@ deploy-dev:
     - my-dev-runner
   script:
     # Only copy changed files to project folder
-    - sudo chown -R gitlab-runner:gitlab-runner $PROJECT_DIR
     - cp -r -u * $PROJECT_DIR
     - ls -la $PROJECT_DIR
     - cd $PROJECT_DIR
