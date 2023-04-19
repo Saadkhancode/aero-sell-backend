@@ -9,15 +9,15 @@ const productModifierSchema = new mongoose.Schema({
             type: String
         },
         quantity: {
-            type:Number
+            type: Number
         }
     }],
-    Espresso:[{
+    Espresso: [{
         name: {
             type: String
         },
         quantity: {
-            type:Number
+            type: Number
         }
     }],
     Flavors: [{
@@ -25,7 +25,7 @@ const productModifierSchema = new mongoose.Schema({
             type: String
         },
         quantity: {
-            type:Number
+            type: Number
         },
         price: {
             type: Number
@@ -40,10 +40,40 @@ const productModifierSchema = new mongoose.Schema({
         required: true,
         ref: 'user'
     }
-
-
-
-
 })
+
+const category1Schema = new mongoose.Schema({
+    categories: [{
+        name: {
+            type: String
+        },
+        subcategories: [{
+
+            name: String,
+
+            quantity: Number,
+
+            price: Number
+        }
+        ]
+    }],
+    Size: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'mu'
+    },
+    productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'product'
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        // required: true,
+        ref: 'user'
+    }
+});
+const Category1 = mongoose.model('Category1', category1Schema);
 const productModifierModel = mongoose.model("productModifier", productModifierSchema)
-export default productModifierModel;
+export {
+    productModifierModel,
+    Category1
+}
