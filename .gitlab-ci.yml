@@ -57,8 +57,8 @@ deploy-dev:
     - my-dev-runner
   script:
     # Only copy changed files to project folder
+    - ls -la $PROJECT_DIRsss
     - cp -r -u * $PROJECT_DIR
-    - ls -la $PROJECT_DIR
     - cd $PROJECT_DIR
     - npm install
     # Restart NodeJS service with forever for npm run dev
