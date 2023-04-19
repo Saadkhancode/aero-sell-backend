@@ -11,7 +11,6 @@ export const getProduct = async (req, res) => {
         filter = { userId: req.query.userId.split(',') }
     }
     let productData = await product.find(filter, filter2).populate('categoryId').populate('categoryParents', 'name').populate('userId').populate('order')
-    // sendMail(userEmail, "Low Stock Alerts", `<h2 style="background-color: #f1f1f1; padding: 20px;width:50%">These Products Are  Low  In  Stock</h2><br><h3 style="background-color: #f1f1f1; width:60%">${filteredProductsName}</h3>`)
     let islock = productData.filter((item) => item.isLock == false)
     res.send(islock);
 

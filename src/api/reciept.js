@@ -18,8 +18,6 @@ export const getRecieptById = async (req, res) => {
 }
 
 export const postReciept = async (req, res) => { 
-    // let { recieptNo, tableNo, customer, operator, product, itemTotal, discount, subtotal, tax, loyality, total } = req.params;
-    // const data = await new reciept({ recieptNo, tableNo, customer, operator, product, itemTotal, discount, subtotal, tax, loyality, total });
     const data = await new reciept(req.body);
     await data.save().then(result => {
         console.log(result, "Reciept data save to database")

@@ -12,7 +12,7 @@ export const getOrderItemByUserId = async (req, res) => {
     } else if (req.query.orderStatus){
         filter = { orderStatus: req.query.orderStatus.split(',') }
     }
-    let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers").populate('paymentType').populate('table').populate({ path: "orderId", populate: { path: "employeeId", model: "employee"}})
+    let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers").populate('paymentType').populate('table').populate({ path: "orderId", populate: { path: "employeeId", model: "employee"},populate: { path: "recieptId", model: "reciept"}})
 
     res.send(data);
 }
@@ -21,7 +21,7 @@ export const getOrderItemOrderStatus = async (req,res)=>{
     if (req.query.userId){
         filter = { userId: req.query.userId.split(',') }
     }
-    let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers").populate('paymentType').populate('table').populate({ path: "orderId", populate: { path: "employeeId", model: "employee"}})
+    let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers").populate('paymentType').populate('table').populate({ path: "orderId", populate: { path: "employeeId", model: "employee"},populate: { path: "recieptId", model: "reciept"}})
       let onlineOrders=data?.filter((item)=> item.orderStatus=='Online')
       console.log('onlineOrders: ', onlineOrders);
     
@@ -30,7 +30,7 @@ export const getOrderItemOrderStatus = async (req,res)=>{
 
 export const getOrderItemById = async (req, res) => {
 
-    let data = await orderitem.findOne(req.params).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate('paymentType').populate('table').populate({ path: "orderId", populate: { path: "employeeId", model: "employee"}})
+    let data = await orderitem.findOne(req.params).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate('paymentType').populate('table').populate({ path: "orderId", populate: { path: "employeeId", model: "employee"},populate: { path: "recieptId", model: "reciept"}})
     res.send(data);
 }
 

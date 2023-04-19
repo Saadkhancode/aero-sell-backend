@@ -50,6 +50,12 @@ const recieptSchema = new mongoose.Schema({
     },
     total: {
         type: Number,
+    },
+    cashTendered:{
+        type:Number
+    },
+    changeDue:{
+        type:Number
     }
 
 })
