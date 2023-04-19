@@ -58,6 +58,7 @@ deploy-dev:
   script:
     # Only copy changed files to project folder
     - cp -r -u * $PROJECT_DIR
+    - ls -la $PROJECT_DIR
     - cd $PROJECT_DIR
     - npm install
     # Restart NodeJS service with forever for npm run dev
