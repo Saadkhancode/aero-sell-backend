@@ -23,10 +23,18 @@ router.post("/", async (req, res) => {
                 token: jwt.sign({ id: user._id }, process.env.JWT_SECRET,{expiresIn:'20min'})
             }).save();
         }
+        if (process.env.NODE_ENV === 'production') {
+            const link = `${process.env.BASE_URL}/auth/reset-password/${user._id}/${token.token}`;
+            await sendMail(user.email, "Password Reset Link", `<h2>click on given link to reset ur password.</h2>
+            ${link} `);
+    
+          } else if (process.env.NODE_ENV === 'development') {
+            const link = `${process.env.DEV_BASE_URL}/auth/reset-password/${user._id}/${token.token}`;
+            await sendMail(user.email, "Password Reset Link", `<h2>click on given link to reset ur password.</h2>
+            ${link} `);
+    
+          } 
 
-        const link = `${process.env.BASE_URL}/auth/reset-password/${user._id}/${token.token}`;
-        await sendMail(user.email, "Password Reset Link", `<h2>click on given link to reset ur password.</h2>
-        ${link} `);
         return res.json({ message: `password-reset link send to your gmail account ` })
 
     } catch (error) {
