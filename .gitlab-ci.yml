@@ -102,17 +102,17 @@ deploy-dev:
     JWT_SECRET: secret
     DEV_DB_NAME: patronworksdev
     DEV_MONGODB_URI: "mongodb+srv://saudkhanbpk:2YJeIXMGYjgeMD76@patronworksdev.rlpj5py.mongodb.net/patronworksdev?retryWrites=true&w=majority"
-    BASE_URL: "http://www.patronworks.net"
+    DEV_BASE_URL: "http://dev.patronworks.net"
     CLOUD_NAME: djm945kfs
   tags:
     - my-dev-runner
   script:
     # Only copy changed files to project folder
-    - cp -r -u * $DEV_PROJECT_DIR
-    - cd $DEV_PROJECT_DIR
+    - cp -r -u * $PROJECT_DIR
+    - cd $PROJECT_DIR
     - npm install
     # Restart NodeJS service with forever for npm run dev
-    - forever stop $DEV_PROJECT_DIR/src/index.js || true
+    - forever stop $PROJECT_DIR/src/index.js || true
     - NODE_ENV=development forever start src/index.js
   only:
     - master
