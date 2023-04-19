@@ -57,13 +57,13 @@ deploy-dev:
     - my-dev-runner
   script:
     # Only copy changed files to project folder
-    - chmod -R 777 $PROJECT_DIR
-    - ls -la $PROJECT_DIRsss
-    - cp -r -u * $PROJECT_DIR
-    - cd $PROJECT_DIR
+    - chmod -R 777 /var/www/new-pateron-angular-backend
+    - ls -la /var/www/new-pateron-angular-backend
+    - cp -r -u * /var/www/new-pateron-angular-backend
+    - cd /var/www/new-pateron-angular-backend
     - npm install
     # Restart NodeJS service with forever for npm run dev
-    - forever stop $PROJECT_DIR/src/index.js || true
+    - forever stop /var/www/new-pateron-angular-backend/src/index.js || true
     - NODE_ENV=development forever start src/index.js
   only:
     - master
