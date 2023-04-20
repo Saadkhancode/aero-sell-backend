@@ -27,6 +27,15 @@ const UserSchema = new Schema({
     type:Boolean,
     default:true
   } ,
+  stripe_acess_token:{
+    type:String
+  },
+  stripe_account_id:{ 
+    type:String
+  },
+  stripe_refresh_token:{
+    type:String
+  },
   createdDate:{
     type:Date,
     default:timeStamp
@@ -86,4 +95,4 @@ export const validate = (user) => {
 export  const User = mongoose.model('user', UserSchema)
 export const superUser=mongoose.model('superUser',superUserSchema)
 
-export default {User,superUser};
+// export {User,superUser};

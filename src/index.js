@@ -46,18 +46,18 @@ dotenv.config();
 const __filename=fileURLToPath(import.meta.url)
 const __dirname=path.dirname(__filename)
 //middelwares
-
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(express.json());
-app.use("/public",express.static("public"));
-// app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.json())
 app.use(cors({
     origin: true,
     credentials: true,
     defaultErrorHandler: false,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json());
+app.use("/public",express.static("public"));
+// app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.json())
 
 app.use(helmet({crossOriginResourcePolicy:false,}));
 app.use(morgan("dev"));

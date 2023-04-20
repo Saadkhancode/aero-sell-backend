@@ -1,4 +1,4 @@
-import User from '../models/User.js'
+import {User} from '../models/User.js'
 import Token from '../models/token.js';
 import sendMail from '../middlewares/send-email.js';
 import jwt from "jsonwebtoken";
