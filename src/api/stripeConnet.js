@@ -1,89 +1,28 @@
 import dotenv from 'dotenv'
+import { User } from '../models/User.js'
 import Stripe from 'stripe';
 
 dotenv.config();
 let stripe = Stripe('sk_test_51MiZTVF1YkHoz4Y5AsHfg9ovHa5zsRFHCfVrHSy5XKvxKtdKSMHpzQ5V0wEfcGHVfoEQ50NjXhCP0aF2aC1Mc05300eCAJlRxu');
 
-// export const createAccount = async (req, res) => {
-//   const account = await stripe.accounts.create({
-//     type: 'express',
-//   });
-
-//   const accountLink = await stripe.accountLinks.create({
-//     account: account.id,
-//     refresh_url: process.env.redirect_url,
-//     return_url: process.env.redirect_url,
-//     type: 'account_onboarding',
-//   });
-
-//   res.json({ accountLink: accountLink.url });
-// };
-// // const account = await stripe.accounts.create({type: 'express'});
-// async function createStripeConnectAccount(user) {
-//   const account = await stripe.accounts.create({
-//     type: 'express',
-//     country: 'US',
-//     email: user.email,
-//     capabilities: {
-//       card_payments: {
-//         requested: true,
-//       },
-//       transfers: {
-//         requested: true,
-//       },
-//     },
-//   });
-
-//   // Store the account ID in your database for future use
-//   user.stripeAccountId = account.id;
-//   await user.save();
-
-//   // Create an account link to connect the user's account
-//   const accountLink = await stripe.accountLinks.create({
-//     account: account.id,
-//     refresh_url: 'https://example.com/reauth',
-//     return_url: 'https://example.com/return',
-//     type: 'account_onboarding',
-//   });
-
-//   // Return the account link URL for the user to click
-//   return accountLink.url;
-// }
 // Create a custom account for a new seller
 export const createSellerAccount = async (req, res) => {
-  // const { email, country} = req.body;
+  const { userId } = req.query
+  console.log('userId: ', userId);
+  const userById = await User.findById(userId)
+  console.log('userById: ', userById);
 
   try {
     const account = await stripe.accounts.create({
       type: 'express',
-      // country,
-      // email,
-      // capabilities: {
-      //   card_payments: { requested: true },
-      //   transfers: { requested: true },
-      // },
     });
     console.log('account: ', account);
     const accountID = account.id;
     console.log('accountID: ', accountID);
-
-    // const accountLink = await stripe.accountLinks.create({
-    //   account: account.id,
-    //   refresh_url: 'http://localhost:18020/stripe-connect',
-    //   return_url: 'http://localhost:18020/stripe-connect',
-    //   type: 'account_onboarding',
-    // });
-    
-    // console.log('accountLink: ', accountLink);
-    // Set the account type (i.e. individual or business) and the seller's internal ID in metadata
-    // await stripe.accounts.update(accountID, {
-    //   metadata: {
-    //     account_type,
-    //     seller_id: '123456789',
-    //   },
-    // });
-
-    // res.json({ accountLink: accountLink.url });
+    if (userById) {
+      const userData = await User.findByIdAndUpdate(userById, { $set: { "stripe_account_id": accountID } })
+      console.log(' userData after update : ', userData);
+    }
     res.send({ account_id: accountID });
   } catch (err) {
     console.error(err);
@@ -92,8 +31,12 @@ export const createSellerAccount = async (req, res) => {
 };
 
 // Handle seller authorization after they've connected their Stripe account
-export const authorizeSeller=async (req, res) => {
+export const authorizeSeller = async (req, res) => {
   const { code } = req.query;
+  const { userId } = req.params;
+  console.log('userId: ', userId);
+  const userById = await User.findById(userId)
+  console.log('userById: ', userById);
 
   try {
     const response = await stripe.oauth.token({
@@ -103,12 +46,16 @@ export const authorizeSeller=async (req, res) => {
 
     // Save the access token and refresh token to your database
     const { access_token, refresh_token, stripe_user_id } = response;
-
+    if (userById) {
+      const userData = await User.findByIdAndUpdate(userById, { $set: { "stripe_account_id": stripe_user_id, "stripe_refresh_token": refresh_token, "stripe_acess_token": access_token } })
+      console.log(' userData after update : ', userData);
+    }
     res.json({
       access_token,
       refresh_token,
       stripe_user_id,
     });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({
@@ -116,7 +63,7 @@ export const authorizeSeller=async (req, res) => {
     });
   }
 };
-export const getSellerBalance= async (req, res) => {
+export const getSellerBalance = async (req, res) => {
   const { account_id } = req.params;
 
   try {

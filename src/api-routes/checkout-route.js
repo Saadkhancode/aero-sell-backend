@@ -9,7 +9,7 @@ import { createSellerAccount,
 } from "../api/stripeConnet.js"
 
 routes.get('/sellerbalance/:account_id',getSellerBalance)
-routes.post('/authorize-seller', authorizeSeller )
+routes.post('/authorize-seller/:userId', authorizeSeller )
 routes.post('/credit', Checkout )
 routes.post('/create-account', createSellerAccount )
 
