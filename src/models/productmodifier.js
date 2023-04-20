@@ -57,10 +57,10 @@ const category1Schema = new mongoose.Schema({
         }
         ]
     }],
-    Size: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'mu'
-    },
+    // Size: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'mu'
+    // },
     productId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'product'

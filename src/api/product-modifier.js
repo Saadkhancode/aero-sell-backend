@@ -50,16 +50,29 @@ export const deleteModifier = async (req, res) => {
 
 
 //get
+// export const getaddnewcategory = async (req, res) => {
+//     const categories = await Category1.find();
+//     res.json(categories);
+// };
+
+
 export const getaddnewcategory = async (req, res) => {
-    const categories = await Category1.find();
-    res.json(categories);
-};
+    let filter = {}
+    if (req.query.userId) {
+        filter = { userId: req.query.userId.split(',') }
+    } else if (req.query.productId) {
+        filter = { productId: req.query.productId.split(',') }
+    }
+    let modifierData = await Category1.find(filter).populate("productId")
+    res.send(modifierData)
+}
 
 //post
 export const addnewcategory = async (req, res) => {
-    const { categories, subcategories, Size, productId, userId } = req.body;
+    const { categories, subcategories, productId, userId } = req.body;
 
-    const newCategory = await new Category1({ categories: req.body.categories, Size: req.body.Size, productId: req.body.productId, userId: req.body.userId });
+    // const newCategory = await new Category1({ categories: req.body.categories, Size: req.body.Size, productId: req.body.productId, userId: req.body.userId });
+    const newCategory = await new Category1({ categories: req.body.categories, productId: req.body.productId, userId: req.body.userId });
     const savedCategory = await newCategory.save();
     res.json(savedCategory);
 };
