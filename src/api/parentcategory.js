@@ -29,16 +29,6 @@ export const postParentCategories = async (req, res) => {
         console.log(err)
     });
 }
-// export const getParentCategoryByKey = async (req, res) => {
-//     let parentcategoeyData = await parentcategory.find({
-//         "$or":[{
-//         name:{$regex:req.params.key}
-//         }]
-//     });
-//     res.send(parentcategoeyData);
-
-// }
-
 export const updateParentCategories = async (req, res) => {
     console.log(req.params)
     let data = await parentcategory.findByIdAndUpdate(

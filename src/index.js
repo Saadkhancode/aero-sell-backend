@@ -46,18 +46,18 @@ dotenv.config();
 const __filename=fileURLToPath(import.meta.url)
 const __dirname=path.dirname(__filename)
 //middelwares
-
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(express.json());
-app.use("/public",express.static("public"));
-// app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.json())
 app.use(cors({
     origin: true,
     credentials: true,
     defaultErrorHandler: false,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json());
+app.use("/public",express.static("public"));
+// app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.json())
 
 app.use(helmet({crossOriginResourcePolicy:false,}));
 app.use(morgan("dev"));
@@ -73,22 +73,20 @@ app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, or
 app.use('*', (req, res) => {
     return res.status(404).json({
         success: false,
-        message: 'API endpoint doesnt exist please put Api routes..'
+        message: 'API endpoint doesnt exist please put Api routes dev..'
     })
 });
 
 
 //Port
+if (process.env.NODE_ENV === 'production') {
 const port = process.env.PORT || 3333;
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 });
-// if (process.env.NODE_ENV === 'production') {
-// } else if (process.env.NODE_ENV === 'development') {
-//     const port = process.env.DEV_PORT;
-//     app.listen(port, () => {
-//         console.log(`Server is running on port: ${port}`);
-//     });
-// }
-// "start": "NODE_ENV=production node src/index.js",
-    // "dev": "NODE_ENV=development nodemon src/index.js",
+} else if (process.env.NODE_ENV === 'development') {
+    const port = process.env.DEV_PORT || 4444;
+    app.listen(port, () => {
+        console.log(`Server is running on port: ${port}`);
+    });
+}
