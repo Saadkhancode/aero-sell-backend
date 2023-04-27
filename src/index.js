@@ -73,7 +73,7 @@ app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, or
 app.use('*', (req, res) => {
     return res.status(404).json({
         success: false,
-        message: 'API endpoint doesnt exist please put Api routes dev1..'
+        message: 'API endpoint doesnt exist please put Api routes dev2..'
     })
 });
 
