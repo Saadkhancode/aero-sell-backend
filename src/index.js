@@ -70,21 +70,25 @@ app.use('/api/v1/reset-password',passwordreset)
 app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo,blog,contactus,employeTimeStamp, reciept)
 
     
-app.use('*', (req, res) => {
-    return res.status(404).json({
-        success: false,
-        message: 'API endpoint doesnt exist please put Api routes dev3..'
-    })
-});
-
-
 //Port
 if (process.env.NODE_ENV === 'production') {
-const port = process.env.PORT || 3333;
-app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
-});
+    app.use('*', (req, res) => {
+        return res.status(404).json({
+            success: false,
+            message: 'API endpoint doesnt exist please put Api prod routes ..'
+        })
+    });
+    const port = process.env.PORT || 3333;
+    app.listen(port, () => {
+        console.log(`Server is running on port: ${port}`);
+    });
 } else if (process.env.NODE_ENV === 'development') {
+    app.use('*', (req, res) => {
+        return res.status(404).json({
+            success: false,
+            message: 'API endpoint doesnt exist please put Api dev routes ..'
+        })
+    });
     const port = process.env.DEV_PORT || 4444;
     app.listen(port, () => {
         console.log(`Server is running on port: ${port}`);
