@@ -63,7 +63,7 @@ deploy-dev:
     - npm install
     # Restart NodeJS service with forever for npm run dev
     - forever stop /var/www/new-pateron-angular-backend/src/index.js || true
-    - NODE_ENV=development forever start src/index.js
+    - NODE_ENV=development forever start /var/www/new-pateron-angular-backend/src/index.js
   only:
     - master
     # Only deploy for npm run dev
