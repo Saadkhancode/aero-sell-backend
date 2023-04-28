@@ -17,7 +17,7 @@ test:
   stage: test
   # Config to use GitLab Shared Runner with Executor Docker
   tags:
-    - my-shell-runner
+    - my-shell-runner,my-dev-runner
   script:
     - npm install
     - npm run test
@@ -57,12 +57,12 @@ deploy-dev:
     - my-dev-runner
   script:
     # Only copy changed files to project folder
-    - ls -la  $PROJECT_DIR
-    - cp -r -u * $PROJECT_DIR
-    - cd $PROJECT_DIR
+    - ls -la  $DEV_PROJECT_DIR
+    - cp -r -u * $DEV_PROJECT_DIR
+    - cd $DEV_PROJECT_DIR
     - npm install
     # Restart NodeJS service with forever for npm run dev
-    - forever stop $PROJECT_DIR/src/index.js || true
+    - forever stop $DEV_PROJECT_DIR/src/index.js || true
     - NODE_ENV=development forever start /src/index.js
   only:
     - master
