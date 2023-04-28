@@ -57,7 +57,6 @@ deploy-dev:
     - my-dev-runner
   script:
     # Only copy changed files to project folder
-    - chmod -R 777 /var/www/new-pateron-angular-backend
     - ls -la  /var/www/new-pateron-angular-backend
     - cp -r -u * /var/www/new-pateron-angular-backend
     - cd /var/www/new-pateron-angular-backend
