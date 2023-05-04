@@ -12,12 +12,12 @@ router.post('/', async (req, res) => {
     } else if (!user) {
       const token = jwt.sign({ name, email, password, role }, process.env.JWT_SECRET, { expiresIn: '20min' })
       if (process.env.NODE_ENV === 'production') {
-        const link = `http://localhost:18020/auth/activate-account/${token}`;
+        const link = `http://www.patronworks.net/auth/activate-account/${token}`;
         await sendMail(email, "Account Activation Link", `<h2>please click on given link to activate ur account.</h2>
         ${link} `)
 
       } else if (process.env.NODE_ENV === 'development') {
-        const link = `http://localhost:18020/auth/activate-account/${token}`;
+        const link = `http://www.patronworks.net/auth/activate-account/${token}`;
         await sendMail(email, "Account Activation Link", `<h2>please click on given link to activate ur account.</h2>
           ${link} `)
       }

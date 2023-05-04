@@ -17,7 +17,6 @@ const userChargeSchema = new mongoose.Schema({
     type:String,
     default:'AppCharge'
   }
-
 })
 const userHardareSchema = new mongoose.Schema({
   charge: {
@@ -31,6 +30,9 @@ const userHardareSchema = new mongoose.Schema({
   chargeFor:{
     type:String,
     default:'HardwareCharge'
+  },
+  plan:{
+    type:String
   }
 })
 const ChargeSchema = new mongoose.Schema({
