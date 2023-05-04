@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-const userChargeSchema = new mongoose.Schema({
+const orderChargeSchema = new mongoose.Schema({
   charge: {
     type: String
   },
@@ -15,9 +15,9 @@ const userChargeSchema = new mongoose.Schema({
   },
   chargeFor:{
     type:String,
-    default:'AppCharge'
+    default:'orderCharge'
   }
-})
+},{timestamps:true})
 const userHardareSchema = new mongoose.Schema({
   charge: {
     type: String
@@ -34,8 +34,8 @@ const userHardareSchema = new mongoose.Schema({
   plan:{
     type:String
   }
-})
-const ChargeSchema = new mongoose.Schema({
+},{timestamps:true})
+const AppChargeSchema = new mongoose.Schema({
   charge: {
     type: String
   },
@@ -44,12 +44,20 @@ const ChargeSchema = new mongoose.Schema({
     required: true,
     ref: 'user',
   },
+  superUserId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'superUser',
+  },
   chargeFor:{
     type:String,
-    default:'OrderCharge'
+    default:'appCharge'
+  },
+  plan:{
+    type:String
   }
-})
-export const chargeModal = mongoose.model('charge', userChargeSchema)
-export const chargModal = mongoose.model('chargeCustomer', ChargeSchema)
-export const chargHardware = mongoose.model('chargeHardwate', userHardareSchema)
-export default { chargModal, chargeModal,chargHardware }
+},{timestamps:true})
+export const chargeOrder = mongoose.model('charge', orderChargeSchema)
+export const chargeApp = mongoose.model('chargeCustomer', AppChargeSchema)
+export const chargeHardware = mongoose.model('chargeHardwate', userHardareSchema)
+export default { chargeOrder, chargeApp,chargeHardware }
