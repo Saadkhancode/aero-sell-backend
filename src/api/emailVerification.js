@@ -12,12 +12,12 @@ router.post('/', async (req, res) => {
     } else if (!user) {
       const token = jwt.sign({ name, email, password, role }, process.env.JWT_SECRET, { expiresIn: '20min' })
       if (process.env.NODE_ENV === 'production') {
-        const link = `http://www.patronworks.net/auth/activate-account/${token}`;
+        const link = `http://localhost:18020/auth/activate-account/${token}`;
         await sendMail(email, "Account Activation Link", `<h2>please click on given link to activate ur account.</h2>
         ${link} `)
 
       } else if (process.env.NODE_ENV === 'development') {
-        const link = `http://dev.patronworks.net/auth/activate-account/${token}`;
+        const link = `http://localhost:18020/auth/activate-account/${token}`;
         await sendMail(email, "Account Activation Link", `<h2>please click on given link to activate ur account.</h2>
           ${link} `)
       }
@@ -49,8 +49,9 @@ router.post('/:token', (req, res) => {
 
           const newUser = new User({ name, email, password, role });
           const savedUser = await newUser.save();
+          console.log('savedUser: ', savedUser);
           if (savedUser) {
-            res.send({ message: "Account Verified:Thanks For Registering User" });
+            res.send({ message: "Account Verified:Thanks For Registering User" ,userId:savedUser._id});
           } else {
             res.status(400).send({ error: "Cannot register user at the moment!" });
           }
