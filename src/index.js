@@ -46,18 +46,11 @@ dotenv.config();
 const __filename=fileURLToPath(import.meta.url)
 const __dirname=path.dirname(__filename)
 //middelwares
-const allowedOrigins = ['https://patronworks.com/', 'http://www.patronworks.net/', 'http://demo.patronworks.net/', 'http://dev.patronworks.net/', 'http://www.patronpal.com/', 'http://localhost:18020/', 'http://localhost:18200/', 'https://localhost:4200/'];
-
-// Configure the CORS middleware to allow requests from these origins
 app.use(cors({
-  origin: function(origin, callback) {
-    // Check if the origin is in the allowedOrigins list or if it is undefined (which means it is a same-origin request)
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
+    origin: true,
+    credentials: true,
+    defaultErrorHandler: false,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 
 app.use(bodyParser.urlencoded({ extended: false }))
