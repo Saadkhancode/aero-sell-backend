@@ -1,7 +1,7 @@
 import Stripe from 'stripe';
 import chargeModels from '../models/charge.js';
 const { chargeOrder, chargeApp,chargeHardware } = chargeModels;
-let stripe = Stripe('sk_test_51MiZTVF1YkHoz4Y5AsHfg9ovHa5zsRFHCfVrHSy5XKvxKtdKSMHpzQ5V0wEfcGHVfoEQ50NjXhCP0aF2aC1Mc05300eCAJlRxu');
+let stripe = Stripe('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');
 // export const getCustomerOrders = async (req, res) => {
 //   let filter = {}
 //   if (req.query.userId) {

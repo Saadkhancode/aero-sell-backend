@@ -3,7 +3,7 @@ import { User } from '../models/User.js'
 import Stripe from 'stripe';
 
 dotenv.config();
-let stripe = Stripe('sk_test_51MiZTVF1YkHoz4Y5AsHfg9ovHa5zsRFHCfVrHSy5XKvxKtdKSMHpzQ5V0wEfcGHVfoEQ50NjXhCP0aF2aC1Mc05300eCAJlRxu');
+let stripe = Stripe('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');
 
 // Create a custom account for a new seller
 export const createSellerAccount = async (req, res) => {
