@@ -12,7 +12,7 @@ import {
     deleteCustomer
 } from '../api/customer.js'
 route.get('/customer',getCustomer)
-route.get('/customer/:FirstName?/:LastName?/:Email?/:Phone?/:City?/:State?/:PostalCode?/:CustomerId?',searchCustomer)
+route.get('/customer/:userId?/:FirstName?/:LastName?/:Email?/:Phone?/:City?/:State?/:PostalCode?/:CustomerId?',searchCustomer)
 route.post('/customer',postCustomer)
 route.post('/cregister',customerRegister)
 route.post('/clogin',customerLogin)

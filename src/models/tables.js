@@ -10,6 +10,9 @@ const tablesSchema = new mongoose.Schema({
     tableName: {
         type: String
     },
+    location:{
+         type:String
+    }, 
     description: {
         type: String
     },

@@ -65,8 +65,18 @@ const orderSchema = new mongoose.Schema({
         required:true,
         ref:'user'
     },
+    recieptId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'reciept'
+        
+    },
     operator:{
         type:String
+    },
+    employeeId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'employee'
     },
     customerId:{
         type:mongoose.Schema.Types.ObjectId,

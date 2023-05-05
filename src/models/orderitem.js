@@ -16,7 +16,14 @@ const orderItemSchema = new mongoose.Schema({
     orderId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "order",
-
+    },
+    table:{
+         type:mongoose.Schema.Types.ObjectId,
+         ref:'tables'
+    },
+    orderStatus:{
+        type:String,
+        enum:['physical','online']
     },
     productWithQty: [{
         productId: {
@@ -53,6 +60,9 @@ const orderItemSchema = new mongoose.Schema({
     selectedModifiers:{
           type:Array
     },
+    loyalityOffer:{
+          type:Array
+    },
     priceExclTax: {
         type: Number
     },
@@ -81,7 +91,7 @@ const orderItemSchema = new mongoose.Schema({
     },
      userId:{
         type:mongoose.Schema.Types.ObjectId,
-        required:true,
+        // required:true,
         ref:'user'
     },
     paymentType:{

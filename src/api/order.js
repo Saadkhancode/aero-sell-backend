@@ -9,15 +9,15 @@ export const getOrder = async (req, res) => {
     else if (req.query.customerId)
         filter = { customerId: req.query.customerId.split(',') }
 
-    let data = await order.find(filter).populate('customerId')
+    let data = await order.find(filter).populate('customerId').populate('employeeId').populate('recieptId')
     res.send(data);
 
 }
 
 export const postOrder = async (req, res) => {
-    const { tableNo, tableName, currentOrderId, startDate, orderDate,orderValueExclTax, orderValueTax, orderValue, parentOrderNo, orderStatus, orderType, isHold, userId, operator, discount,loyalty,dueamount , distype , customerId } = req.body;
+    const { tableNo, tableName, currentOrderId, startDate, orderDate,orderValueExclTax, orderValueTax, orderValue, parentOrderNo, orderStatus, orderType, isHold, userId, operator, discount,loyalty,dueamount ,recieptId, distype , employeeId, customerId } = req.body;
 
-    const data = await new order({ tableNo, tableName, currentOrderId, startDate, orderDate,  orderValueExclTax, orderValueTax, orderValue, parentOrderNo, orderStatus, orderType, isHold, userId, operator, discount,dueamount,loyalty, distype, customerId });
+    const data = await new order({ tableNo, tableName, currentOrderId, startDate, orderDate,  orderValueExclTax, orderValueTax, orderValue, parentOrderNo, orderStatus, orderType, isHold, userId, operator,recieptId, discount,dueamount,loyalty, distype, employeeId, customerId });
     await data.save().then(async (result) => {
         const customerData = await customer.findById(customerId)
         if(customerData){
@@ -48,6 +48,7 @@ export const postOrder = async (req, res) => {
                 operator: result.operator,
                 isHold: result.isHold,
                 distype: result.distype,
+                employeeId:result.employeeId,
                 customerId: result.customerId,
                 loyalty:result.loyalty
             })
@@ -71,6 +72,7 @@ export const postOrder = async (req, res) => {
                 operator: result.operator,
                 isHold: result.isHold,
                 distype: result.distype,
+                employeeId:result.employeeId,
                 customerId: result.customerId,
                 loyalty:result.loyalty
             })

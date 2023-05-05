@@ -43,6 +43,7 @@ export const customerLogin = async (req, res) => {
     }
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
     const UserName=user.FirstName+ '' + user.LastName
-    res.status(200).send({ message: "customer login successfully", token,UserName });
+    const  _id=user._id
+    res.status(200).send({ message: "customer login successfully", token, UserName,_id });
 
 }

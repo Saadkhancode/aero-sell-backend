@@ -34,6 +34,7 @@ import logo from './api-routes/logo-route.js'
 import blog from './api-routes/blog-route.js'
 import contactus from './api-routes/contactUs-route.js'
 import employeTimeStamp from './api-routes/employeetime-route.js'
+import reciept from './api-routes/reciept-route.js'
 import './config/config.js';
 import path from 'path'
 import { fileURLToPath } from 'url';
@@ -45,18 +46,18 @@ dotenv.config();
 const __filename=fileURLToPath(import.meta.url)
 const __dirname=path.dirname(__filename)
 //middelwares
-
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(express.json());
-app.use("/public",express.static("public"));
-// app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.json())
 app.use(cors({
     origin: true,
     credentials: true,
     defaultErrorHandler: false,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json());
+app.use("/public",express.static("public"));
+// app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.json())
 
 app.use(helmet({crossOriginResourcePolicy:false,}));
 app.use(morgan("dev"));
@@ -66,19 +67,30 @@ app.use('/api/v1/activate-account',userRegisterWithEmailVerification)
 //user forgot and reset-password Endpoints
 app.use('/api/v1/reset-password',passwordreset)
 //All APi's Endponits
-app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo,blog,contactus,employeTimeStamp)
+app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo,blog,contactus,employeTimeStamp, reciept)
 
     
-app.use('*', (req, res) => {
-    return res.status(404).json({
-        success: false,
-        message: 'API endpoint doesnt exist please put Api routes..'
-    })
-});
-
-
 //Port
-const port = process.env.PORT || 3333;
-app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
-});
+if (process.env.NODE_ENV === 'production') {
+    app.use('*', (req, res) => {
+        return res.status(404).json({
+            success: false,
+            message: 'API endpoint doesnt exist please put Api prod routes ..'
+        })
+    });
+    const port = process.env.PORT || 3333;
+    app.listen(port, () => {
+        console.log(`Server is running on port: ${port}`);
+    });
+} else if (process.env.NODE_ENV === 'development') {
+    app.use('*', (req, res) => {
+        return res.status(404).json({
+            success: false,
+            message: 'API endpoint doesnt exist please put Api dev routes ..'
+        })
+    });
+    const port = process.env.DEV_PORT || 4444;
+    app.listen(port, () => {
+        console.log(`Server is running on port: ${port}`);
+    });
+}
