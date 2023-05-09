@@ -22,6 +22,11 @@ const userHardareSchema = new mongoose.Schema({
   charge: {
     type: String
   },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'user',
+  },
   superUserId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
