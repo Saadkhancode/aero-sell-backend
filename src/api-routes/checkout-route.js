@@ -2,8 +2,8 @@ import express  from "express";
 const routes=express.Router();
 
 import {Checkout,
-    createChargeUser,
-    createChargeHardware
+    createAppSubscription,
+    createHardwareSubscription
 } from "../api/checkout.js"
 import { createSellerAccount,
     authorizeSeller,
@@ -13,8 +13,8 @@ import { createSellerAccount,
 routes.get('/sellerbalance/:account_id',getSellerBalance)
 routes.post('/authorize-seller/:userId', authorizeSeller )
 routes.post('/credit', Checkout )
-routes.post('/checkout',createChargeUser  )
-routes.post('/hardware',createChargeHardware  )
+routes.post('/app-plan',createAppSubscription  )
+routes.post('/hardware-plan',createHardwareSubscription  )
 routes.post('/create-account', createSellerAccount )
 
 export default routes
