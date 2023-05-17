@@ -27,6 +27,9 @@ const UserSchema = new Schema({
     type:Boolean,
     default:true
   } ,
+  // stripe_customer_id:{
+  //   type:String
+  // },
   stripe_acess_token:{
     type:String
   },
