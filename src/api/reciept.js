@@ -1,9 +1,19 @@
-import reciept from '../models/reciept.js'
+import reciept from '../models/reciept.js';
 
 export const getReciept = async (req, res) => {
     let filter={}
     if(req.query.userId){
         filter = { userId: req.query.userId.split(',') }
+    }
+    let data = await reciept.find(filter);
+    res.send(data);
+    
+
+}
+export const getRecieptByNumber = async (req, res) => {
+    let filter={}
+    if(req.query.recieptNo){
+        filter = { recieptNo: req.query.recieptNo.split(',') }
     }
     let data = await reciept.find(filter);
     res.send(data);
