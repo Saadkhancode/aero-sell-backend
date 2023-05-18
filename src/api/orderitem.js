@@ -12,7 +12,7 @@ export const getOrderItemByUserId = async (req, res) => {
     } else if (req.query.orderStatus){
         filter = { orderStatus: req.query.orderStatus.split(',') }
     }
-    let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers").populate('paymentType').populate('table').populate({ path: "orderId", populate: { path: "employeeId", model: "employee"},populate: { path: "recieptId", model: "reciept"}})
+    let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers").populate('paymentType').populate('table').populate({ path: "orderId", populate: { path: "employeeId", model: "employee"},populate: { path: "recieptId", model: "reciept"}}).populate('ReservedTable')
 
     res.send(data);
 }
@@ -21,7 +21,7 @@ export const getOrderItemOrderStatus = async (req,res)=>{
     if (req.query.userId){
         filter = { userId: req.query.userId.split(',') }
     }
-    let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers").populate('paymentType').populate('table').populate({ path: "orderId", populate: { path: "employeeId", model: "employee"},populate: { path: "recieptId", model: "reciept"}})
+    let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers").populate('paymentType').populate('table').populate({ path: "orderId", populate: { path: "employeeId", model: "employee"},populate: { path: "recieptId", model: "reciept"}}).populate('ReservedTable')
       let onlineOrders=data?.filter((item)=> item.orderStatus=='Online')
       console.log('onlineOrders: ', onlineOrders);
     
@@ -30,19 +30,19 @@ export const getOrderItemOrderStatus = async (req,res)=>{
 
 export const getOrderItemById = async (req, res) => {
 
-    let data = await orderitem.findOne(req.params).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate('paymentType').populate('table').populate({ path: "orderId", populate: { path: "employeeId", model: "employee"},populate: { path: "recieptId", model: "reciept"}})
+    let data = await orderitem.findOne(req.params).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate('paymentType').populate('table').populate({ path: "orderId", populate: { path: "employeeId", model: "employee"},populate: { path: "recieptId", model: "reciept"}}).populate('ReservedTable')
     res.send(data);
 }
 
 export const getOrderItems = async (req, res) => {
 
-    let data = await orderitem.find(req.params).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate('paymentType').populate('table').populate({ path: "product", populate: { path: "userId", model: "user"}}).populate({ path: "orderId", populate: { path: "employeeId", model: "employee"}})
+    let data = await orderitem.find(req.params).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate('paymentType').populate('table').populate({ path: "product", populate: { path: "userId", model: "user"}}).populate({ path: "orderId", populate: { path: "employeeId", model: "employee"}}).populate('ReservedTable')
     res.send(data);
 }
 
 export const postOrderItem = async (req, res) => {
-    const { orderId, table, product, selectedModifiers,loyalityOffer, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType } = req.body;
-    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,points, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType });
+    const { orderId, table, product, selectedModifiers,loyalityOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType } = req.body;
+    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType });
     let prod = []
     prod = product
     await data.save().then(async (result) => {
@@ -86,7 +86,8 @@ export const postOrderItem = async (req, res) => {
                 paymentType: result.paymentType,
                 createdAt: result.createdAt,
                 updatedAt: result.updatedAt,
-                orderStatus:result.orderStatus
+                orderStatus:result.orderStatus,
+                ReservedTable:result.ReservedTable
             })
         } else {
             res.json({
@@ -109,7 +110,8 @@ export const postOrderItem = async (req, res) => {
                 paymentType: result.paymentType,
                 createdAt: result.createdAt,
                 updatedAt: result.updatedAt,
-                orderStatus:result.orderStatus
+                orderStatus:result.orderStatus,
+                ReservedTable:result.ReservedTable
             })
         }
 

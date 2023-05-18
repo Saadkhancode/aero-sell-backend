@@ -21,6 +21,10 @@ const orderItemSchema = new mongoose.Schema({
          type:mongoose.Schema.Types.ObjectId,
          ref:'tables'
     },
+    ReservedTable:{
+          type:mongoose.Schema.Types.ObjectId,
+          ref:'tableRservationAndWaitingList'
+    },
     orderStatus:{
         type:String,
         enum:['physical','online']

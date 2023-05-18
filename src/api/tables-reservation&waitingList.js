@@ -21,8 +21,8 @@ export const getReservationAndWaitingListById=async(req,res)=>{
     res.send(ReservationAndWaitingList)
 }
 export const postReservationAndWaitingList=async(req,res)=>{
-    const {PartyName,Guests,Email,Phone,Note,Private,Smoking,window,Booth,Boys,HighChairs,WheelChairs,btnStatus,table}=req.body;
-    const ReservationAndWaitingList=await new tableSelect({PartyName,Guests,Email,Phone,Note,Private,Smoking,window,Booth,Boys,HighChairs,WheelChairs,btnStatus,table})
+    const {PartyName,Guests,Email,Phone,Note,Private,Smoking,window,Booth,Boys,HighChairs,WheelChairs,btnStatus,table, tableNo}=req.body;
+    const ReservationAndWaitingList=await new tableSelect({PartyName,Guests,Email,Phone,Note,Private,Smoking,window,Booth,Boys,HighChairs,WheelChairs,btnStatus,table,tableNo})
     await ReservationAndWaitingList.save().then(result=>{
         console.log(result, "ReservationAndWaitingList data save to database")
         res.json({
@@ -39,7 +39,8 @@ export const postReservationAndWaitingList=async(req,res)=>{
             HighChairs:result.HighChairs,
             WheelChairs:result.WheelChairs,
             btnStatus:result.btnStatus,
-            table:result.table
+            table:result.table,
+            tableNo:result.tableNo
         })
     }).catch(err => {
         res.status(400).send('unable to save database');

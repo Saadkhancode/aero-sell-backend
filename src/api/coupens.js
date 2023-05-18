@@ -18,11 +18,21 @@ export const getCoupensById = async (req, res) => {
 }
 
 export const postCoupens = async (req, res) => {
-    const data = await new coupens(req.body);
-    await data.save().then(result => {
+    // const data = await new coupens(req.body);\
+    const {series, description, discount, start, end, startDate, endDate, userId} = req.body;
+    const couponData = await new coupens({ series, description, discount, start, end, startDate, endDate, userId });
+    await couponData.save().then(result => {
+
         console.log(result, "coupens data save to database")
         res.json({
-            result,
+            series : result.series,
+            descrition : result.description,
+            discount: result.discount,
+            start: result.start,
+            end : result.end,
+            startDate : result.startDate,
+            endDate : result.endDate,
+            userId: result.userId,
             message: "coupens data save to database",
         })
     }).catch(err => {
