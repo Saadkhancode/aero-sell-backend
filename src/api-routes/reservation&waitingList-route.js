@@ -3,6 +3,7 @@ const router=express.Router();
 import {
 getReservedTables,
 getWaitingTables,
+getReservationAndWaitingListbyId,
 postReservationAndWaitingList,
 updateReservationAndWaitingList,
 deleteReservationAndWaitingList,
@@ -12,6 +13,7 @@ router.get('/reserved',getReservedTables)
 router.get('/waiting',getWaitingTables)
 router.get('/table-operator/:_id',getReservationAndWaitingListById)
 router.post('/table-operator',postReservationAndWaitingList)
+router.get('/table-operator/:_id',getReservationAndWaitingListbyId)
 router.put('/table-operator/:_id',updateReservationAndWaitingList)
 router.delete('/table-operator/:_id',deleteReservationAndWaitingList)
 export default router;

@@ -1,4 +1,4 @@
-import tableSelect from "../models/tables-reservation&waitingList.js";
+import tableSelect from '../models/tables-reservation&waitingList.js';
 
 export const getReservedTables=async(req,res)=>{
     let filter={}
@@ -15,6 +15,10 @@ export const getWaitingTables=async(req,res)=>{
     }
     const waitingList=await tableSelect.find(filter);
     res.send(waitingList);
+}
+export const getReservationAndWaitingListbyId=async(req,res)=>{
+    const tableByid=await tableSelect.find(req.params);
+    res.send(tableByid);
 }
 export const getReservationAndWaitingListById=async(req,res)=>{
     const ReservationAndWaitingList=await tableSelect(req.params);
@@ -48,7 +52,7 @@ export const postReservationAndWaitingList=async(req,res)=>{
 }
 export const updateReservationAndWaitingList = async (req, res) => {
 
-    console.log(req.params.id)
+    console.log(req.params._id)
     let data = await tableSelect.findByIdAndUpdate(
         { _id: req.params._id }, {
         $set: req.body
