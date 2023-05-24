@@ -67,6 +67,9 @@ const orderItemSchema = new mongoose.Schema({
     loyalityOffer:{
           type:Array
     },
+    couponOffer:{
+          type:Array
+    },
     priceExclTax: {
         type: Number
     },

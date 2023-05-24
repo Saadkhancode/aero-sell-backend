@@ -41,8 +41,8 @@ export const getOrderItems = async (req, res) => {
 }
 
 export const postOrderItem = async (req, res) => {
-    const { orderId, table, product, selectedModifiers,loyalityOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType } = req.body;
-    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType });
+    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType } = req.body;
+    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType });
     let prod = []
     prod = product
     await data.save().then(async (result) => {
@@ -70,6 +70,7 @@ export const postOrderItem = async (req, res) => {
                 table: result.table,
                 selectedModifiers: result.selectedModifiers,
                 loyalityOffer:result.loyalityOffer,
+                couponOffer : result.couponOffer,
                 dueamount: result.dueamount,
                 points: result.points,
                 taxValue: result.taxValue,
@@ -95,6 +96,7 @@ export const postOrderItem = async (req, res) => {
                 product: result.product,
                 dueamount: result.dueamount,
                 loyalityOffer:result.loyalityOffer,
+                couponOffer : result.couponOffer,
                 points: result.points,
                 taxValue: result.taxValue,
                 productWithQty: result.productWithQty,
