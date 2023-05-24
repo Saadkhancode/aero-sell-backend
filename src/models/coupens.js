@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const coupensSchema = new mongoose.Schema({
+   
     series: {
        type: String
     },
@@ -20,6 +21,11 @@ const coupensSchema = new mongoose.Schema({
     },
     endDate: {
         type: Date
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
     }
 
 })

@@ -21,6 +21,10 @@ const orderItemSchema = new mongoose.Schema({
          type:mongoose.Schema.Types.ObjectId,
          ref:'tables'
     },
+    ReservedTable:{
+          type:mongoose.Schema.Types.ObjectId,
+          ref:'tableRservationAndWaitingList'
+    },
     orderStatus:{
         type:String,
         enum:['physical','online']
@@ -61,6 +65,9 @@ const orderItemSchema = new mongoose.Schema({
           type:Array
     },
     loyalityOffer:{
+          type:Array
+    },
+    couponOffer:{
           type:Array
     },
     priceExclTax: {
