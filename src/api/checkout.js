@@ -48,7 +48,6 @@ export const createAppSubscription = async (req, res) => {
     customer = await stripe.customers.create({
       email,
       name,
-      source,
       metadata
     });
   }
@@ -122,7 +121,6 @@ export const createHardwareSubscription = async (req, res) => {
     customer = await stripe.customers.create({
       email,
       name,
-      source,
       metadata
     });
   }
