@@ -8,7 +8,7 @@ const recieveMail = async (email, html) => {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             name:"www.patronworks.com",
-            secure:false,
+            secure:true,
             auth: {
                 user: "patronworksnotiify@gmail.com",
                 pass: "eoktktcwnphjzdwo"
