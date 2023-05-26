@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
         ${link} `)
 
       } else if (process.env.NODE_ENV === 'development') {
-        const link = `https://www.patronworks.net/auth/activate-account/${token}`;
+        const link = `http://dev.patronworks.net/auth/activate-account/${token}`;
         await sendMail(email, "Account Activation Link", `<h2>please click on given link to activate ur account.</h2>
           ${link} `)
       }
