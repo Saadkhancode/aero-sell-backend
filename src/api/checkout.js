@@ -57,6 +57,7 @@ export const createAppSubscription = async (req, res) => {
       metadata
     });
   }
+  console.log('customer: ', customer);
   // Create payment method
   const paymentMethod = await stripe.paymentMethods.create({
     type,
