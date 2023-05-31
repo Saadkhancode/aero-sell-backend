@@ -48,11 +48,10 @@ const __filename=fileURLToPath(import.meta.url)
 const __dirname=path.dirname(__filename)
 //middelwares
 app.use(cors({
-    origin: true,
+    origin: 'https://patronworks.com',
     credentials: true,
-    defaultErrorHandler: false,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-}));
+  }));
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
