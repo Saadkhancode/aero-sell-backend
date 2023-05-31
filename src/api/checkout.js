@@ -1,7 +1,13 @@
+import dotenv from 'dotenv'
 import Stripe from 'stripe';
 import chargeModels from '../models/charge.js';
 const { chargeOrder, chargeApp, chargeHardware } = chargeModels;
-let stripe = Stripe('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');
+dotenv.config();
+if (process.env.NODE_ENV === 'production') {
+  var stripe = Stripe('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');
+} else if (process.env.NODE_ENV === 'development') {
+  var stripe = Stripe('sk_test_51MiZTVF1YkHoz4Y5AsHfg9ovHa5zsRFHCfVrHSy5XKvxKtdKSMHpzQ5V0wEfcGHVfoEQ50NjXhCP0aF2aC1Mc05300eCAJlRxu');
+}
 
 
 export const Checkout = async (req, res) => {
@@ -102,7 +108,7 @@ export const createAppSubscription = async (req, res) => {
     items: [{ plan: appPlan.id }]
   }).then(resSubs => {
     console.log('subscription: ', resSubs);
-    res.json({ message: 'App Subscription Successful!', resSubs });
+    res.json({ message: 'Subscription Successful!', resSubs });
   }).catch(err => {
     console.error(err);
     res.status(500).json({ err: 'Failed to create subscription' });

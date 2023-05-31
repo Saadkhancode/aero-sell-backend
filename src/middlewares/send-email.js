@@ -1,27 +1,34 @@
 import nodemailer from 'nodemailer'
+import dotenv from 'dotenv'
+dotenv.config()
+const sendMail = async (email, subject, html) => {
+    let domain;
+    if (process.env.NODE_ENV === 'production') {
+        domain = true
+    } else if (process.env.NODE_ENV === 'development') {
+        domain = false
+    }
 
-const sendMail=async(email,subject,html)=>{
-    
     console.log('email 1: ', email);
     try {
-       
+
         const transporter = nodemailer.createTransport({
             service: 'gmail',
-            name:"www.patronworks.net",
-            secure:true,
+            name: "www.patronworks.net",
+            secure: domain,
             auth: {
                 user: "patronworksnotiify@gmail.com",
-                pass:"eoktktcwnphjzdwo"
+                pass: "eoktktcwnphjzdwo"
             }
         })
         await transporter.sendMail({
-            to:email,
+            to: email,
             subject: subject,
-            html:html
+            html: html
         })
         console.log("Send Eamil Success");
     } catch (error) {
-        console.log(error,"email not sent");
+        console.log(error, "email not sent");
     }
 }
 
