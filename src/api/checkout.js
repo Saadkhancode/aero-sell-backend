@@ -108,7 +108,7 @@ export const createAppSubscription = async (req, res) => {
     items: [{ plan: appPlan.id }]
   }).then(resSubs => {
     console.log('subscription: ', resSubs);
-    res.json({ message: 'App Subscription Successful!', resSubs });
+    res.json({ message: 'Subscription Successful!', resSubs });
   }).catch(err => {
     console.error(err);
     res.status(500).json({ err: 'Failed to create subscription' });
