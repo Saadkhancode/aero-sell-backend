@@ -180,7 +180,7 @@ export const createHardwareSubscription = async (req, res) => {
     card,
   }).catch(err => {
     console.error(err);
-    res.status(500).json({ error: 'Failed to create payment method' });
+    res.status(500).json({ error: 'Enter Valid Card Number' });
   });
 
   // Attach payment method to customer
