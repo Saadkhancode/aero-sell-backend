@@ -46,7 +46,11 @@ export const createAppSubscription = async (req, res) => {
   let customer = null;
 
   // Check if customer already exists
-  const existingCustomers = await stripe.customers.list({ email: email });
+  const existingCustomers = await stripe.customers.list({ email: email }).catch(err => {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to list existing customers' });
+  });
+  
   if (existingCustomers.data.length > 0) {
     customer = existingCustomers.data[0];
   } else {
@@ -55,18 +59,29 @@ export const createAppSubscription = async (req, res) => {
       email,
       name,
       metadata
+    }).catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to create customer' });
     });
   }
+  
   console.log('customer: ', customer);
+  
   // Create payment method
   const paymentMethod = await stripe.paymentMethods.create({
     type,
     card,
+  }).catch(err => {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to create payment method' });
   });
 
   // Attach payment method to customer
   await stripe.paymentMethods.attach(paymentMethod.id, {
     customer: customer.id,
+  }).catch(err => {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to attach payment method' });
   });
 
   // Set payment method as default
@@ -74,19 +89,34 @@ export const createAppSubscription = async (req, res) => {
     invoice_settings: {
       default_payment_method: paymentMethod.id,
     },
+  }).catch(err => {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to update customer' });
   });
+
   console.log('product.name: ', product.name);
   let products = null;
-  await getProductByName(product.name).then((product) =>
-    products = product
-  );
+  
+  await getProductByName(product.name)
+    .then((product) => {
+      products = product;
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to get product by name' });
+    });
+  
   console.log('product: ', products);
 
-  // return
   // Check if app plan already exists
   let appPlan = null;
-  const existingPlans = await stripe.plans.list({ product: products.id });
+  const existingPlans = await stripe.plans.list({ product: products.id }).catch(err => {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to list existing plans' });
+  });
+
   console.log('existingPlans: ', existingPlans);
+
   if (existingPlans.data.length > 0) {
     appPlan = existingPlans.data[0];
     console.log('appPlan in if: ', appPlan);
@@ -99,7 +129,11 @@ export const createAppSubscription = async (req, res) => {
       product: {
         name: products.name
       },
+    }).catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to create app plan' });
     });
+
     console.log('appPlanin else : ', appPlan);
   }
 
@@ -112,15 +146,20 @@ export const createAppSubscription = async (req, res) => {
     res.json({ message: 'Subscription Successful!', resSubs });
   }).catch(err => {
     console.error(err);
-    res.status(500).json({ err: 'Failed to create subscription' });
+    res.status(500).json({ error: 'Failed to create subscription' });
   });
-}
+};
+
 export const createHardwareSubscription = async (req, res) => {
   const { email, name, metadata, amount, currency, interval, product, type, card } = req.body.stripeToken;
   let customer = null;
 
   // Check if customer already exists
-  const existingCustomers = await stripe.customers.list({ email: email });
+  const existingCustomers = await stripe.customers.list({ email: email }).catch(err => {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to list existing customers' });
+  });
+  
   if (existingCustomers.data.length > 0) {
     customer = existingCustomers.data[0];
   } else {
@@ -129,17 +168,27 @@ export const createHardwareSubscription = async (req, res) => {
       email,
       name,
       metadata
+    }).catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to create customer' });
     });
   }
+
   // Create payment method
   const paymentMethod = await stripe.paymentMethods.create({
     type,
     card,
+  }).catch(err => {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to create payment method' });
   });
 
   // Attach payment method to customer
   await stripe.paymentMethods.attach(paymentMethod.id, {
     customer: customer.id,
+  }).catch(err => {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to attach payment method' });
   });
 
   // Set payment method as default
@@ -147,19 +196,34 @@ export const createHardwareSubscription = async (req, res) => {
     invoice_settings: {
       default_payment_method: paymentMethod.id,
     },
+  }).catch(err => {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to update customer' });
   });
+
   console.log('product.name: ', product.name);
   let products = null;
-  await getProductByName(product.name).then((product) =>
-    products = product
-  );
+
+  await getProductByName(product.name)
+    .then((product) => {
+      products = product;
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to get product by name' });
+    });
+
   console.log('product: ', products);
 
-  // return
   // Check if app plan already exists
   let hardwarePlan = null;
-  const existingPlans = await stripe.plans.list({ product: products.id });
+  const existingPlans = await stripe.plans.list({ product: products.id }).catch(err => {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to list existing plans' });
+  });
+
   console.log('existingPlans: ', existingPlans);
+
   if (existingPlans.data.length > 0) {
     hardwarePlan = existingPlans.data[0];
     console.log('hardwarePlan in if: ', hardwarePlan);
@@ -172,11 +236,16 @@ export const createHardwareSubscription = async (req, res) => {
       product: {
         name: products.name
       },
+    }).catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to create hardware plan' });
     });
+
     console.log('hardwarePlanin else : ', hardwarePlan);
   }
+
   const oneYearFromNow = Date.now() + 31536000000; // 31536000000 is the number of milliseconds in a year
-const trialEnd = Math.floor(oneYearFromNow / 1000); // convert milliseconds to seconds
+  const trialEnd = Math.floor(oneYearFromNow / 1000); // convert milliseconds to seconds
 
   // Create subscription for the customer with app plan
   await stripe.subscriptions.create({
@@ -186,10 +255,10 @@ const trialEnd = Math.floor(oneYearFromNow / 1000); // convert milliseconds to s
     // trial_end: trialEnd, // start the subscription immediately
   }).then(resSubs => {
     console.log('subscription: ', resSubs);
-    res.json({ message: 'hardware Subscription Successful!', resSubs });
+    res.json({ message: 'Hardware subscription successful!', resSubs });
   }).catch(err => {
     console.error(err);
-    res.status(500).json({ err: 'Failed to create subscription' });
+    res.status(500).json({ error: 'Failed to create subscription' });
   });
-}
+};
 
