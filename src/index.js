@@ -36,6 +36,7 @@ import contactus from './api-routes/contactUs-route.js'
 import employeTimeStamp from './api-routes/employeetime-route.js'
 import reciept from './api-routes/reciept-route.js'
 import coupens from './api-routes/coupens-route.js'
+import chatRoute from './api-routes/chat_route.js'
 import './config/config.js';
 import path from 'path'
 import { fileURLToPath } from 'url';
@@ -68,7 +69,7 @@ app.use('/api/v1/activate-account',userRegisterWithEmailVerification)
 //user forgot and reset-password Endpoints
 app.use('/api/v1/reset-password',passwordreset)
 //All APi's Endponits
-app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo,blog,contactus,employeTimeStamp, reciept,coupens)
+app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo,blog,contactus,employeTimeStamp, reciept,coupens,chatRoute)
 
     
 //Port
