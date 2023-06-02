@@ -79,6 +79,12 @@ if (process.env.NODE_ENV === 'production') {
             message: 'API endpoint doesnt exist please put Api prod routes ..'
         })
     });
+    app.use(function(req, res, next) {
+        res.setHeader('Access-Control-Allow-Origin', 'https://patronworks.com');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        next();
+      });
     const port = process.env.PORT || 3333;
     app.listen(port, () => {
         console.log(`Server is running on port: ${port}`);
@@ -90,6 +96,12 @@ if (process.env.NODE_ENV === 'production') {
             message: 'API endpoint doesnt exist please put Api dev routes ..'
         })
     });
+    app.use(function(req, res, next) {
+        res.setHeader('Access-Control-Allow-Origin', 'https://patronworks.com');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        next();
+      });
     const port = process.env.DEV_PORT || 4444;
     app.listen(port, () => {
         console.log(`Server is running on port: ${port}`);
