@@ -63,12 +63,6 @@ app.use(bodyParser.json())
 app.use(helmet({crossOriginResourcePolicy:false,}));
 app.use(morgan("dev"));
 //Routes
-app.use(function(req, res, next) {
-res.setHeader('Access-Control-Allow-Origin', 'https://patronworks.com');
-res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-next();
-});
 //uset Email Verification Endpoints
 app.use('/api/v1/activate-account',userRegisterWithEmailVerification)
 //user forgot and reset-password Endpoints
