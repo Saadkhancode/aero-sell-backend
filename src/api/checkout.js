@@ -61,7 +61,7 @@ export const createAppSubscription = async (req, res) => {
       metadata
     }).catch(err => {
       console.error(err);
-      res.status(500).json({ error: 'Failed to create customer' });
+      res.status(500).json({ error: 'Enter a valid email' });
     });
   }
   
