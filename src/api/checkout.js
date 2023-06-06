@@ -163,27 +163,24 @@ export const createHardwareSubscription = async (req, res) => {
   if (existingCustomers.data.length > 0) {
     customer = existingCustomers.data[0];
   } else {
-    // Create new customer
     customer = await stripe.customers.create({
       email,
       name,
       metadata
     }).catch(err => {
       console.error(err);
-      res.status(500).json({ error: 'Failed to create customer' });
+      res.status(500).json({ error: 'Enter Valid Email' });
     });
   }
 
-  // Create payment method
   const paymentMethod = await stripe.paymentMethods.create({
     type,
     card,
   }).catch(err => {
     console.error(err);
-    res.status(500).json({ error: 'Enter Valid Card Number' });
+    res.status(500).json({ error: 'Enter a Valid Card Number' });
   });
 
-  // Attach payment method to customer
   await stripe.paymentMethods.attach(paymentMethod.id, {
     customer: customer.id,
   }).catch(err => {
@@ -191,7 +188,6 @@ export const createHardwareSubscription = async (req, res) => {
     res.status(500).json({ error: 'Failed to attach payment method' });
   });
 
-  // Set payment method as default
   await stripe.customers.update(customer.id, {
     invoice_settings: {
       default_payment_method: paymentMethod.id,
@@ -215,7 +211,6 @@ export const createHardwareSubscription = async (req, res) => {
 
   console.log('product: ', products);
 
-  // Check if app plan already exists
   let hardwarePlan = null;
   const existingPlans = await stripe.plans.list({ product: products.id }).catch(err => {
     console.error(err);
@@ -228,7 +223,6 @@ export const createHardwareSubscription = async (req, res) => {
     hardwarePlan = existingPlans.data[0];
     console.log('hardwarePlan in if: ', hardwarePlan);
   } else {
-    // Create new app plan
     hardwarePlan = await stripe.plans.create({
       amount,
       currency,
@@ -244,18 +238,16 @@ export const createHardwareSubscription = async (req, res) => {
     console.log('hardwarePlanin else : ', hardwarePlan);
   }
 
-  const oneYearFromNow = Date.now() + 31536000000; // 31536000000 is the number of milliseconds in a year
-  const trialEnd = Math.floor(oneYearFromNow / 1000); // convert milliseconds to seconds
+  const oneYearFromNow = Date.now() + 31536000000; 
+  const trialEnd = Math.floor(oneYearFromNow / 1000);
 
-  // Create subscription for the customer with app plan
+ 
   await stripe.subscriptions.create({
     customer: customer.id,
     items: [{ plan: hardwarePlan.id }],
-    billing_cycle_anchor: Math.floor(Date.now() / 1000), // start the subscription immediately
-    // trial_end: trialEnd, // start the subscription immediately
   }).then(resSubs => {
     console.log('subscription: ', resSubs);
-    res.json({ message: 'Hardware subscription successful!', resSubs });
+    res.json({ message: 'Order Successfull!', resSubs });
   }).catch(err => {
     console.error(err);
     res.status(500).json({ error: 'Failed to create subscription' });
