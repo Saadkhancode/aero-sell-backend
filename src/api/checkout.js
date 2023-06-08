@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 import Stripe from 'stripe';
+import sendMail from '../middlewares/send-email.js'
 import chargeModels from '../models/charge.js';
 const { chargeOrder, chargeApp, chargeHardware } = chargeModels;
 dotenv.config();
@@ -36,11 +37,24 @@ export const Checkout = async (req, res) => {
 
 
 };
+// async function getProductByName(name) {
+//   const products = await stripe.products.list();
+//   const product = products.data.find((p) => p.name === name);
+//   return product;
+// }
 async function getProductByName(name) {
-  const products = await stripe.products.list();
-  const product = products.data.find((p) => p.name === name);
-  return product;
+  try {
+    const products = await stripe.products.list();
+    console.log('productsAll: ', products);
+    const product = products.data.find((p) => p.name === name);
+    return product;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to get product by name');
+  }
 }
+
+
 export const createAppSubscription = async (req, res) => {
   const { email, name, metadata, amount, currency, interval, product, type, card } = req.body.stripeToken;
   let customer = null;
@@ -50,7 +64,7 @@ export const createAppSubscription = async (req, res) => {
     console.error(err);
     res.status(500).json({ error: 'Failed to list existing customers' });
   });
-  
+
   if (existingCustomers.data.length > 0) {
     customer = existingCustomers.data[0];
   } else {
@@ -64,16 +78,16 @@ export const createAppSubscription = async (req, res) => {
       res.status(500).json({ error: 'Enter a valid email' });
     });
   }
-  
+
   console.log('customer: ', customer);
-  
+
   // Create payment method
   const paymentMethod = await stripe.paymentMethods.create({
     type,
     card,
   }).catch(err => {
     console.error(err);
-    res.status(500).json({ error:'Enter Valid Card Number' });
+    res.status(500).json({ error: 'Enter Valid Card Number' });
   });
 
   // Attach payment method to customer
@@ -95,22 +109,19 @@ export const createAppSubscription = async (req, res) => {
   });
 
   console.log('product.name: ', product.name);
-  let products = null;
-  
-  await getProductByName(product.name)
-    .then((product) => {
-      products = product;
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({ error: 'Failed to get product by name' });
-    });
-  
-  console.log('product: ', products);
+  let productsData = null;
+  try {
+    productsData = await getProductByName(product.name);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to get product by name' });
+    return;
+  }
+  console.log('product: ', productsData);
 
   // Check if app plan already exists
   let appPlan = null;
-  const existingPlans = await stripe.plans.list({ product: products.id }).catch(err => {
+  const existingPlans = await stripe.plans.list({ product: productsData?.id }).catch(err => {
     console.error(err);
     res.status(500).json({ error: 'Failed to list existing plans' });
   });
@@ -127,7 +138,7 @@ export const createAppSubscription = async (req, res) => {
       currency,
       interval,
       product: {
-        name: products.name
+        name: product.name
       },
     }).catch(err => {
       console.error(err);
@@ -141,8 +152,29 @@ export const createAppSubscription = async (req, res) => {
   await stripe.subscriptions.create({
     customer: customer.id,
     items: [{ plan: appPlan.id }]
-  }).then(resSubs => {
+  }).then(async resSubs => {
     console.log('subscription: ', resSubs);
+    const latestInvoice = await stripe.invoices.retrieve(resSubs.latest_invoice);
+    console.log('latestInvoice: ', latestInvoice.hosted_invoice_url);
+   await sendMail(email,"Patronworks Reciept And Invoice",`<html>
+   <body>
+   
+   
+   <div style="width:auto; height:30rem;   padding:10px; font-family: 'Poppins', sans-serif;">
+   <h2 style=" text-align:center; ">Patronworks</h2>
+   <h2 style=" text-align:center; margin:0px;">Transaction Successfull</h2>
+   <h3 style=" text-align:center; font-style:italic; font-weight:bold; ">Hi ${name}</h3>
+   <p style=" text-align:center; font-style:italic; ">The transaction details are given below please click On the link:</p>
+   <p style="text-align:center; ">${latestInvoice.hosted_invoice_url}</p>
+   </div>
+   <p style=" text-align:center; line-height:20px; ">For any queries plz call the Patronworks helpline on 224-558-1828 or send an email on </p> 
+   <p style=" text-align:center; line-height:20px; color:#4cdc9c; font-size:15px; font-weight:bold; ">Sales@patronworks.com </p>
+   </div>
+   
+   
+   </body>
+   </html>`)
+
     res.json({ message: 'Subscription Successful!', resSubs });
   }).catch(err => {
     console.error(err);
@@ -159,7 +191,7 @@ export const createHardwareSubscription = async (req, res) => {
     console.error(err);
     res.status(500).json({ error: 'Failed to list existing customers' });
   });
-  
+
   if (existingCustomers.data.length > 0) {
     customer = existingCustomers.data[0];
   } else {
@@ -238,15 +270,34 @@ export const createHardwareSubscription = async (req, res) => {
     console.log('hardwarePlanin else : ', hardwarePlan);
   }
 
-  const oneYearFromNow = Date.now() + 31536000000; 
+  const oneYearFromNow = Date.now() + 31536000000;
   const trialEnd = Math.floor(oneYearFromNow / 1000);
 
- 
+
   await stripe.subscriptions.create({
     customer: customer.id,
     items: [{ plan: hardwarePlan.id }],
-  }).then(resSubs => {
+  }).then(async resSubs => {
     console.log('subscription: ', resSubs);
+    const latestInvoice = await stripe.invoices.retrieve(resSubs.latest_invoice);
+    console.log('latestInvoice: ', latestInvoice.hosted_invoice_url);
+   await sendMail(email,"Patronworks Reciept And Invoice",`<html>
+   <body>
+   <div style="width:auto; height:30rem;   padding:10px; font-family: 'Poppins', sans-serif;">
+   <h2 style=" text-align:center; ">Patronworks</h2>
+   <h2 style=" text-align:center; margin:0px;">Transaction Successfull</h2>
+   <h3 style=" text-align:center; font-style:italic; font-weight:bold; ">Hi ${name}</h3>
+   <p style=" text-align:center; font-style:italic; ">The transaction details are given below please click On the link:</p>
+   <p style="text-align:center; ">${latestInvoice.hosted_invoice_url}</p>
+   </div>
+   <p style=" text-align:center; line-height:20px; ">For any queries plz call the Patronworks helpline on 224-558-1828 or send an email on </p> 
+   <p style=" text-align:center; line-height:20px; color:#4cdc9c; font-size:15px; font-weight:bold; ">Sales@patronworks.com </p>
+   </div>
+   
+   
+   </body>
+   </html>`)
+
     res.json({ message: 'Order Successfull!', resSubs });
   }).catch(err => {
     console.error(err);
