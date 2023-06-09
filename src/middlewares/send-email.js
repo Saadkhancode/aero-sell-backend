@@ -14,7 +14,7 @@ const sendMail = async (email, subject, html) => {
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
-            name: "www.patronworks.net",
+            name: ["www.patronworks.net","www.patronworks.com"],
             secure: domain,
             auth: {
                 user: "patronworksnotiify@gmail.com",
