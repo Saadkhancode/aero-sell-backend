@@ -159,7 +159,9 @@ export const createAppSubscription = async (req, res) => {
     const latestInvoice = await stripe.invoices.retrieve(resSubs.latest_invoice);
     console.log('latestInvoice: ', latestInvoice);
     console.log('latestInvoice: ', latestInvoice.hosted_invoice_url);
-   await sendMail(email,"Patronworks Reciept And Invoice",`<div style="font-family: Arial, Helvetica, sans-serif;">
+   await sendMail(email,"Patronworks Reciept And Invoice",`<html>
+   <body>
+   <div style="font-family: Arial, Helvetica, sans-serif;">
    <div style="width: auto; height: 14rem; background-color: rgb(6, 138, 245); display: flex; align-items: center;">
        <h2 style="color: white; padding-left: 10px; font-weight: bold;">Payment Confirmation</h2>
    </div>
@@ -257,7 +259,8 @@ export const createAppSubscription = async (req, res) => {
        </div>
    </div>
 </div>
-
+</body>
+</html>
 `)
 
     res.json({ message: 'Subscription Successful!', resSubs });
@@ -394,21 +397,107 @@ export const createHardwareSubscription = async (req, res) => {
     console.log('latestInvoice: ', latestInvoice.hosted_invoice_url);
 
     await sendMail(email, "Patronworks Reciept And Invoice", `<html>
-       <body>
-       <div style="width:auto; height:30rem;   padding:10px; font-family: 'Poppins', sans-serif;">
-       <h2 style=" text-align:center; ">Patronworks</h2>
-       <h2 style=" text-align:center; margin:0px;">Transaction Successfull</h2>
-       <h3 style=" text-align:center; font-style:italic; font-weight:bold; ">Hi ${name}</h3>
-       <p style=" text-align:center; font-style:italic; ">The transaction details are given below please click On the link:</p>
-       <p style="text-align:center; ">${latestInvoice.hosted_invoice_url}</p>
-       </div>
-       <p style=" text-align:center; line-height:20px; ">For any queries plz call the Patronworks helpline on 224-558-1828 or send an email on </p> 
-       <p style=" text-align:center; line-height:20px; color:#4cdc9c; font-size:15px; font-weight:bold; ">Sales@patronworks.com </p>
-       </div>
-       
-       
-       </body>
-       </html>`);
+    <body>
+    <div style="font-family: Arial, Helvetica, sans-serif;">
+    <div style="width: auto; height: 14rem; background-color: rgb(6, 138, 245); display: flex; align-items: center;">
+        <h2 style="color: white; padding-left: 10px; font-weight: bold;">Payment Confirmation</h2>
+    </div>
+    <div style="padding: 2rem;">
+        <h2 style="font-size: 1rem; margin-bottom: 2rem;">Hello <strong>${name}</strong></h2>
+        <p style="margin-bottom: 2rem;">Thank you for your recent purchase with PatronWorks! We are sending this email
+            to confirm that your payment has been successfully processed.</p>
+ 
+        <ul>
+            <h2 style="font-size: 1rem; margin-bottom: 1rem;">Details of your transaction are as follows:</h2>
+ 
+            <li style="margin-bottom: 1rem;">Product : <strong>PatronWorks POS Software${product.name}</strong></li>
+            <li style="margin-bottom: 1rem;">Total Amount : <strong>${amount}/month</strong></li>
+            <li style="margin-bottom: 3rem;">Date of Purchase : <strong>${latestInvoice.status_transitions.paid_at}</strong></li>
+        </ul>
+        <p style="margin-bottom: 3rem;">You can view the full details of your receipt on Stripe by clicking the link
+            below:</p>
+        <a href=""
+            style="display: flex; overflow-wrap: anywhere; margin-bottom: 3rem;">${latestInvoice.hosted_invoice_url}</a>
+ 
+        <p style="margin-bottom: 3rem;">If you have any questions or need further assistance, please don't hesitate to
+            contact our support team at <a href=""> support@patronworks.com</a> or call us at 224-558-1828.</p>
+        <p>Thank you for entrusting your business to PatronWorks POS. Your choice is not taken lightly and we are
+            steadfast in our commitment to deliver you service of the highest caliber. We understand the importance of
+            your operations, and we pledge to equip you with innovative, reliable, and efficient solutions that will
+            help propel your business to new heights.</p>
+ 
+        <table border="0" cellpadding="0" cellspacing="0" width="" role="presentation"
+            style=" display: flex; justify-content: center; margin-top: 2rem;" class="m_17281146269363811mceClusterLayout">
+            <tbody>
+                <tr>
+                    <td style="padding-left:12px;padding-top:0;padding-right:12px" valign="top"
+                        class="m_17281146269363811mobileClass-11">
+                        <a href="https://linkedin.com/company/insoftservices/" style="display:block" target="_blank"
+                            data-saferedirecturl="https://www.google.com/url?q=https://linkedin.com/company/insoftservices/&amp;source=gmail&amp;ust=1686635450412000&amp;usg=AOvVaw0FKb0ZzhI0eyC2knHMv7Y2"><img
+                                width="32" style="border:0;width:32px;height:auto;max-width:100%;display:block"
+                                alt="LinkedIn icon"
+                                src="https://ci5.googleusercontent.com/proxy/ekzLfgy0x7y21v8P74144pFNolAfHKeP2IBElMFDQAuKbTXWzGOPqANSZOQJa9AA1KAbTRNxVyvPacbcNKf7XLcgf1suPBx2kjnfsDjdNKp2PRDGO_nWmW367IhQobVIRvVOHplkA1Zvb9bD-0tg2saj6ySxA4Hobn4IUFPrBZSBDcFBYGEeQ-84Jr4-VVP2l7El4PqFKv3lN7HN2DonkMxmO9dr=s0-d-e1-ft#https://dim.mcusercontent.com/https/cdn-images.mailchimp.com%2Ficons%2Fsocial-block-v3%2Fblock-icons-v3%2Flinkedin-filled-color-40.png?w=32&amp;dpr=2"
+                                class="CToWUd" data-bit="iit"></a>
+                    </td>
+                    <td style="padding-left:12px;padding-top:0;padding-right:12px" valign="top"
+                        class="m_17281146269363811mobileClass-11">
+                        <a href="https://facebook.com/insoftservicesemear" style="display:block" target="_blank"
+                            data-saferedirecturl="https://www.google.com/url?q=https://facebook.com/insoftservicesemear&amp;source=gmail&amp;ust=1686635450412000&amp;usg=AOvVaw1eqrUSNNB-EF1mUvIw1nQm"><img
+                                width="32" style="border:0;width:32px;height:auto;max-width:100%;display:block"
+                                alt="Facebook icon"
+                                src="https://ci5.googleusercontent.com/proxy/sUMv1C6_q5qdsNdB_QIMwtSlChBxePZ7V4omll7bLK5s2Q4BGSZbmblOzabl1I6QPfp9yKEcN57HnShUe4cJzEb8SJmabi1vO7RxyfdoSFQTYnVMvXZg45fzAQasdz_99T0YeGt538NAlUttGW_gzZbB0q36zpJVpwHHM6nrOHTqqF-8vDRtpx-pg43ouCEqxFrN3282W8huMTzL3o-74SdAAhys=s0-d-e1-ft#https://dim.mcusercontent.com/https/cdn-images.mailchimp.com%2Ficons%2Fsocial-block-v3%2Fblock-icons-v3%2Ffacebook-filled-color-40.png?w=32&amp;dpr=2"
+                                class="CToWUd" data-bit="iit"></a>
+                    </td>
+                    <td style="padding-left:12px;padding-top:0;padding-right:12px" valign="top"
+                        class="m_17281146269363811mobileClass-11">
+                        <a href="https://instagram.com/insoftservices/" style="display:block" target="_blank"
+                            data-saferedirecturl="https://www.google.com/url?q=https://instagram.com/insoftservices/&amp;source=gmail&amp;ust=1686635450412000&amp;usg=AOvVaw3PAC3bKI6YRs2nQrZSQSn3"><img
+                                width="32" style="border:0;width:32px;height:auto;max-width:100%;display:block"
+                                alt="Instagram icon"
+                                src="https://ci6.googleusercontent.com/proxy/MZQ3iHAZ3PEV5S63svVAw7NToy3q4Cd9RPF50HFYC024sHEo9PwBuo4Ce5faBsHel7En0jMG_XM_ejm05kElZcNqPIv7__9yvdxfKGabkPe00eFY38GD6VGjNEhy7MXj6Kp3a88Y70lddF89PDGaMt6ahzlUbfFw2Qm4ow6PEGQeEIrIoDXykzM6ly1LfM3dYEuK8B-oGJvFG1MzYB_v9pS7Wmk0kw=s0-d-e1-ft#https://dim.mcusercontent.com/https/cdn-images.mailchimp.com%2Ficons%2Fsocial-block-v3%2Fblock-icons-v3%2Finstagram-filled-color-40.png?w=32&amp;dpr=2_9yvdxfKGabkPe00eFY38GD6VGjNEhy7MXj6Kp3a88Y70lddF89PDGaMt6ahzlUbfFw2Qm4ow6PEGQeEIrIoDXykzM6ly1LfM3dYEuK8B-oGJvFG1MzYB_v9pS7Wmk0kw=s0-d-e1-ft#https://dim.mcusercontent.com/https/cdn-images.mailchimp.com%2Ficons%2Fsocial-block-v3%2Fblock-icons-v3%2Finstagram-filled-color-40.png?w=32&amp;dpr=2"
+                                class="CToWUd" data-bit="iit"></a>
+                    </td>
+                    <td style="padding-left:12px;padding-top:0;padding-right:12px" valign="top"
+                        class="m_17281146269363811mobileClass-11">
+                        <a href="https://twitter.com/InsoftServices" style="display:block" target="_blank"
+                            data-saferedirecturl="https://www.google.com/url?q=https://twitter.com/InsoftServices&amp;source=gmail&amp;ust=1686635450412000&amp;usg=AOvVaw376xIdkBLY9_zAs9nL-OtY"><img
+                                width="32" style="border:0;width:32px;height:auto;max-width:100%;display:block"
+                                alt="Twitter icon"
+                                src="https://ci3.googleusercontent.com/proxy/d-6J3vMN1HYSEoAyJzUUsg2-uM0WWp0hTIWuPOp3iSRltHO1h0Z5vHQuuzj2k8t0G0AFWXNUkK6u9uRjTD7ZKcljqzn33WUh4-EpXnostm9zPRqlKGojtl2V1u0OzuNhRcO7Ncs8i2yBHTI_bzRJrBdpkRy4K0oF3wIiaB7tW8wTzAuuFZ4u412xgdcMLtfRtNq02_azzHm_WaaJLTzZjBf4wpM=s0-d-e1-ft#https://dim.mcusercontent.com/https/cdn-images.mailchimp.com%2Ficons%2Fsocial-block-v3%2Fblock-icons-v3%2Ftwitter-filled-color-40.png?w=32&amp;dpr=2"
+                                class="CToWUd" data-bit="iit"></a>
+                    </td>
+                    <td style="padding-left:12px;padding-top:0;padding-right:12px" valign="top"
+                        class="m_17281146269363811mobileClass-11">
+                        <a href="mailto:info@insoftservices.uk" style="display:block" target="_blank"><img width="32"
+                                style="border:0;width:32px;height:auto;max-width:100%;display:block" alt="Email icon"
+                                src="https://ci6.googleusercontent.com/proxy/qcF_gwFMT4yvIY8IFWyizKS0oDe-zFblAzVCqmWdYYkFbgfkEoZcGCPMZKxdtyk7E2JyuryL3r5wMzm0Lds3XwjdeZoeOtFHlTE1HA_B6JV0oYFkjiH-jD_oMADlCsaevKzoMc_WRJV353PDpHHWaW9zhIKqYRJ2nbkbDTyxwe95QdbVT1oRXYDauuFa3x3V4Fc2iRy_YWgYfpo9advbjgqH=s0-d-e1-ft#https://dim.mcusercontent.com/https/cdn-images.mailchimp.com%2Ficons%2Fsocial-block-v3%2Fblock-icons-v3%2Femail-filled-color-40.png?w=32&amp;dpr=2"
+                                class="CToWUd" data-bit="iit"></a>
+                    </td>
+                </tr>
+                
+              
+                    
+            </tbody>
+        </table>
+        <div style="display:flex;  justify-content: center; margin-top: 2rem; margin-bottom: 2rem;">
+            <img
+                        _ngcontent-wtb-c2="" width="281" alt="Logo"
+                        src="https://ci3.googleusercontent.com/proxy/ZxMQoZdE1WQC4wQtZEAP_M8MyhhFVkgQR-ZWTJ800_rKB7zDN1wt1lZJ0QuaP8EEwPogjSLTTcAyvbjs6QGLTnqHl0sQAw4HVyPZT0QUG094RRGJv40ccSChYuJJLMg9b-Xl-35HiDWExI-fSF0_72ZRESC4uMDLLcxmTWd96oh-EZNdZ-dttkk=s0-d-e1-ft#https://dim.mcusercontent.com/cs/e4ca1d9defed245490a5b50eb/images/91e8cd6a-94af-2b9a-8594-a382d4b12070.png?w=281&amp;dpr=2"
+                        data-bit="iit" class="CToWUd"
+                        style="width: 281px; height: auto; max-width: 100%; display: block;">
+        </div>
+        <div style="display:grid; justify-content: center;">
+            <p style="font-style: italic; margin-bottom: 5px; display: flex; justify-content: center;">Copyright (C) 2023 Polaris PatronWorks. All rights reserved.</p>
+            <p style="margin-bottom: 5px; display: flex; justify-content: center; text-align: center;">In the past, you provided Insoft with your email address |EMAIL|. Occasionally, you will receive promotions and brief announcements.</p>
+            <p style="margin-bottom: 5px; display: flex; justify-content: center;">Our mailing address is:</p>
+            <p style="margin-bottom: 5px; display: flex; justify-content: center;"> 208 W Alexander St, Plant City, Fl 33563</p>
+            <p style="margin-bottom: 5px; display: flex; justify-content: center;">Want to change how you receive these emails?</p>
+            <p style="margin-bottom: 5px; display: flex; justify-content: center;">You can <a href="" style="margin-left: 5px; margin-right: 5px;">update your preferences</a>  or <a href="" style="margin-left: 5px; margin-right: 5px;">unsubscribe</a> </p>
+        </div>
+    </div>
+ </div>
+ </body>
+ </html>`);
 
     return res.json({ message: 'Order Successfull!', resSubs });
   } catch (err) {
