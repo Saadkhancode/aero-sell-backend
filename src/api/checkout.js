@@ -163,7 +163,7 @@ export const createAppSubscription = async (req, res) => {
    <body>
    <div style="font-family: Arial, Helvetica, sans-serif;">
    <div style="width: auto; height: 14rem; background-color: rgb(6, 138, 245); display: flex; align-items: center;">
-       <h2 style="color: white; padding-left: 10px; font-weight: bold;">Payment Confirmation</h2>
+       <h2 style="color: white; padding-left: 10px; font-weight: bold;justify-content:center;">Payment Confirmation</h2>
    </div>
    <div style="padding: 2rem;">
        <h2 style="font-size: 1rem; margin-bottom: 2rem;">Hello <strong>${name}</strong></h2>
@@ -266,7 +266,7 @@ export const createAppSubscription = async (req, res) => {
    <body>
    <div style="font-family: Arial, Helvetica, sans-serif;">
    <div style="width: auto; height: 14rem; background-color: rgb(6, 138, 245); display: flex; align-items: center;">
-       <h2 style="color: white; padding-left: 10px; font-weight: bold;">Payment Confirmation</h2>
+       <h2 style="color: white; padding-left: 10px; font-weight: bold;justify-content:center;">Client OnBoarding</h2>
    </div>
    <div style="padding: 2rem;">
        <h2 style="font-size: 1rem; margin-bottom: 2rem;">Email Subject: <strong>Welcome to PatronWorks - Your POS Journey Begins Now</strong></h2>
@@ -494,7 +494,7 @@ export const createHardwareSubscription = async (req, res) => {
     <body>
     <div style="font-family: Arial, Helvetica, sans-serif;">
     <div style="width: auto; height: 14rem; background-color: rgb(6, 138, 245); display: flex; align-items: center;">
-        <h2 style="color: white; padding-left: 10px; font-weight: bold;">Payment Confirmation</h2>
+        <h2 style="color: white; padding-left: 10px; font-weight: bold;justify-content:center;">Payment Confirmation</h2>
     </div>
     <div style="padding: 2rem;">
         <h2 style="font-size: 1rem; margin-bottom: 2rem;">Hello <strong>${name}</strong></h2>
