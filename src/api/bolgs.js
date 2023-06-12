@@ -51,7 +51,9 @@ export const updateBlog = async (req, res) => {
         { new: true }
     )
     if (data) {
+        // res.send({ message: "blog data updated successfully" });
         res.send({ message: "blog data updated successfully" });
+
     }
     else {
         res.send({ message: "blog data cannot be updated successfully" })
