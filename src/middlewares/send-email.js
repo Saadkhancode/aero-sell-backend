@@ -14,11 +14,11 @@ const sendMail = async (email, subject, html) => {
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
-            name: ["www.patronworks.net","www.patronworks.com"],
+            // name: ["www.patronworks.net","www.patronworks.com"],
             secure: domain,
             auth: {
-                user: "patronworksnotiify@gmail.com",
-                pass: "eoktktcwnphjzdwo"
+                user: "info@patronworks.com",
+                pass: "f1d1cefbb2$"
             }
         })
         await transporter.sendMail({
