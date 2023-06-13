@@ -40,6 +40,7 @@ import chatRoute from './api-routes/chat_route.js'
 import './config/config.js';
 import path from 'path'
 import { fileURLToPath } from 'url';
+import { Server } from "socket.io"
 // import fs from "fs"
 // const file=fs.readFileSync('./036C0DBFDB2A157703FBA75521E0278D.txt')
 const app = express();
@@ -71,7 +72,7 @@ app.use('/api/v1/reset-password',passwordreset)
 //All APi's Endponits
 app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo,blog,contactus,employeTimeStamp, reciept,coupens,chatRoute)
 
-    
+  let NODESERVER  
 //Port
 if (process.env.NODE_ENV === 'production') {
     app.use('*', (req, res) => {
@@ -92,7 +93,39 @@ if (process.env.NODE_ENV === 'production') {
         })
     });
     const port = process.env.DEV_PORT || 4444;
-    app.listen(port, () => {
+    NODESERVER=  app.listen(port, () => {
         console.log(`Server is running on port: ${port}`);
     });
 }
+
+// socket.io portion 
+const io = new Server(NODESERVER, {
+    pingTimeout: 60000,
+    cors: {
+        origin:[process.env.LINK1, process.env.LINK2],
+        // credentials: true,
+    },
+});
+
+io.on("connection", (socket) => {
+    console.log("Connected to socket.io");
+    socket.on("setup", (userData) => {
+        socket.join(userData._id)
+        socket.emit("me", userData._id)
+        socket.emit("connected")
+    })
+
+    socket.on("new message", (newMessageRecieved) => {
+        var chat = newMessageRecieved.chat;
+        if (!chat) return console.log("chat.users not defined");
+
+        if (chat.Admin == newMessageRecieved.senderId) {
+            socket.in(chat.subUser).emit("messagerecieved", newMessageRecieved);
+        }
+        if (chat.subUser == newMessageRecieved.senderId) {
+            socket.in(chat.Admin).emit("messagerecieved", newMessageRecieved);
+        }
+    });
+
+
+})
