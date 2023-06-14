@@ -179,7 +179,8 @@ export const createAppSubscription = async (req, res) => {
     margin:auto;
     }
     .head{
-    width: 100%; height: 14rem;background-color: rgb(6, 138, 245);font-size:22px; display:flex; align-items:end
+    width: 100%; height: 14rem;background-color: rgb(6, 138, 245);font-size:22px; display:flex; align-items:end;
+    font-size:22px;
     }
     }
     </style>
@@ -189,7 +190,7 @@ export const createAppSubscription = async (req, res) => {
        <div style="width:100%; margin:auto; border:1px solid lightgrey; text-align:center;">
        <div style="font-family: Arial, Helvetica, sans-serif;">
        <div style="" class="head">
-           <h2 style="color: white; padding-left: 10px; font-weight: bold;margin-bottom:2rem;width:100%;align-items:center; padding-top:8rem;">Payment Confirmation</h2>
+           <h2 style="color: white; padding-left: 10px; font-weight: bold;margin-bottom:2rem;width:100%;align-items:center; padding-top:6rem;">Payment Confirmation</h2>
        </div>
        <div style="padding: 2rem;">
            <h2 style="font-size: 1rem; margin-bottom: 2rem;">Hello <strong>${name}</strong></h2>
@@ -577,7 +578,8 @@ export const createHardwareSubscription = async (req, res) => {
     margin:auto;
     }
     .head{
-    width: 100%; height: 14rem;background-color: rgb(6, 138, 245);font-size:22px; display:flex; align-items:end
+    width: 100%; height: 14rem;background-color: rgb(6, 138, 245);font-size:22px; display:flex; align-items:end;
+    font-size:22px;
     }
     }
     </style>
@@ -587,7 +589,7 @@ export const createHardwareSubscription = async (req, res) => {
        <div style="width:100%; margin:auto; border:1px solid lightgrey; text-align:center;">
        <div style="font-family: Arial, Helvetica, sans-serif;">
        <div style="" class="head">
-           <h2 style="color: white; padding-left: 10px; font-weight: bold;margin-bottom:2rem;width:100%;align-items:center; padding-top:8rem;">Payment Confirmation</h2>
+           <h2 style="color: white; padding-left: 10px; font-weight: bold;margin-bottom:2rem;width:100%;align-items:center; padding-top:6rem;">Payment Confirmation</h2>
        </div>
        <div style="padding: 2rem;">
            <h2 style="font-size: 1rem; margin-bottom: 2rem;">Hello <strong>${name}</strong></h2>
