@@ -111,9 +111,9 @@ export const sendMessage = async (req, res) => {
     let newMessageData = new chatMessages(newMessage)
     try {
       var message = await newMessageData.save()
-
+      let messageDetail = await chatMessages.findById({_id:message._id}).populate("chat")
       const updateChat = await newChat.findByIdAndUpdate({_id:chatId}, { latestMessage: message.content })
-      res.json(message);
+      res.json(messageDetail);
     } catch (error) {
      res.status(400).json({error:"something went wrong!"})
     }

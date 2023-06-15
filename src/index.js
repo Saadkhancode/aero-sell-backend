@@ -72,57 +72,57 @@ app.use('/api/v1/reset-password',passwordreset)
 //All APi's Endponits
 app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo,blog,contactus,employeTimeStamp, reciept,coupens,chatRoute)
 
-  let NODESERVER  
 //Port
-if (process.env.NODE_ENV === 'production') {
-    app.use('*', (req, res) => {
-        return res.status(404).json({
-            success: false,
-            message: 'API endpoint doesnt exist please put Api prod routes ..'
-        })
-    });
-    const port = process.env.PORT || 3333;
-    app.listen(port, () => {
-        console.log(`Server is running on port: ${port}`);
-    });
-} else if (process.env.NODE_ENV === 'development') {
+// if (process.env.NODE_ENV === 'production') {
+//     app.use('*', (req, res) => {
+//         return res.status(404).json({
+//             success: false,
+//             message: 'API endpoint doesnt exist please put Api prod routes ..'
+//         })
+//     });
+//     var port = process.env.PORT || 3333;
+//     app.listen(port, () => {
+//         console.log(`Server is running on port: ${port}`);
+//     });
+// } else if (process.env.NODE_ENV === 'development') {
     app.use('*', (req, res) => {
         return res.status(404).json({
             success: false,
             message: 'API endpoint doesnt exist please put Api dev routes ..'
         })
     });
-    const port = process.env.DEV_PORT || 4444;
-    NODESERVER=  app.listen(port, () => {
+    let port =  3333;
+    let  resultListen = app.listen(port, () => {
         console.log(`Server is running on port: ${port}`);
     });
-}
+    // console.log("result :",resultListen)
+// }
 
+// console.log("node server :",port)
 // socket.io portion 
-const io = new Server(NODESERVER, {
+const io = new Server(resultListen, {
     pingTimeout: 60000,
     cors: {
-        origin:[process.env.LINK1, process.env.LINK2],
+        origin:["http://localhost:18020","http://localhost:4200"]
         // credentials: true,
     },
 });
 
 io.on("connection", (socket) => {
-    console.log("Connected to socket.io");
     socket.on("setup", (userData) => {
-        socket.join(userData._id)
-        socket.emit("me", userData._id)
+        socket.join(userData.userId)
+        socket.emit("me", userData.userId)
         socket.emit("connected")
     })
 
-    socket.on("new message", (newMessageRecieved) => {
+    socket.on("new_message", (newMessageRecieved) => {
         var chat = newMessageRecieved.chat;
         if (!chat) return console.log("chat.users not defined");
 
         if (chat.Admin == newMessageRecieved.senderId) {
-            socket.in(chat.subUser).emit("messagerecieved", newMessageRecieved);
+            socket.in(chat.user).emit("messagerecieved", newMessageRecieved);
         }
-        if (chat.subUser == newMessageRecieved.senderId) {
+        if (chat.user == newMessageRecieved.senderId) {
             socket.in(chat.Admin).emit("messagerecieved", newMessageRecieved);
         }
     });
