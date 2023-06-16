@@ -82,7 +82,7 @@ if (process.env.NODE_ENV === 'production') {
         })
     });
     const port = process.env.PORT || 3333;
-    app.listen(port, () => {
+    NODESERVER=app.listen(port, () => {
         console.log(`Server is running on port: ${port}`);
     });
 } else if (process.env.NODE_ENV === 'development') {
@@ -102,7 +102,7 @@ if (process.env.NODE_ENV === 'production') {
 const io = new Server(NODESERVER, {
     pingTimeout: 60000,
     cors: {
-        origin:[process.env.LINK1, process.env.LINK2],
+        origin:[process.env.LOCAL_LINK1, process.env.LOCAL_LINK2,process.env.PROD_LINK1,process.env.PROD_LINK2],
         // credentials: true,
     },
 });
