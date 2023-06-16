@@ -71,8 +71,7 @@ app.use('/api/v1/activate-account',userRegisterWithEmailVerification)
 app.use('/api/v1/reset-password',passwordreset)
 //All APi's Endponits
 app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo,blog,contactus,employeTimeStamp, reciept,coupens,chatRoute)
-
-  let NODESERVER  
+var NODESERVER;
 //Port
 if (process.env.NODE_ENV === 'production') {
     app.use('*', (req, res) => {
@@ -92,12 +91,14 @@ if (process.env.NODE_ENV === 'production') {
             message: 'API endpoint doesnt exist please put Api dev routes ..'
         })
     });
-    const port = process.env.DEV_PORT || 4444;
-    NODESERVER=  app.listen(port, () => {
+    const port = process.env.PORT || 3333;
+    NODESERVER=app.listen(port, () => {
         console.log(`Server is running on port: ${port}`);
     });
 }
+console.log('NODESERVER: ', NODESERVER);
 
+// console.log("node server :",port)
 // socket.io portion 
 const io = new Server(NODESERVER, {
     pingTimeout: 60000,
@@ -108,21 +109,20 @@ const io = new Server(NODESERVER, {
 });
 
 io.on("connection", (socket) => {
-    console.log("Connected to socket.io");
     socket.on("setup", (userData) => {
-        socket.join(userData._id)
-        socket.emit("me", userData._id)
+        socket.join(userData.userId)
+        socket.emit("me", userData.userId)
         socket.emit("connected")
     })
 
-    socket.on("new message", (newMessageRecieved) => {
+    socket.on("new_message", (newMessageRecieved) => {
         var chat = newMessageRecieved.chat;
         if (!chat) return console.log("chat.users not defined");
 
         if (chat.Admin == newMessageRecieved.senderId) {
-            socket.in(chat.subUser).emit("messagerecieved", newMessageRecieved);
+            socket.in(chat.user).emit("messagerecieved", newMessageRecieved);
         }
-        if (chat.subUser == newMessageRecieved.senderId) {
+        if (chat.user == newMessageRecieved.senderId) {
             socket.in(chat.Admin).emit("messagerecieved", newMessageRecieved);
         }
     });
