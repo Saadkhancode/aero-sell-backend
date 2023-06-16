@@ -71,7 +71,7 @@ app.use('/api/v1/activate-account',userRegisterWithEmailVerification)
 app.use('/api/v1/reset-password',passwordreset)
 //All APi's Endponits
 app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo,blog,contactus,employeTimeStamp, reciept,coupens,chatRoute)
-var NODESERVER;
+let NODESERVER=null;
 //Port
 if (process.env.NODE_ENV === 'production') {
     app.use('*', (req, res) => {
@@ -81,7 +81,7 @@ if (process.env.NODE_ENV === 'production') {
         })
     });
     const port = process.env.PORT || 3333;
-    NODESERVER=app.listen(port, () => {
+       NODESERVER=app.listen(port, () => {
         console.log(`Server is running on port: ${port}`);
     });
 } else if (process.env.NODE_ENV === 'development') {
@@ -91,13 +91,13 @@ if (process.env.NODE_ENV === 'production') {
             message: 'API endpoint doesnt exist please put Api dev routes ..'
         })
     });
-    const port = process.env.PORT || 3333;
+    const port = process.env.PORT || 4444;
     NODESERVER=app.listen(port, () => {
         console.log(`Server is running on port: ${port}`);
     });
 }
-console.log('NODESERVER: ', NODESERVER);
 
+console.log('NODESERVER: ', NODESERVER);
 // console.log("node server :",port)
 // socket.io portion 
 const io = new Server(NODESERVER, {
