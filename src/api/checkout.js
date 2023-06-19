@@ -344,7 +344,7 @@ export const createAppSubscription = async (req, res) => {
           <p style=" margin-bottom: 2rem;">We hope this message finds you well. We are thrilled to extend a warm welcome to you as the newest member of our PatronWorks family. Your subscription to our Point-of-Sale (POS) software has been successfully activated and we are excited to be a part of your business journey.</p>
           <p style=" margin-bottom: 2rem;">Thank you for choosing us. We understand that you have many options when it comes to selecting POS software, and we are deeply grateful that you've entrusted us with your needs. We are committed to providing you with a powerful, user-friendly tool that will help drive your business growth and streamline your operations.</p>
           <p style="margin-bottom: 2rem;">To get started, please click the link below. This will take you to our POS registration page where you can set up your account:</p>
-          <a style="color: blue; margin-bottom: 2rem;">https://patronworks.net/auth/register</a>
+          <a style="color: blue; margin-bottom: 2rem;">https://patronworks.net/auth/select-location</a>
           <p style=" margin-bottom: 2rem;"> Our platform is designed to be intuitive and easy-to-use, but if you encounter any challenges or have any questions, our dedicated customer support team is available to assist you. We are here to ensure that your experience with our POS system is smooth and rewarding.
           </p>
           <p style=" margin-bottom: 2rem;">We believe that your success is our success. As we embark on this journey together, we are committed to helping you make the most of our software. We'll be sending you tips and updates regularly to help you get the most out of our platform.</p>
