@@ -81,7 +81,7 @@ deploy-prod:
     MONGODB_URI: "mongodb+srv://saadk4474:CnxwMdQTG7ey9nMr@patronworks.2voqycm.mongodb.net/patronworks?retryWrites=true&w=majority"
     BASE_URL: "http://www.patronworks.net"
     CLOUD_NAME: djm945kfs
-    PROD_LINK1: "https://www.patronworks.com"
+    PROD_LINK1: "https://patronworks.com"
     PROD_LINK2: "https://www.patronworks.net"
   tags:
     - my-shell-runner
