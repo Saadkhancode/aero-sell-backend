@@ -6,7 +6,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import Auth from './api-routes/user-route.js';
 import category from './api-routes/category-route.js'
-import emailMarketing  from './api-routes/emailMarketing-route.js';
+import emailMarketing from './api-routes/emailMarketing-route.js';
 import smsMarketing from './api-routes/smsmarketing-route.js';
 import check from './api-routes/check-route.js'
 import device from './api-routes/device-route.js'
@@ -24,7 +24,7 @@ import tables from './api-routes/table-route.js'
 import parentcategory from './api-routes/parentcategory-route.js';
 import customer from './api-routes/customer-route.js'
 import passwordreset from './api/reset-password.js'
-import  Checkout  from './api-routes/checkout-route.js';
+import Checkout from './api-routes/checkout-route.js';
 import userRegisterWithEmailVerification from './api/emailVerification.js'
 import modifier from './api-routes/prdouct-modifier-route.js'
 import tableReservation from './api-routes/reservation&waitingList-route.js'
@@ -38,16 +38,12 @@ import reciept from './api-routes/reciept-route.js'
 import coupens from './api-routes/coupens-route.js'
 import chatRoute from './api-routes/chat_route.js'
 import './config/config.js';
-import path from 'path'
-import { fileURLToPath } from 'url';
+import fs from 'fs'
 import { Server } from "socket.io"
-// import fs from "fs"
-// const file=fs.readFileSync('./036C0DBFDB2A157703FBA75521E0278D.txt')
+import { exec } from 'child_process';
+import { spawn } from 'child_process';
 const app = express();
 dotenv.config();
-//path
-const __filename=fileURLToPath(import.meta.url)
-const __dirname=path.dirname(__filename)
 //middelwares
 app.use(cors({
     origin: true,
@@ -58,22 +54,56 @@ app.use(cors({
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
-// app.use("/public",express.static("public"));
-// app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json())
 
-app.use(helmet({crossOriginResourcePolicy:false,}));
+app.use(helmet({ crossOriginResourcePolicy: false, }));
 app.use(morgan("dev"));
 //Routes
 //uset Email Verification Endpoints
-app.use('/api/v1/activate-account',userRegisterWithEmailVerification)
+app.use('/api/v1/activate-account', userRegisterWithEmailVerification)
 //user forgot and reset-password Endpoints
-app.use('/api/v1/reset-password',passwordreset)
+app.use('/api/v1/reset-password', passwordreset)
 //All APi's Endponits
-app.use('/api/v1', Auth,category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables,parentcategory,customer,Checkout,modifier,tableReservation,emailMarketing,smsMarketing,Loyaltyoffers,customization,logo,blog,contactus,employeTimeStamp, reciept,coupens,chatRoute)
-let NODESERVER=null;
+app.use('/api/v1', Auth, category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables, parentcategory, customer, Checkout, modifier, tableReservation, emailMarketing, smsMarketing, Loyaltyoffers, customization, logo, blog, contactus, employeTimeStamp, reciept, coupens, chatRoute)
+let NODESERVER = null;
 //Port
 if (process.env.NODE_ENV === 'production') {
+    const streamUrl = 'rtsp://zephyr.rtsp.stream/pattern?streamKey=1bf02385ec5fded64098f9902885649d'; // Replace with your RTSP stream URL
+
+    // Execute the FFmpeg command to stream the video
+    const ffmpegCommand = `ffmpeg -i "${streamUrl}" -f mpegts -codec:v mpeg1video -s 640x480 -b:v 1000k -bf 0 -muxdelay 0.001 http://localhost:3333/stream`;
+    const ffmpegProcess = exec(ffmpegCommand);
+    
+    ffmpegProcess.stderr.on('data', (data) => {
+      console.error(`FFmpeg stderr: ${data}`);
+    });
+    
+    ffmpegProcess.on('close', (code) => {
+      console.log(`FFmpeg process exited with code ${code}`);
+    });
+    
+    // Timer to capture a snapshot every 10 minutes
+    setInterval(captureSnapshot, 10 * 60 * 1000);
+    
+    function captureSnapshot() {
+      const snapshotFileName = `snapshot_${Date.now()}.jpg`;
+      const snapshotCommand = `ffmpeg -i "${streamUrl}" -vframes 1 -q:v 2 ${snapshotFileName}`;
+    
+      exec(snapshotCommand, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Snapshot capture error: ${error}`);
+        } else {
+          console.log(`Snapshot captured: ${snapshotFileName}`);
+        }
+      });
+    }
+    
+    app.get('/stream', (req, res) => {
+      res.setHeader('Content-Type', 'video/mp4');
+    
+      // FFmpeg output stream piped to the response
+      ffmpegProcess.stdout.pipe(res);
+    });
     app.use('*', (req, res) => {
         return res.status(404).json({
             success: false,
@@ -81,10 +111,50 @@ if (process.env.NODE_ENV === 'production') {
         })
     });
     const port = process.env.PORT || 3333;
-       NODESERVER=app.listen(port, () => {
+    NODESERVER = app.listen(port, () => {
         console.log(`Server is running on port: ${port}`);
     });
 } else if (process.env.NODE_ENV === 'development') {
+    // Command to stream RTSP using FFmpeg
+    const streamUrl = 'rtsp://zephyr.rtsp.stream/pattern?streamKey=1bf02385ec5fded64098f9902885649d'; // Replace with your RTSP stream URL
+    const command = `ffmpeg -i ${streamUrl} -f mpegts -codec:v mpeg1video -s 640x480 -b:v 1000k -bf 0 -muxdelay 0.001 http://localhost:4444/stream`;
+
+    // Execute the FFmpeg command
+    const ffmpegProcess = exec(command);
+
+    ffmpegProcess.stderr.on('data', (data) => {
+        console.error(`FFmpeg stderr: ${data}`);
+    });
+
+    ffmpegProcess.on('close', (code) => {
+        console.log(`FFmpeg process exited with code ${code}`);
+    });
+    // Timer to capture snapshot every 10 minutes
+    setInterval(captureSnapshot, 10 * 60 * 1000);
+
+    function captureSnapshot() {
+        const snapshotFileName = `snapshot_${Date.now()}.jpg`;
+
+        // Command to capture snapshot using FFmpeg
+        const snapshotCommand = `ffmpeg -i ${streamUrl} -vframes 1 -q:v 2 ${snapshotFileName}`;
+
+        exec(snapshotCommand, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Snapshot capture error: ${error}`);
+            } else {
+                console.log(`Snapshot captured: ${snapshotFileName}`);
+            }
+        });
+    }
+    app.get('/stream', (req, res) => {
+        res.writeHead(200, {
+            'Content-Type': 'video/mp2t',
+            'Transfer-Encoding': 'chunked',
+          });
+        
+          // FFmpeg output stream piped to the response
+          ffmpegProcess.stdout.pipe(res);
+      });
     app.use('*', (req, res) => {
         return res.status(404).json({
             success: false,
@@ -92,18 +162,17 @@ if (process.env.NODE_ENV === 'production') {
         })
     });
     const port = process.env.PORT || 4444;
-    NODESERVER=app.listen(port, () => {
+    NODESERVER = app.listen(port, () => {
         console.log(`Server is running on port: ${port}`);
     });
 }
 
 console.log('NODESERVER: ', NODESERVER);
-// console.log("node server :",port)
-// socket.io portion 
+
 const io = new Server(NODESERVER, {
     pingTimeout: 60000,
     cors: {
-        origin:[process.env.LOCAL_LINK1, process.env.LOCAL_LINK2,process.env.PROD_LINK1,process.env.PROD_LINK2],
+        origin: [process.env.LOCAL_LINK1, process.env.LOCAL_LINK2, process.env.PROD_LINK1, process.env.PROD_LINK2],
         // credentials: true,
     },
 });
@@ -129,3 +198,4 @@ io.on("connection", (socket) => {
 
 
 })
+

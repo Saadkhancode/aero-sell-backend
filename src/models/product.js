@@ -24,7 +24,7 @@ const productSchema = new mongoose.Schema({
         type: Number
     },
     barCode: {
-        type: Number
+        type: String
     },
     name: {
         type: String
