@@ -278,7 +278,7 @@ export const createAppSubscription = async (req, res) => {
            </div>
            <div style="display:grid; justify-content: center; align-items:center;">
                <p style="font-style: italic; margin-bottom: 5px; text-align:center;">Copyright (C) 2023 PatronWorks. All rights reserved.</p>
-               <p style="margin-bottom: 5px; text-align:center; text-align: center;">In the past, you provided Insoft with your email address |EMAIL|. Occasionally, you will receive promotions and brief announcements.</p>
+               <p style="margin-bottom: 5px; text-align:center; text-align: center;">By providing us with your email address, ${email}, occasionally, you will receive promotions and updates from us.</p>
                <p style="margin-bottom: 5px; text-align:center;">Our mailing address is:</p>
                <p style="margin-bottom: 5px; text-align:center;"> 208 W Alexander St, Plant City, Fl 33563</p>
                <p style="margin-bottom: 5px; text-align:center; text-align:center">Need some assistance? Reach out to us<a href="support@patronworks.com" style="margin-left:5px;">support@patronworks.com</a> </p >
@@ -415,7 +415,7 @@ export const createAppSubscription = async (req, res) => {
            </div>
            <div style="display:grid; justify-content: center; align-items:center;">
                <p style="font-style: italic; margin-bottom: 5px; text-align:center;">Copyright (C) 2023 PatronWorks. All rights reserved.</p>
-               <p style="margin-bottom: 5px; text-align:center; text-align: center;">In the past, you provided Insoft with your email address |EMAIL|. Occasionally, you will receive promotions and brief announcements.</p>
+               <p style="margin-bottom: 5px; text-align:center; text-align: center;">By providing us with your email address, ${email}, occasionally, you will receive promotions and updates from us.</p>
                <p style="margin-bottom: 5px; text-align:center;">Our mailing address is:</p>
                <p style="margin-bottom: 5px; text-align:center;"> 208 W Alexander St, Plant City, Fl 33563</p>
                <p style="margin-bottom: 5px; text-align:center; text-align:center">Need some assistance? Reach out to us<a href="support@patronworks.com" style="margin-left:5px;">support@patronworks.com</a> </p >
@@ -677,7 +677,7 @@ export const createHardwareSubscription = async (req, res) => {
            </div>
            <div style="display:grid; justify-content: center; align-items:center;">
                <p style="font-style: italic; margin-bottom: 5px; text-align:center;">Copyright (C) 2023 PatronWorks. All rights reserved.</p>
-               <p style="margin-bottom: 5px; text-align:center; text-align: center;">In the past, you provided Insoft with your email address |EMAIL|. Occasionally, you will receive promotions and brief announcements.</p>
+               <p style="margin-bottom: 5px; text-align:center; text-align: center;">By providing us with your email address, ${email}, occasionally, you will receive promotions and updates from us.</p>
                <p style="margin-bottom: 5px; text-align:center;">Our mailing address is:</p>
                <p style="margin-bottom: 5px; text-align:center;"> 208 W Alexander St, Plant City, Fl 33563</p>
                <p style="margin-bottom: 5px; text-align:center; text-align:center">Need some assistance? Reach out to us<a href="support@patronworks.com" style="margin-left:5px;">support@patronworks.com</a> </p >
