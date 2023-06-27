@@ -281,7 +281,7 @@ export const createAppSubscription = async (req, res) => {
                <p style="margin-bottom: 5px; text-align:center; text-align: center;">By providing us with your email address, ${email}, occasionally, you will receive promotions and updates from us.</p>
                <p style="margin-bottom: 5px; text-align:center;">Our mailing address is:</p>
                <p style="margin-bottom: 5px; text-align:center;"> 208 W Alexander St, Plant City, Fl 33563</p>
-               <p style="margin-bottom: 5px; text-align:center; text-align:center">Need some assistance? Reach out to us<a href="support@patronworks.com" style="margin-left:5px;">support@patronworks.com</a> </p >
+               <p style="margin-bottom: 5px; text-align:center; text-align:center">Need some assistance? Reach out to us<a href="info@patronworks.com" style="margin-left:5px;">info@patronworks.com</a> </p >
            </div>
        </div>
     </div>
@@ -418,7 +418,7 @@ export const createAppSubscription = async (req, res) => {
                <p style="margin-bottom: 5px; text-align:center; text-align: center;">By providing us with your email address, ${email}, occasionally, you will receive promotions and updates from us.</p>
                <p style="margin-bottom: 5px; text-align:center;">Our mailing address is:</p>
                <p style="margin-bottom: 5px; text-align:center;"> 208 W Alexander St, Plant City, Fl 33563</p>
-               <p style="margin-bottom: 5px; text-align:center; text-align:center">Need some assistance? Reach out to us<a href="support@patronworks.com" style="margin-left:5px;">support@patronworks.com</a> </p >
+               <p style="margin-bottom: 5px; text-align:center; text-align:center">Need some assistance? Reach out to us<a href="info@patronworks.com" style="margin-left:5px;">info@patronworks.com</a> </p >
            </div>
       </div>
    </div>
@@ -680,7 +680,7 @@ export const createHardwareSubscription = async (req, res) => {
                <p style="margin-bottom: 5px; text-align:center; text-align: center;">By providing us with your email address, ${email}, occasionally, you will receive promotions and updates from us.</p>
                <p style="margin-bottom: 5px; text-align:center;">Our mailing address is:</p>
                <p style="margin-bottom: 5px; text-align:center;"> 208 W Alexander St, Plant City, Fl 33563</p>
-               <p style="margin-bottom: 5px; text-align:center; text-align:center">Need some assistance? Reach out to us<a href="support@patronworks.com" style="margin-left:5px;">support@patronworks.com</a> </p >
+               <p style="margin-bottom: 5px; text-align:center; text-align:center">Need some assistance? Reach out to us<a href="info@patronworks.com" style="margin-left:5px;">info@patronworks.com</a> </p >
            </div>
        </div>
     </div>

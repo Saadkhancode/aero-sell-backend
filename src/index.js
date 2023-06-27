@@ -38,10 +38,8 @@ import reciept from './api-routes/reciept-route.js'
 import coupens from './api-routes/coupens-route.js'
 import chatRoute from './api-routes/chat_route.js'
 import './config/config.js';
-import fs from 'fs'
 import { Server } from "socket.io"
 import { exec } from 'child_process';
-import { spawn } from 'child_process';
 const app = express();
 dotenv.config();
 //middelwares
@@ -83,20 +81,20 @@ if (process.env.NODE_ENV === 'production') {
     });
     
     // Timer to capture a snapshot every 10 minutes
-    setInterval(captureSnapshot, 10 * 60 * 1000);
+    // setInterval(captureSnapshot, 10 * 60 * 1000);
     
-    function captureSnapshot() {
-      const snapshotFileName = `snapshot_${Date.now()}.jpg`;
-      const snapshotCommand = `ffmpeg -i "${streamUrl}" -vframes 1 -q:v 2 ${snapshotFileName}`;
+    // function captureSnapshot() {
+    //   const snapshotFileName = `snapshot_${Date.now()}.jpg`;
+    //   const snapshotCommand = `ffmpeg -i "${streamUrl}" -vframes 1 -q:v 2 ${snapshotFileName}`;
     
-      exec(snapshotCommand, (error, stdout, stderr) => {
-        if (error) {
-          console.error(`Snapshot capture error: ${error}`);
-        } else {
-          console.log(`Snapshot captured: ${snapshotFileName}`);
-        }
-      });
-    }
+    //   exec(snapshotCommand, (error, stdout, stderr) => {
+    //     if (error) {
+    //       console.error(`Snapshot capture error: ${error}`);
+    //     } else {
+    //       console.log(`Snapshot captured: ${snapshotFileName}`);
+    //     }
+    //   });
+    // }
     
     app.get('/stream', (req, res) => {
       res.setHeader('Content-Type', 'video/mp4');
