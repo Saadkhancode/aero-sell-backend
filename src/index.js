@@ -159,7 +159,7 @@ if (process.env.NODE_ENV === 'production') {
             message: 'API endpoint doesnt exist please put Api dev routes ..'
         })
     });
-    const port = process.env.PORT || 4444;
+    const port = process.env.DEV_PORT || 4444;
     NODESERVER = app.listen(port, () => {
         console.log(`Server is running on port: ${port}`);
     });
