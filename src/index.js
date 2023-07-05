@@ -128,22 +128,22 @@ if (process.env.NODE_ENV === 'production') {
         console.log(`FFmpeg process exited with code ${code}`);
     });
     // Timer to capture snapshot every 10 minutes
-    setInterval(captureSnapshot, 10 * 60 * 1000);
+    // setInterval(captureSnapshot, 10 * 60 * 1000);
 
-    function captureSnapshot() {
-        const snapshotFileName = `snapshot_${Date.now()}.jpg`;
+    // function captureSnapshot() {
+    //     const snapshotFileName = `snapshot_${Date.now()}.jpg`;
 
-        // Command to capture snapshot using FFmpeg
-        const snapshotCommand = `ffmpeg -i ${streamUrl} -vframes 1 -q:v 2 ${snapshotFileName}`;
+    //     // Command to capture snapshot using FFmpeg
+    //     const snapshotCommand = `ffmpeg -i ${streamUrl} -vframes 1 -q:v 2 ${snapshotFileName}`;
 
-        exec(snapshotCommand, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Snapshot capture error: ${error}`);
-            } else {
-                console.log(`Snapshot captured: ${snapshotFileName}`);
-            }
-        });
-    }
+    //     exec(snapshotCommand, (error, stdout, stderr) => {
+    //         if (error) {
+    //             console.error(`Snapshot capture error: ${error}`);
+    //         } else {
+    //             console.log(`Snapshot captured: ${snapshotFileName}`);
+    //         }
+    //     });
+    // }
     app.get('/stream', (req, res) => {
         res.writeHead(200, {
             'Content-Type': 'video/mp2t',

@@ -16,7 +16,7 @@ import {
 
 
 routes.get('/sellerbalance/:account_id',getSellerBalance)
-routes.post('/authorize-sellerr/:userId', authorizeSeller )
+routes.post('/authorize-seller/:userId', authorizeSeller )
 routes.post('/credit', Checkout )
 routes.post('/app-plan',createAppSubscription  )
 routes.post('/hardware-plan',createHardwareSubscription  )
