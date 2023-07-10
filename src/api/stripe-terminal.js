@@ -72,22 +72,31 @@ export const terminalConnection= async (req, res) => {
   }
 }
   export const orderPaymentIntent=async (req, res) => {
-    const {amount,currency,stripeAccount}=req.body
+    let paymentIntent
+    const {amount,currency,stripeAccount,application_fee_amount}=req.body
     try {
-      const intent = await stripe.paymentIntents.create(
+      paymentIntent = await stripe.paymentIntents.create(
         {
           amount,
           currency,
           automatic_payment_methods: {
             enabled: true,
           },
-          application_fee_amount: 123,
+          application_fee_amount,
         },
         {
           stripeAccount,
         }
       );
-      res.json(intent);
+      res.json(paymentIntent);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+      return;
+    }
+    try {
+      let capturePaymentIntent=await stripe.paymentIntents.capture({payment_intent_id:paymentIntent.id});
+      res.json(capturePaymentIntent);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'An error occurred' });
