@@ -13,6 +13,10 @@ const orderItemSchema = new mongoose.Schema({
     dueamount:{
         type:Number,
     },
+    Status:{
+        type:String,
+        default:'pending'
+    },
     orderId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "order",
