@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+
 const productModifierSchema = new mongoose.Schema({
     Size: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -51,7 +52,7 @@ const category1Schema = new mongoose.Schema({
 
             name: String,
 
-            quantity: Number,
+            totalQuantity: Number,
 
             price: Number
         }
@@ -73,7 +74,4 @@ const category1Schema = new mongoose.Schema({
 });
 const Category1 = mongoose.model('Category1', category1Schema);
 const productModifierModel = mongoose.model("productModifier", productModifierSchema)
-export {
-    productModifierModel,
-    Category1
-}
+export { Category1, productModifierModel };
