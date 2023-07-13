@@ -64,7 +64,7 @@ export const createAppSubscription = async (req, res) => {
   let customer = null;
 
   // Check if customer already exists
-  const existingCustomers = await stripe.customers.list({ email: email }).catch(err => {
+  const existingCustomers = await stripe.customers.list({ email: email,limit:100}).catch(err => {
     console.error(err);
     res.status(500).json({ error: 'Failed to list existing customers' });
   });
@@ -125,7 +125,7 @@ export const createAppSubscription = async (req, res) => {
 
   // Check if app plan already exists
   let appPlan = null;
-  const existingPlans = await stripe.plans.list({ product: productsData?.id, active: true }).catch(err => {
+  const existingPlans = await stripe.plans.list({ product: productsData?.id, active: true,limit:100 }).catch(err => {
     console.error(err);
     res.status(500).json({ error: 'Failed to list existing plans' });
   });
@@ -443,7 +443,7 @@ export const createHardwareSubscription = async (req, res) => {
 
     try {
       // Check if customer already exists
-      const existingCustomers = await stripe.customers.list({ email: email });
+      const existingCustomers = await stripe.customers.list({ email: email,limit:100 });
       if (existingCustomers.data.length > 0) {
         customer = existingCustomers.data[0];
       } else {
@@ -506,7 +506,7 @@ export const createHardwareSubscription = async (req, res) => {
     let oneTimePlan = null;
     let yearlyPlan = null;
 
-    const existingPlans = await stripe.plans.list({ product: products?.id });
+    const existingPlans = await stripe.plans.list({ product: products?.id ,active:true,limit:100});
 
     console.log('existingPlans: ', existingPlans);
 

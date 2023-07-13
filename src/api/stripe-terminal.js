@@ -6,8 +6,8 @@ if (process.env.NODE_ENV === 'production') {
 } else if (process.env.NODE_ENV === 'development') {
   var stripe = Stripe('sk_test_51MiZTVF1YkHoz4Y5AsHfg9ovHa5zsRFHCfVrHSy5XKvxKtdKSMHpzQ5V0wEfcGHVfoEQ50NjXhCP0aF2aC1Mc05300eCAJlRxu');
 }
-export const terminalConnection= async (req, res) => {
-  const  {display_name,address,stripeAccount,registration_code,label}=req.body
+export const terminalConnection = async (req, res) => {
+  const { display_name, address, stripeAccount, registration_code, label } = req.body
   try {
     let location, reader, connectionToken;
     // Create a location for the connected account
@@ -71,34 +71,32 @@ export const terminalConnection= async (req, res) => {
     res.status(500).json({ error: 'An unexpected error occurred' });
   }
 }
-  export const orderPaymentIntent=async (req, res) => {
-    let paymentIntent
-    const {amount,currency,stripeAccount,application_fee_amount}=req.body
-    try {
-      paymentIntent = await stripe.paymentIntents.create(
-        {
-          amount,
-          currency,
-          automatic_payment_methods: {
-            enabled: true,
-          },
-          application_fee_amount,
-        },
-        {
-          stripeAccount,
-        }
-      );
-      res.json(paymentIntent);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'An error occurred' });
-      return;
-    }
-    try {
-      let capturePaymentIntent=await stripe.paymentIntents.capture({payment_intent_id:paymentIntent.id});
-      res.json(capturePaymentIntent);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'An error occurred' });
-    }
-  };
+export const orderPaymentIntent = async (req, res) => {
+  let paymentIntent
+  const { amount, currency, transfer_data, application_fee_amount } = req.body
+  try {
+    paymentIntent = await stripe.paymentIntents.create(
+      {
+        amount,
+        currency,
+        payment_method_types: [
+          'card_present',
+        ],
+        capture_method: 'manual',
+        application_fee_amount,
+        transfer_data
+      }
+    );
+    res.json(paymentIntent);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+    return;
+  }
+  // try {
+  //   let capturePaymentIntent = await stripe.paymentIntents.capture(paymentIntent.id);
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).json({ error: 'An error occurred' });
+  // }
+};
