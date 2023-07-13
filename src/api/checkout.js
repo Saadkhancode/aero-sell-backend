@@ -152,7 +152,7 @@ export const createAppSubscription = async (req, res) => {
     console.log('appPlanin else : ', appPlan);
   }
 
-  // Create subscription for the customer with app plan
+
   await stripe.subscriptions.create({
     customer: customer.id,
     items: [{ plan: appPlan.id }]
