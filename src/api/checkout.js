@@ -296,11 +296,11 @@ export const createAppSubscription = async (req, res) => {
    <style>
    .client{
     color: white;
-    font-weight: bold;
+    font-weight: 700;
     display: flex;
     font-size: 25px;
     width: 100%;
-    justify-content: flex-start;
+    justify-content:center;
     padding-top: 10rem;
     padding-left:20px;
    }
@@ -318,7 +318,7 @@ export const createAppSubscription = async (req, res) => {
    }
    .client{
     color: white;
-    font-weight: bold;
+    font-weight: 700;
     display: grid;
     font-size: 25px;
     width: 100%;
