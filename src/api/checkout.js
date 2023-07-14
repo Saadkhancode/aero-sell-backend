@@ -201,8 +201,8 @@ export const createAppSubscription = async (req, res) => {
                <h2 style="font-size: 1rem; margin-bottom: 1rem;">Details of your transaction are as follows:</h2>
     
                <li style="margin-bottom: 1rem; display:flex; justify-content:center">Product : <strong>PatronWorks POS Software(${product.name})</strong></li>
-               <li style="margin-bottom: 1rem; display:flex; justify-content:center">Total Amount : <strong>${amount}/month</strong></li>
-               <li style="margin-bottom: 3rem; display:flex; justify-content:center">Date of Purchase : <strong>${latestInvoice.status_transitions.paid_at}</strong></li>
+               <li style="margin-bottom: 1rem; display:flex; justify-content:center">Total Amount : <strong>${amount/100}/month</strong></li>
+               <li style="margin-bottom: 3rem; display:flex; justify-content:center">Date of Purchase : <strong>${new Date(latestInvoice.status_transitions.paid_at * 1000).toLocaleDateString()}</strong></li>
            </ul>
            <p style="margin-bottom: 3rem;">You can view the full details of your receipt on Stripe by clicking the link
                below:</p>
@@ -598,8 +598,8 @@ export const createHardwareSubscription = async (req, res) => {
                <h2 style="font-size: 1rem; margin-bottom: 1rem;">Details of your transaction are as follows:</h2>
     
                <li style="margin-bottom: 1rem; display:flex; justify-content:center">Product : <strong>PatronWorks POS Hardware(${product.name})</strong></li>
-               <li style="margin-bottom: 1rem; display:flex; justify-content:center">Total Amount : <strong>${amount}/month</strong></li>
-               <li style="margin-bottom: 3rem; display:flex; justify-content:center">Date of Purchase : <strong>${latestInvoice.status_transitions.paid_at}</strong></li>
+               <li style="margin-bottom: 1rem; display:flex; justify-content:center">Total Amount : <strong>${amount/100}/month</strong></li>
+               <li style="margin-bottom: 3rem; display:flex; justify-content:center">Date of Purchase : <strong>${new Date(latestInvoice.status_transitions.paid_at * 1000).toLocaleDateString()}</strong></li>
            </ul>
            <p style="margin-bottom: 3rem;">You can view the full details of your receipt on Stripe by clicking the link
                below:</p>
