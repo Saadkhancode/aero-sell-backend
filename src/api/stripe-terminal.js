@@ -72,8 +72,8 @@ export const terminalConnection = async (req, res) => {
   }
 }
 export const orderPaymentIntent = async (req, res) => {
-  let paymentIntent,capturePaymentIntent ;
-  const { amount, currency, transfer_data, application_fee_amount ,on_behalf_of} = req.body
+  let paymentIntent ;
+  const { amount, currency, transfer_data, application_fee_amount } = req.body
   try {
     paymentIntent = await stripe.paymentIntents.create(
       {
@@ -84,7 +84,6 @@ export const orderPaymentIntent = async (req, res) => {
         ],
         capture_method: 'manual',
         application_fee_amount,
-        on_behalf_of,
         transfer_data
       }
     );
@@ -93,11 +92,15 @@ export const orderPaymentIntent = async (req, res) => {
     res.status(500).json({ error: 'An error occurred' });
     return;
   }
+};
+export const capturePaymentIntent=async(req,res)=>{
+  let capturePaymentIntent
   try {
     capturePaymentIntent = await stripe.paymentIntents.capture(paymentIntent.id);
-    res.json(paymentIntent,capturePaymentIntent);
+    res.json(capturePaymentIntent);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred' });
   }
-};
+
+}

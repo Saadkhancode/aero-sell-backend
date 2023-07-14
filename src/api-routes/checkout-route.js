@@ -11,7 +11,8 @@ import { createSellerAccount,
 } from "../api/stripeConnet.js"
 import {
     orderPaymentIntent,
-    terminalConnection
+    terminalConnection,
+    capturePaymentIntent
 } from '../api/stripe-terminal.js'
 
 
@@ -23,5 +24,6 @@ routes.post('/hardware-plan',createHardwareSubscription  )
 routes.post('/create-account', createSellerAccount )
 routes.post('/connect-terminal', terminalConnection )
 routes.post('/order-payment', orderPaymentIntent )
+routes.post('/capture_payment', capturePaymentIntent )
 
 export default routes
