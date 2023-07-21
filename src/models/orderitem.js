@@ -111,11 +111,11 @@ const orderItemSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: timeStamp
+        default:Date.now
     },
     updatedAt: {
         type:Date,
-        default:timeStamp
+        default:Date.now
     }
 })
 const orderitem = mongoose.model('orderitem', orderItemSchema);
