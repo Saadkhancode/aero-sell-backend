@@ -27,11 +27,11 @@ const orderSchema = new mongoose.Schema({
     },
     orderDate: {
         type: Date,
-        default:timeStamp
+        default:Date.now
     },
     startDate: {
         type: Date,
-        default:timeStamp
+        default:Date.now
     },
     currentOrderId: {
         type: String,

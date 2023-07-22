@@ -17,9 +17,9 @@ export const terminalConnection = async (req, res) => {
           display_name,
           address,
         },
-        {
-          stripeAccount,
-        }
+        // {
+        //   stripeAccount,
+        // }
       );
     } catch (error) {
       console.error('Error creating location:', error);
@@ -35,9 +35,9 @@ export const terminalConnection = async (req, res) => {
           label,
           location: location.id,
         },
-        {
-          stripeAccount,
-        }
+        // {
+        //   stripeAccount,
+        // }
       );
     } catch (error) {
       console.error('Error creating reader:', error);
@@ -51,9 +51,9 @@ export const terminalConnection = async (req, res) => {
         {
           location: location.id,
         },
-        {
-          stripeAccount,
-        }
+        // {
+        //   stripeAccount,
+        // }
       );
     } catch (error) {
       console.error('Error creating connection token:', error);
@@ -72,8 +72,8 @@ export const terminalConnection = async (req, res) => {
   }
 }
 export const orderPaymentIntent = async (req, res) => {
-  let paymentIntent ;
-  const { amount, currency, transfer_data, application_fee_amount } = req.body
+  let paymentIntent;
+  const { amount, currency, stripeAccount,application_fee_amount } = req.body
   try {
     paymentIntent = await stripe.paymentIntents.create(
       {
@@ -84,19 +84,21 @@ export const orderPaymentIntent = async (req, res) => {
         ],
         capture_method: 'manual',
         application_fee_amount,
-        transfer_data
+        transfer_data: {
+          destination:stripeAccount,
+          },
       }
     );
+    res.json(paymentIntent)
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred' });
-    return;
   }
 };
-export const capturePaymentIntent=async(req,res)=>{
-  let capturePaymentIntent
+export const capturePaymentIntent = async (req, res) => {
+
   try {
-    capturePaymentIntent = await stripe.paymentIntents.capture(paymentIntent.id);
+    const capturePaymentIntent = await stripe.paymentIntents.capture(req.body.payment_intent_id);
     res.json(capturePaymentIntent);
   } catch (error) {
     console.error(error);
@@ -104,3 +106,12 @@ export const capturePaymentIntent=async(req,res)=>{
   }
 
 }
+export const confirmPaymentIntent = async (req, res) => {
+  try {
+    const paymentIntent = await stripe.paymentIntents.confirm(req.body.payment_intent_id);
+    res.json(paymentIntent);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while confirming PaymentIntent' });
+  }
+};
