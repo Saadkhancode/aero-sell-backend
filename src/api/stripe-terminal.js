@@ -6,8 +6,8 @@ if (process.env.NODE_ENV === 'production') {
 } else if (process.env.NODE_ENV === 'development') {
   var stripe = Stripe('sk_test_51MiZTVF1YkHoz4Y5AsHfg9ovHa5zsRFHCfVrHSy5XKvxKtdKSMHpzQ5V0wEfcGHVfoEQ50NjXhCP0aF2aC1Mc05300eCAJlRxu');
 }
-export const terminalConnection= async (req, res) => {
-  const  {display_name,address,stripeAccount,registration_code,label}=req.body
+export const terminalConnection = async (req, res) => {
+  const { display_name, address, stripeAccount, registration_code, label } = req.body
   try {
     let location, reader, connectionToken;
     // Create a location for the connected account
@@ -17,9 +17,9 @@ export const terminalConnection= async (req, res) => {
           display_name,
           address,
         },
-        {
-          stripeAccount,
-        }
+        // {
+        //   stripeAccount,
+        // }
       );
     } catch (error) {
       console.error('Error creating location:', error);
@@ -35,9 +35,9 @@ export const terminalConnection= async (req, res) => {
           label,
           location: location.id,
         },
-        {
-          stripeAccount,
-        }
+        // {
+        //   stripeAccount,
+        // }
       );
     } catch (error) {
       console.error('Error creating reader:', error);
@@ -51,9 +51,9 @@ export const terminalConnection= async (req, res) => {
         {
           location: location.id,
         },
-        {
-          stripeAccount,
-        }
+        // {
+        //   stripeAccount,
+        // }
       );
     } catch (error) {
       console.error('Error creating connection token:', error);
@@ -71,34 +71,47 @@ export const terminalConnection= async (req, res) => {
     res.status(500).json({ error: 'An unexpected error occurred' });
   }
 }
-  export const orderPaymentIntent=async (req, res) => {
-    let paymentIntent
-    const {amount,currency,stripeAccount,application_fee_amount}=req.body
-    try {
-      paymentIntent = await stripe.paymentIntents.create(
-        {
-          amount,
-          currency,
-          automatic_payment_methods: {
-            enabled: true,
+export const orderPaymentIntent = async (req, res) => {
+  let paymentIntent;
+  const { amount, currency, stripeAccount,application_fee_amount } = req.body
+  try {
+    paymentIntent = await stripe.paymentIntents.create(
+      {
+        amount,
+        currency,
+        payment_method_types: [
+          'card_present',
+        ],
+        capture_method: 'manual',
+        application_fee_amount,
+        transfer_data: {
+          destination:stripeAccount,
           },
-          application_fee_amount,
-        },
-        {
-          stripeAccount,
-        }
-      );
-      res.json(paymentIntent);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'An error occurred' });
-      return;
-    }
-    try {
-      let capturePaymentIntent=await stripe.paymentIntents.capture({payment_intent_id:paymentIntent.id});
-      res.json(capturePaymentIntent);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'An error occurred' });
-    }
-  };
+      }
+    );
+    res.json(paymentIntent)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+};
+export const capturePaymentIntent = async (req, res) => {
+
+  try {
+    const capturePaymentIntent = await stripe.paymentIntents.capture(req.body.payment_intent_id);
+    res.json(capturePaymentIntent);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+
+}
+export const confirmPaymentIntent = async (req, res) => {
+  try {
+    const paymentIntent = await stripe.paymentIntents.confirm(req.body.payment_intent_id);
+    res.json(paymentIntent);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while confirming PaymentIntent' });
+  }
+};

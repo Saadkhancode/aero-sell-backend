@@ -64,7 +64,7 @@ export const createAppSubscription = async (req, res) => {
   let customer = null;
 
   // Check if customer already exists
-  const existingCustomers = await stripe.customers.list({ email: email }).catch(err => {
+  const existingCustomers = await stripe.customers.list({ email: email,limit:100}).catch(err => {
     console.error(err);
     res.status(500).json({ error: 'Failed to list existing customers' });
   });
@@ -125,7 +125,7 @@ export const createAppSubscription = async (req, res) => {
 
   // Check if app plan already exists
   let appPlan = null;
-  const existingPlans = await stripe.plans.list({ product: productsData?.id, active: true }).catch(err => {
+  const existingPlans = await stripe.plans.list({ product: productsData?.id, active: true,limit:100 }).catch(err => {
     console.error(err);
     res.status(500).json({ error: 'Failed to list existing plans' });
   });
@@ -152,7 +152,7 @@ export const createAppSubscription = async (req, res) => {
     console.log('appPlanin else : ', appPlan);
   }
 
-  // Create subscription for the customer with app plan
+
   await stripe.subscriptions.create({
     customer: customer.id,
     items: [{ plan: appPlan.id }]
@@ -201,8 +201,8 @@ export const createAppSubscription = async (req, res) => {
                <h2 style="font-size: 1rem; margin-bottom: 1rem;">Details of your transaction are as follows:</h2>
     
                <li style="margin-bottom: 1rem; display:flex; justify-content:center">Product : <strong>PatronWorks POS Software(${product.name})</strong></li>
-               <li style="margin-bottom: 1rem; display:flex; justify-content:center">Total Amount : <strong>${amount}/month</strong></li>
-               <li style="margin-bottom: 3rem; display:flex; justify-content:center">Date of Purchase : <strong>${latestInvoice.status_transitions.paid_at}</strong></li>
+               <li style="margin-bottom: 1rem; display:flex; justify-content:center">Total Amount : <strong>${amount/100}/month</strong></li>
+               <li style="margin-bottom: 3rem; display:flex; justify-content:center">Date of Purchase : <strong>${new Date(latestInvoice.status_transitions.paid_at * 1000).toLocaleDateString()}</strong></li>
            </ul>
            <p style="margin-bottom: 3rem;">You can view the full details of your receipt on Stripe by clicking the link
                below:</p>
@@ -290,19 +290,19 @@ export const createAppSubscription = async (req, res) => {
     </body>
     </html>
 `)
-    await sendMail(email, "Account Setup", `<html>
+    await sendMail(email, "Welcome to PatronWorks - Your POS Journey Begins Now", `<html>
 
    <head>
    <style>
    .client{
     color: white;
-    font-weight: bold;
-    display: grid;
+    font-weight: 700;
+    display: flex;
     font-size: 25px;
     width: 100%;
-    justify-content: center;
+    justify-content:center;
     padding-top: 10rem;
-    padding-left:25%
+    padding-left:20px;
    }
    @media screen and (max-width:3000px) and (min-width:769px){
    .container{
@@ -318,13 +318,12 @@ export const createAppSubscription = async (req, res) => {
    }
    .client{
     color: white;
-    font-weight: bold;
+    font-weight: 700;
     display: grid;
     font-size: 25px;
     width: 100%;
-    justify-content: center;
     padding-top: 10rem;
-    padding-left:0%
+    padding-left:10px;
    }
    
    }
@@ -339,12 +338,11 @@ export const createAppSubscription = async (req, res) => {
       
       </div>
       <div style="padding: 2rem; border:1px solid lightgray">
-          <h2 style="font-size: 1rem; margin-bottom: 2rem;">Email Subject: <strong>Welcome to PatronWorks - Your POS Journey Begins Now</strong></h2>
           <h2 style="font-size: 1rem; margin-bottom: 2rem;">Hello <strong>${name}</strong></h2>
           <p style=" margin-bottom: 2rem;">We hope this message finds you well. We are thrilled to extend a warm welcome to you as the newest member of our PatronWorks family. Your subscription to our Point-of-Sale (POS) software has been successfully activated and we are excited to be a part of your business journey.</p>
           <p style=" margin-bottom: 2rem;">Thank you for choosing us. We understand that you have many options when it comes to selecting POS software, and we are deeply grateful that you've entrusted us with your needs. We are committed to providing you with a powerful, user-friendly tool that will help drive your business growth and streamline your operations.</p>
           <p style="margin-bottom: 2rem;">To get started, please click the link below. This will take you to our POS registration page where you can set up your account:</p>
-          <a style="color: blue; margin-bottom: 2rem;">https://patronworks.net/auth/select-location</a>
+          <a style="color: blue; margin-bottom: 2rem;" href= "https://patronworks.net/auth/onboarding">https://patronworks.net/auth/onboarding</a>
           <p style=" margin-bottom: 2rem;"> Our platform is designed to be intuitive and easy-to-use, but if you encounter any challenges or have any questions, our dedicated customer support team is available to assist you. We are here to ensure that your experience with our POS system is smooth and rewarding.
           </p>
           <p style=" margin-bottom: 2rem;">We believe that your success is our success. As we embark on this journey together, we are committed to helping you make the most of our software. We'll be sending you tips and updates regularly to help you get the most out of our platform.</p>
@@ -443,7 +441,7 @@ export const createHardwareSubscription = async (req, res) => {
 
     try {
       // Check if customer already exists
-      const existingCustomers = await stripe.customers.list({ email: email });
+      const existingCustomers = await stripe.customers.list({ email: email,limit:100 });
       if (existingCustomers.data.length > 0) {
         customer = existingCustomers.data[0];
       } else {
@@ -506,7 +504,7 @@ export const createHardwareSubscription = async (req, res) => {
     let oneTimePlan = null;
     let yearlyPlan = null;
 
-    const existingPlans = await stripe.plans.list({ product: products?.id });
+    const existingPlans = await stripe.plans.list({ product: products?.id ,active:true,limit:100});
 
     console.log('existingPlans: ', existingPlans);
 
@@ -600,8 +598,8 @@ export const createHardwareSubscription = async (req, res) => {
                <h2 style="font-size: 1rem; margin-bottom: 1rem;">Details of your transaction are as follows:</h2>
     
                <li style="margin-bottom: 1rem; display:flex; justify-content:center">Product : <strong>PatronWorks POS Hardware(${product.name})</strong></li>
-               <li style="margin-bottom: 1rem; display:flex; justify-content:center">Total Amount : <strong>${amount}/month</strong></li>
-               <li style="margin-bottom: 3rem; display:flex; justify-content:center">Date of Purchase : <strong>${latestInvoice.status_transitions.paid_at}</strong></li>
+               <li style="margin-bottom: 1rem; display:flex; justify-content:center">Total Amount : <strong>${amount/100}/month</strong></li>
+               <li style="margin-bottom: 3rem; display:flex; justify-content:center">Date of Purchase : <strong>${new Date(latestInvoice.status_transitions.paid_at * 1000).toLocaleDateString()}</strong></li>
            </ul>
            <p style="margin-bottom: 3rem;">You can view the full details of your receipt on Stripe by clicking the link
                below:</p>
