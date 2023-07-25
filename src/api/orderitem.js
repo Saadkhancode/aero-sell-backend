@@ -41,8 +41,8 @@ export const getOrderItems = async (req, res) => {
 }
 
 export const postOrderItem = async (req, res) => {
-    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType } = req.body;
-    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType });
+    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split } = req.body;
+    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split });
     let prod = []
     prod = product
     await data.save().then(async (result) => {
@@ -68,6 +68,7 @@ export const postOrderItem = async (req, res) => {
                 orderId: result.orderId,
                 product: result.product,
                 table: result.table,
+                split:result.split,
                 selectedModifiers: result.selectedModifiers,
                 loyalityOffer:result.loyalityOffer,
                 couponOffer : result.couponOffer,
@@ -98,6 +99,7 @@ export const postOrderItem = async (req, res) => {
                 loyalityOffer:result.loyalityOffer,
                 couponOffer : result.couponOffer,
                 points: result.points,
+                split:result.split,
                 taxValue: result.taxValue,
                 productWithQty: result.productWithQty,
                 priceExclTax: result.priceExclTax,
