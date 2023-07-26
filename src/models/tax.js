@@ -10,7 +10,14 @@ const taxSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         required:true,
         ref:'user'
+    },
+    byDefault:{
+            type:Boolean
+    },
+    active:{
+        type:String
     }
+    
 })
 const tax = mongoose.model('tax', taxSchema)
 export default tax;

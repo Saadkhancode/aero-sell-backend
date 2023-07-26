@@ -14,13 +14,15 @@ export const getTaxById = async (req, res) => {
 }
 
 export const postTax = async (req, res) => {
-    const { name, taxValue,userId } = req.body;
-    const data = await new tax({ name, taxValue,userId });
+    const { name, taxValue,userId,active,byDefault } = req.body;
+    const data = await new tax({ name, taxValue,userId,active,byDefault });
     await data.save().then(result => {
         console.log(result, "Tax data save to database")
         res.json({
             name: result.name,
-            taxValue: result.taxValue
+            taxValue: result.taxValue,
+            active:result.active,
+            byDefault: result.byDefault
         })
     }).catch(err => {
         res.status(400).send('unable to save database');
