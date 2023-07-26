@@ -10,28 +10,32 @@ const orderItemSchema = new mongoose.Schema({
     taxValue: {
         type: Number
     },
-    dueamount:{
-        type:Number,
+    dueamount: {
+        type: Number,
     },
-    Status:{
-        type:String,
-        default:'pending'
+    Status: {
+        type: String,
+        default: 'pending'
+    },
+    split: {
+        type: Object,
+        default: {}
     },
     orderId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "order",
     },
-    table:{
-         type:mongoose.Schema.Types.ObjectId,
-         ref:'tables'
+    table: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tables'
     },
-    ReservedTable:{
-          type:mongoose.Schema.Types.ObjectId,
-          ref:'tableRservationAndWaitingList'
+    ReservedTable: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tableRservationAndWaitingList'
     },
-    orderStatus:{
-        type:String,
-        enum:['physical','online']
+    orderStatus: {
+        type: String,
+        enum: ['physical', 'online']
     },
     productWithQty: [{
         productId: {
@@ -65,14 +69,14 @@ const orderItemSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "product",
     }],
-    selectedModifiers:{
-          type:Array
+    selectedModifiers: {
+        type: Array
     },
-    loyalityOffer:{
-          type:Array
+    loyalityOffer: {
+        type: Array
     },
-    couponOffer:{
-          type:Array
+    couponOffer: {
+        type: Array
     },
     priceExclTax: {
         type: Number
@@ -95,27 +99,27 @@ const orderItemSchema = new mongoose.Schema({
     },
     text: {
         type: String
-    } ,
-    customerId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'customer'
     },
-     userId:{
-        type:mongoose.Schema.Types.ObjectId,
+    customerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'customer'
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
         // required:true,
-        ref:'user'
+        ref: 'user'
     },
-    paymentType:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'paymentlist'
+    paymentType: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'paymentlist'
     },
     createdAt: {
         type: Date,
-        default:Date.now
+        default: Date.now
     },
     updatedAt: {
-        type:Date,
-        default:Date.now
+        type: Date,
+        default: Date.now
     }
 })
 const orderitem = mongoose.model('orderitem', orderItemSchema);
