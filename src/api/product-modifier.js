@@ -23,6 +23,52 @@ export const addnewcategory = async (req, res) => {
 };
 
 //put 
+// const Category1 = mongoose.model('Category1', category1Schema);
+
+// Define the API endpoint for updating quantity
+// app.put('/updateQuantity', async (req, res) => {
+export const updatemod =async (req, res) => {
+  try {
+    const productId = req.body.productId; // Assuming you pass productId in the request body
+    const subcategoryName = req.body.subcategoryName; // Assuming you pass subcategoryName in the request body
+    const newQuantity = req.body.newQuantity; // Assuming you pass newQuantity in the request body
+
+    // Find the document that matches the productId and userId
+    console.log("category : ::::::: : ",req.body.productId)
+    console.log("category : ::::::: : ",productId)
+    const category = await Category1.findOne({ productId: productId });
+    console.log("category : ::::::: : ",category)
+
+    if (!category) {
+      return res.status(404).json({ error: 'Category not found.' });
+    }
+
+    // Find the subcategory by name
+    const subcategory = category.categories.find(cat => cat.subcategories.find(subcat => subcat.name === subcategoryName));
+
+    if (!subcategory) {
+      return res.status(404).json({ error: 'Subcategory not found.' });
+    }
+
+    // Update the totalQuantity field in the subcategory
+    subcategory.subcategories.forEach(subcat => {
+      if (subcat.name === subcategoryName) {
+        subcat.totalQuantity = newQuantity;
+      }
+    });
+
+    // Save the updated document
+    await category.save();
+
+    return res.status(200).json({ message: 'Quantity updated successfully.' });
+  } catch (error) {
+    console.error('Error updating quantity:', error);
+    return res.status(500).json({ error: 'Internal server error.' });
+  }
+};
+
+
+
 
 export const putaddnewcategory = async (req, res) => {
     const { _id } = req.params;
