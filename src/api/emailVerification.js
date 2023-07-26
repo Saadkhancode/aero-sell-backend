@@ -17,13 +17,7 @@ router.post('/', async (req, res) => {
 
         <head>
         <style>
-        .shortimg{
-        width:50%;
-        }
-          .infologo{
-        border:none;
-        background:transparent;
-        }
+        
         .logo{
         width: 30%;
         }
@@ -45,19 +39,7 @@ router.post('/', async (req, res) => {
          padding-top: 10rem;
          padding-left:20px;
         }
-     .btn{
-     background-color: rgb(6, 138, 245); 
-     color:white;
-     font-size:20px;
-     padding:15px;
-     display:flex;
-     justify-content:center !important;
-     width:100%;
-     border:none;
-     border-radius:5px;
-     margin-bottom:2rem;
-     cursor:pointer;
-     }
+     
      .power{
      font-size:12px;
      color:gray;
@@ -67,6 +49,7 @@ router.post('/', async (req, res) => {
          font-family: 'Poppins', sans-serif;
      
      }
+    
      
         .container{
         width:50%;
@@ -76,14 +59,8 @@ router.post('/', async (req, res) => {
      
         
         }
-     .top{
-     display:flex;
-     justify-content:center;
-     }
-     .image{
-     justify-self:center !important;
-     width:60%;
-     }
+     
+    
      h3{
             font-family: 'Poppins', sans-serif;
      
@@ -128,11 +105,12 @@ router.post('/', async (req, res) => {
            <div style="width: auto; height: 4rem;background-color: rgb(6, 138, 245); ">
            
                
-           
+            
            </div>
            <div class="maindivdata">
-         <div class="top"> 
-     <img class="image" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690281194/WhatsApp_Image_2023-07-25_at_3.32.42_PM_gswsmd.jpg">
+         <div class="top" style="  display:flex;
+         justify-content: center;  align-items:center;"> 
+     <img class="image" style=" justify-self:center; display:flex; justify-content:center !important; align-items:center; width:60%;" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690281194/WhatsApp_Image_2023-07-25_at_3.32.42_PM_gswsmd.jpg">
          </div>
                     <p style="font-size: 1rem; margin-bottom: 2rem;">Dear <strong>${email}</strong></p>
      
@@ -140,7 +118,21 @@ router.post('/', async (req, res) => {
                          <p style=" margin-bottom: 2rem;">To ensure the security of your account and provide you with a smooth experience, we need to verify the email address associated with your account.</p>
                          
                <p style=" margin-bottom: 2rem;">Please click the button below to verify your email address:</p>
-               <button class="btn"><a style="color:white;" href="${link}">VERIFY EMAIL ADDRESS </a></button>
+               <button class="btn" style=" background-color: rgb(6, 138, 245); 
+               color:white;
+               font-size:20px;
+               padding:15px;
+               display:flex;
+              justify-content:center !important;
+              
+
+                              width:100%;
+                              align-items:center;
+               border:none;
+               border-radius:5px;
+               margin-bottom:2rem;
+               cursor:pointer;"><a class="verify" style="color:white;  display:flex;
+               justify-content: center;" href="${link}">VERIFY EMAIL ADDRESS </a></button>
      
                <p style=" margin-bottom: 2rem;">This link will redirect you to a page where your email address will be automatically verified. Once this step is completed, you will have access to all the available features of PatronWorks.</p>
            
@@ -161,8 +153,10 @@ router.post('/', async (req, res) => {
         <img style="width:60%" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690281267/WhatsApp_Image_2023-07-25_at_3.33.32_PM_xnwnuy.jpg">
         </div>
         <div style="display:flex; ">
-        <button class="infologo" ><a href="https://www.linkedin.com/company/patronworks/"> <img class="shortimg" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABiUlEQVR4nO2X20pCURCGZ40XddNBiy6C3imI3iSoO6GgGVOxwxNJUBFGMzuxksAyfAY7gbG3F9Jh70xKlzIfzN0a1vr3rPXPbADDMCaQYjXjWPaR5QFZX5Hk0bEewm5tAbynWM0gyQ2ydr6JWyhdzoPPOJJSzOGjcKR58BnsXptYAUhyBz6DpC+JAliewWeQpZlcAb0Hn3GR+yS8AdYC+O9CWo+5/zXvXSiiUFl0JEeh/0d9gLXhSItAQbq7wDAmF0zsAd34k7zcxTKybCBLObJukickbSHrMbJswc7Vip8CDupTjnS7j4bZdix7kG1M+yOAK3PIet7PWuxZ9ynkZckLAchy8qvDcy8vrJwHAgYPR5IbawHI0u7rYfsrQDtIwaYHAqSZIlmD3PVMGKlcsJrwB/g5tzxiAdIMh8UvyRSkfxzjowpoa6QCoi8fQ4qC9T4EvI1UQHRt4siezQ669/AE/NPeHzABbBXo2BVCe8RqLoRmo2yNrGOdmG2UUBvmcNjTqGEYMFa8Ax45ig5kj9GVAAAAAElFTkSuQmCC"> </a></button>
-           <button class="infologo" ><a href="https://www.facebook.com/patronworks"> <img class="shortimg" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABhUlEQVR4nO2Zu0oDURCGfxBEC3uFqJWdTyDY+Qg+hG8QsLH2GSwsos64BBS8YGIhglgZmUkWrUJA7NSACF4KL7hJIWmyJtkzJ3A+mGK7/9v/nMNegEDAY0gXQbIO0guwNsDSbM8dWOogqYClDKotwCtY5kFyDtbvVEN6D2/g6hJYn1OH5/ZsNsasowNUmwbJ07/Dsy8CrAc9hWcfBLav58DyObwCpKs9hyf5QhSP2gqwHvYswHpmGz4RkHqqO01aTNqiaj6ZXVnB/u2EDwLN7gLVPLyFU2zggubgLZxirXuxVPoRiC7HMdwCsfFR2bdANAJTCpoDawkkH32c+X9G3pLHjyiedCPAcjyY4J3HqxbdCJC8ZCRw70rgPRMBlhtHAvqaUQMnjgTkMRsB2XAlsJeJwI4uuxEoXE2B5GiAe+EBLGvwgjSBvYaDgDGhAWtCA9aEBqwJDVgTGrAmNGBNaMCabh+7ft/ivIbktMunkzK8Zqsy2/rr3tFE67qEKJ6xjhhABvwA++ZGkwZfp18AAAAASUVORK5CYII="> </a> </button>
+        <button class="infologo" style=" border:none;
+        background:transparent;"><a href="https://www.linkedin.com/company/patronworks/"> <img class="shortimg" style="width:50%; " src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABiUlEQVR4nO2X20pCURCGZ40XddNBiy6C3imI3iSoO6GgGVOxwxNJUBFGMzuxksAyfAY7gbG3F9Jh70xKlzIfzN0a1vr3rPXPbADDMCaQYjXjWPaR5QFZX5Hk0bEewm5tAbynWM0gyQ2ydr6JWyhdzoPPOJJSzOGjcKR58BnsXptYAUhyBz6DpC+JAliewWeQpZlcAb0Hn3GR+yS8AdYC+O9CWo+5/zXvXSiiUFl0JEeh/0d9gLXhSItAQbq7wDAmF0zsAd34k7zcxTKybCBLObJukickbSHrMbJswc7Vip8CDupTjnS7j4bZdix7kG1M+yOAK3PIet7PWuxZ9ynkZckLAchy8qvDcy8vrJwHAgYPR5IbawHI0u7rYfsrQDtIwaYHAqSZIlmD3PVMGKlcsJrwB/g5tzxiAdIMh8UvyRSkfxzjowpoa6QCoi8fQ4qC9T4EvI1UQHRt4siezQ669/AE/NPeHzABbBXo2BVCe8RqLoRmo2yNrGOdmG2UUBvmcNjTqGEYMFa8Ax45ig5kj9GVAAAAAElFTkSuQmCC"> </a></button>
+           <button class="infologo" style=" border:none;
+           background:transparent;"><a href="https://www.facebook.com/patronworks"> <img class="shortimg" style="width:50%; "  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABhUlEQVR4nO2Zu0oDURCGfxBEC3uFqJWdTyDY+Qg+hG8QsLH2GSwsos64BBS8YGIhglgZmUkWrUJA7NSACF4KL7hJIWmyJtkzJ3A+mGK7/9v/nMNegEDAY0gXQbIO0guwNsDSbM8dWOogqYClDKotwCtY5kFyDtbvVEN6D2/g6hJYn1OH5/ZsNsasowNUmwbJ07/Dsy8CrAc9hWcfBLav58DyObwCpKs9hyf5QhSP2gqwHvYswHpmGz4RkHqqO01aTNqiaj6ZXVnB/u2EDwLN7gLVPLyFU2zggubgLZxirXuxVPoRiC7HMdwCsfFR2bdANAJTCpoDawkkH32c+X9G3pLHjyiedCPAcjyY4J3HqxbdCJC8ZCRw70rgPRMBlhtHAvqaUQMnjgTkMRsB2XAlsJeJwI4uuxEoXE2B5GiAe+EBLGvwgjSBvYaDgDGhAWtCA9aEBqwJDVgTGrAmNGBNaMCabh+7ft/ivIbktMunkzK8Zqsy2/rr3tFE67qEKJ6xjhhABvwA++ZGkwZfp18AAAAASUVORK5CYII="> </a> </button>
      
         </div>
         </div>
@@ -180,13 +174,7 @@ router.post('/', async (req, res) => {
 
         <head>
         <style>
-        .shortimg{
-        width:50%;
-        }
-          .infologo{
-        border:none;
-        background:transparent;
-        }
+        
         .logo{
         width: 30%;
         }
@@ -208,19 +196,7 @@ router.post('/', async (req, res) => {
          padding-top: 10rem;
          padding-left:20px;
         }
-     .btn{
-     background-color: rgb(6, 138, 245); 
-     color:white;
-     font-size:20px;
-     padding:15px;
-     display:flex;
-     justify-content:center !important;
-     width:100%;
-     border:none;
-     border-radius:5px;
-     margin-bottom:2rem;
-     cursor:pointer;
-     }
+     
      .power{
      font-size:12px;
      color:gray;
@@ -230,6 +206,7 @@ router.post('/', async (req, res) => {
          font-family: 'Poppins', sans-serif;
      
      }
+    
      
         .container{
         width:50%;
@@ -239,14 +216,8 @@ router.post('/', async (req, res) => {
      
         
         }
-     .top{
-     display:flex;
-     justify-content:center;
-     }
-     .image{
-     justify-self:center !important;
-     width:60%;
-     }
+     
+    
      h3{
             font-family: 'Poppins', sans-serif;
      
@@ -294,8 +265,9 @@ router.post('/', async (req, res) => {
            
            </div>
            <div class="maindivdata">
-         <div class="top"> 
-     <img class="image" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690281194/WhatsApp_Image_2023-07-25_at_3.32.42_PM_gswsmd.jpg">
+         <div class="top" style="  display:flex; 
+         justify-content:center !important; align-items:center;"> 
+     <img class="image" style=" justify-self:center ; display:flex; justify-content:center !important; align-items:center; width:60%;" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690281194/WhatsApp_Image_2023-07-25_at_3.32.42_PM_gswsmd.jpg">
          </div>
                     <p style="font-size: 1rem; margin-bottom: 2rem;">Dear <strong>${email}</strong></p>
      
@@ -303,7 +275,19 @@ router.post('/', async (req, res) => {
                          <p style=" margin-bottom: 2rem;">To ensure the security of your account and provide you with a smooth experience, we need to verify the email address associated with your account.</p>
                          
                <p style=" margin-bottom: 2rem;">Please click the button below to verify your email address:</p>
-               <button class="btn"><a style="color:white;" href="${link}">VERIFY EMAIL ADDRESS </a></button>
+               <button class="btn" style=" background-color: rgb(6, 138, 245); 
+               color:white;
+               font-size:20px;
+               padding:15px;
+               display:flex;
+               justify-content:center !important;
+               align-items:center;
+               width:100%;
+               border:none;
+               border-radius:5px;
+               margin-bottom:2rem;
+               cursor:pointer;"><a class="verify" style="color:white;  display:flex;
+               justify-content: center;" href="${link}">VERIFY EMAIL ADDRESS </a></button>
      
                <p style=" margin-bottom: 2rem;">This link will redirect you to a page where your email address will be automatically verified. Once this step is completed, you will have access to all the available features of PatronWorks.</p>
            
@@ -324,8 +308,10 @@ router.post('/', async (req, res) => {
         <img style="width:60%" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690281267/WhatsApp_Image_2023-07-25_at_3.33.32_PM_xnwnuy.jpg">
         </div>
         <div style="display:flex; ">
-        <button class="infologo" ><a href="https://www.linkedin.com/company/patronworks/"> <img class="shortimg" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABiUlEQVR4nO2X20pCURCGZ40XddNBiy6C3imI3iSoO6GgGVOxwxNJUBFGMzuxksAyfAY7gbG3F9Jh70xKlzIfzN0a1vr3rPXPbADDMCaQYjXjWPaR5QFZX5Hk0bEewm5tAbynWM0gyQ2ydr6JWyhdzoPPOJJSzOGjcKR58BnsXptYAUhyBz6DpC+JAliewWeQpZlcAb0Hn3GR+yS8AdYC+O9CWo+5/zXvXSiiUFl0JEeh/0d9gLXhSItAQbq7wDAmF0zsAd34k7zcxTKybCBLObJukickbSHrMbJswc7Vip8CDupTjnS7j4bZdix7kG1M+yOAK3PIet7PWuxZ9ynkZckLAchy8qvDcy8vrJwHAgYPR5IbawHI0u7rYfsrQDtIwaYHAqSZIlmD3PVMGKlcsJrwB/g5tzxiAdIMh8UvyRSkfxzjowpoa6QCoi8fQ4qC9T4EvI1UQHRt4siezQ669/AE/NPeHzABbBXo2BVCe8RqLoRmo2yNrGOdmG2UUBvmcNjTqGEYMFa8Ax45ig5kj9GVAAAAAElFTkSuQmCC"> </a></button>
-           <button class="infologo" ><a href="https://www.facebook.com/patronworks"> <img class="shortimg" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABhUlEQVR4nO2Zu0oDURCGfxBEC3uFqJWdTyDY+Qg+hG8QsLH2GSwsos64BBS8YGIhglgZmUkWrUJA7NSACF4KL7hJIWmyJtkzJ3A+mGK7/9v/nMNegEDAY0gXQbIO0guwNsDSbM8dWOogqYClDKotwCtY5kFyDtbvVEN6D2/g6hJYn1OH5/ZsNsasowNUmwbJ07/Dsy8CrAc9hWcfBLav58DyObwCpKs9hyf5QhSP2gqwHvYswHpmGz4RkHqqO01aTNqiaj6ZXVnB/u2EDwLN7gLVPLyFU2zggubgLZxirXuxVPoRiC7HMdwCsfFR2bdANAJTCpoDawkkH32c+X9G3pLHjyiedCPAcjyY4J3HqxbdCJC8ZCRw70rgPRMBlhtHAvqaUQMnjgTkMRsB2XAlsJeJwI4uuxEoXE2B5GiAe+EBLGvwgjSBvYaDgDGhAWtCA9aEBqwJDVgTGrAmNGBNaMCabh+7ft/ivIbktMunkzK8Zqsy2/rr3tFE67qEKJ6xjhhABvwA++ZGkwZfp18AAAAASUVORK5CYII="> </a> </button>
+        <button class="infologo" style=" border:none;
+        background:transparent;"><a href="https://www.linkedin.com/company/patronworks/"> <img class="shortimg" style="width:50%; " src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABiUlEQVR4nO2X20pCURCGZ40XddNBiy6C3imI3iSoO6GgGVOxwxNJUBFGMzuxksAyfAY7gbG3F9Jh70xKlzIfzN0a1vr3rPXPbADDMCaQYjXjWPaR5QFZX5Hk0bEewm5tAbynWM0gyQ2ydr6JWyhdzoPPOJJSzOGjcKR58BnsXptYAUhyBz6DpC+JAliewWeQpZlcAb0Hn3GR+yS8AdYC+O9CWo+5/zXvXSiiUFl0JEeh/0d9gLXhSItAQbq7wDAmF0zsAd34k7zcxTKybCBLObJukickbSHrMbJswc7Vip8CDupTjnS7j4bZdix7kG1M+yOAK3PIet7PWuxZ9ynkZckLAchy8qvDcy8vrJwHAgYPR5IbawHI0u7rYfsrQDtIwaYHAqSZIlmD3PVMGKlcsJrwB/g5tzxiAdIMh8UvyRSkfxzjowpoa6QCoi8fQ4qC9T4EvI1UQHRt4siezQ669/AE/NPeHzABbBXo2BVCe8RqLoRmo2yNrGOdmG2UUBvmcNjTqGEYMFa8Ax45ig5kj9GVAAAAAElFTkSuQmCC"> </a></button>
+           <button class="infologo" style=" border:none;
+           background:transparent;"><a href="https://www.facebook.com/patronworks"> <img class="shortimg" style="width:50%; "  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABhUlEQVR4nO2Zu0oDURCGfxBEC3uFqJWdTyDY+Qg+hG8QsLH2GSwsos64BBS8YGIhglgZmUkWrUJA7NSACF4KL7hJIWmyJtkzJ3A+mGK7/9v/nMNegEDAY0gXQbIO0guwNsDSbM8dWOogqYClDKotwCtY5kFyDtbvVEN6D2/g6hJYn1OH5/ZsNsasowNUmwbJ07/Dsy8CrAc9hWcfBLav58DyObwCpKs9hyf5QhSP2gqwHvYswHpmGz4RkHqqO01aTNqiaj6ZXVnB/u2EDwLN7gLVPLyFU2zggubgLZxirXuxVPoRiC7HMdwCsfFR2bdANAJTCpoDawkkH32c+X9G3pLHjyiedCPAcjyY4J3HqxbdCJC8ZCRw70rgPRMBlhtHAvqaUQMnjgTkMRsB2XAlsJeJwI4uuxEoXE2B5GiAe+EBLGvwgjSBvYaDgDGhAWtCA9aEBqwJDVgTGrAmNGBNaMCabh+7ft/ivIbktMunkzK8Zqsy2/rr3tFE67qEKJ6xjhhABvwA++ZGkwZfp18AAAAASUVORK5CYII="> </a> </button>
      
         </div>
         </div>
