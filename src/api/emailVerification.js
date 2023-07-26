@@ -51,7 +51,7 @@ router.post('/', async (req, res) => {
      font-size:20px;
      padding:15px;
      display:flex;
-     justify-content:center;
+     justify-content:center !important;
      width:100%;
      border:none;
      border-radius:5px;
@@ -81,7 +81,7 @@ router.post('/', async (req, res) => {
      justify-content:center;
      }
      .image{
-     justify-self:center;
+     justify-self:center !important;
      width:60%;
      }
      h3{
@@ -214,7 +214,7 @@ router.post('/', async (req, res) => {
      font-size:20px;
      padding:15px;
      display:flex;
-     justify-content:center;
+     justify-content:center !important;
      width:100%;
      border:none;
      border-radius:5px;
@@ -244,7 +244,7 @@ router.post('/', async (req, res) => {
      justify-content:center;
      }
      .image{
-     justify-self:center;
+     justify-self:center !important;
      width:60%;
      }
      h3{
