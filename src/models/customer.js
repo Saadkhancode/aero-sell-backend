@@ -5,7 +5,7 @@ const timeStamp = new Date(Date.UTC(current.getFullYear(),
     current.getMinutes(), current.getSeconds(), current.getMilliseconds()));
 const customerSchema = new mongoose.Schema({
     CustomerId: {
-        type: Number
+        type: String
     },
     userId:{
         type:mongoose.Schema.Types.ObjectId,
