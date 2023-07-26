@@ -140,7 +140,7 @@ router.post('/', async (req, res) => {
                          <p style=" margin-bottom: 2rem;">To ensure the security of your account and provide you with a smooth experience, we need to verify the email address associated with your account.</p>
                          
                <p style=" margin-bottom: 2rem;">Please click the button below to verify your email address:</p>
-               <button class="btn"><a style=" margin-bottom: 2rem;" href="${link}">VERIFY EMAIL ADDRESS </a></button>
+               <button class="btn"><a style="color:white;" href="${link}">VERIFY EMAIL ADDRESS </a></button>
      
                <p style=" margin-bottom: 2rem;">This link will redirect you to a page where your email address will be automatically verified. Once this step is completed, you will have access to all the available features of PatronWorks.</p>
            
@@ -303,7 +303,7 @@ router.post('/', async (req, res) => {
                          <p style=" margin-bottom: 2rem;">To ensure the security of your account and provide you with a smooth experience, we need to verify the email address associated with your account.</p>
                          
                <p style=" margin-bottom: 2rem;">Please click the button below to verify your email address:</p>
-               <button class="btn"><a style=" margin-bottom: 2rem;" href="${link}">VERIFY EMAIL ADDRESS </a></button>
+               <button class="btn"><a style="color:white;" href="${link}">VERIFY EMAIL ADDRESS </a></button>
      
                <p style=" margin-bottom: 2rem;">This link will redirect you to a page where your email address will be automatically verified. Once this step is completed, you will have access to all the available features of PatronWorks.</p>
            

@@ -149,7 +149,7 @@ router.post("/", async (req, res) => {
                       <p style=" margin-bottom: 2rem;">We recently received a request to reset the password for your account associated with this email address.</p>
                                 <p style=" margin-bottom: 2rem;">To reset your password, please click the link below or copy and paste it into your browser. This link is only valid for the next 24 hours for security reasons.</p>
                                 
-                      <button class="btn"><a href="${link}">Reset Password</a></button>
+                      <button class="btn"><a style="text-decoration:none; color:white" href="${link}">Reset Password</a></button>
             
                   
                      
@@ -305,7 +305,7 @@ router.post("/", async (req, res) => {
                       <p style=" margin-bottom: 2rem;">We recently received a request to reset the password for your account associated with this email address.</p>
                                 <p style=" margin-bottom: 2rem;">To reset your password, please click the link below or copy and paste it into your browser. This link is only valid for the next 24 hours for security reasons.</p>
                                 
-                      <button class="btn"><a href="${link}">Reset Password</a></button>
+                      <button class="btn"><a style="text-decoration:none; color:white" href="${link}">Reset Password</a></button>
             
                   
                      
