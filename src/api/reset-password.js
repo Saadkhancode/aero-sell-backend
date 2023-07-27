@@ -30,6 +30,7 @@ router.post("/", async (req, res) => {
             
             <head>
             <style>
+
             .shortimg{
             width:50%;
             }
@@ -67,6 +68,7 @@ router.post("/", async (req, res) => {
          border-radius:5px;
          margin-bottom:2rem;
          cursor:pointer;
+         padding:left:40%;
          }
          .power{
          font-size:12px;
@@ -86,6 +88,14 @@ router.post("/", async (req, res) => {
          
             
             }
+            .shortimg{
+              width:20px;
+              height:20px;
+              }
+              .infologo{
+                background:transparent;
+                border:none;
+              }
          .top{
          display:flex;
          justify-content:center;
@@ -93,6 +103,7 @@ router.post("/", async (req, res) => {
          .image{
          justify-self:center !important;
          width:60%;
+         margin-left:25%
          }
          h3{
                 font-family: 'Poppins', sans-serif;
@@ -123,6 +134,9 @@ router.post("/", async (req, res) => {
             }
           .maindivdata{
             padding:2rem 10px;
+            }
+            .btn{
+              padding-left:30%;
             }
             
             
@@ -162,18 +176,23 @@ router.post("/", async (req, res) => {
           
           <hr>
             
-         <div style="display:flex; justify-content:space-between; margin-top:1rem;">
-            <div>
-            <img style="width:60%" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690281267/WhatsApp_Image_2023-07-25_at_3.33.32_PM_xnwnuy.jpg">
-            </div>
-            <div style="display:flex; ">
-            <button class="infologo" ><a href="https://www.linkedin.com/company/patronworks/"> <img class="shortimg" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABiUlEQVR4nO2X20pCURCGZ40XddNBiy6C3imI3iSoO6GgGVOxwxNJUBFGMzuxksAyfAY7gbG3F9Jh70xKlzIfzN0a1vr3rPXPbADDMCaQYjXjWPaR5QFZX5Hk0bEewm5tAbynWM0gyQ2ydr6JWyhdzoPPOJJSzOGjcKR58BnsXptYAUhyBz6DpC+JAliewWeQpZlcAb0Hn3GR+yS8AdYC+O9CWo+5/zXvXSiiUFl0JEeh/0d9gLXhSItAQbq7wDAmF0zsAd34k7zcxTKybCBLObJukickbSHrMbJswc7Vip8CDupTjnS7j4bZdix7kG1M+yOAK3PIet7PWuxZ9ynkZckLAchy8qvDcy8vrJwHAgYPR5IbawHI0u7rYfsrQDtIwaYHAqSZIlmD3PVMGKlcsJrwB/g5tzxiAdIMh8UvyRSkfxzjowpoa6QCoi8fQ4qC9T4EvI1UQHRt4siezQ669/AE/NPeHzABbBXo2BVCe8RqLoRmo2yNrGOdmG2UUBvmcNjTqGEYMFa8Ax45ig5kj9GVAAAAAElFTkSuQmCC"> </a></button>
-               <button class="infologo" ><a href="https://www.facebook.com/patronworks"> <img class="shortimg" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABhUlEQVR4nO2Zu0oDURCGfxBEC3uFqJWdTyDY+Qg+hG8QsLH2GSwsos64BBS8YGIhglgZmUkWrUJA7NSACF4KL7hJIWmyJtkzJ3A+mGK7/9v/nMNegEDAY0gXQbIO0guwNsDSbM8dWOogqYClDKotwCtY5kFyDtbvVEN6D2/g6hJYn1OH5/ZsNsasowNUmwbJ07/Dsy8CrAc9hWcfBLav58DyObwCpKs9hyf5QhSP2gqwHvYswHpmGz4RkHqqO01aTNqiaj6ZXVnB/u2EDwLN7gLVPLyFU2zggubgLZxirXuxVPoRiC7HMdwCsfFR2bdANAJTCpoDawkkH32c+X9G3pLHjyiedCPAcjyY4J3HqxbdCJC8ZCRw70rgPRMBlhtHAvqaUQMnjgTkMRsB2XAlsJeJwI4uuxEoXE2B5GiAe+EBLGvwgjSBvYaDgDGhAWtCA9aEBqwJDVgTGrAmNGBNaMCabh+7ft/ivIbktMunkzK8Zqsy2/rr3tFE67qEKJ6xjhhABvwA++ZGkwZfp18AAAAASUVORK5CYII="> </a> </button>
-         
-            </div>
-            </div>
-            
-                 </div>
+          <div style="display:flex; justify-content:space-between; margin-top:1rem;">
+          <div>
+          <img style="width:60%" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690281267/WhatsApp_Image_2023-07-25_at_3.33.32_PM_xnwnuy.jpg">
+          </div>
+          <div style="display:flex; margin-left:45%;">
+          <a style="margin-right:10px; href="https://www.linkedin.com/company/patronworks/">
+            <img class="shortimg" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690439086/WhatsApp_Image_2023-07-27_at_11.12.37_AM_1_whbn0t.jpg" alt="LinkedIn">
+          </a>
+          
+          <a href="https://www.facebook.com/patronworks">
+            <img class="shortimg" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690439056/WhatsApp_Image_2023-07-27_at_11.12.37_AM_yedkyi.jpg" alt="Facebook">
+          </a>
+        </div>
+        
+                
+          
+               </div>
             </div>
             </div>
             </body>
@@ -196,6 +215,14 @@ router.post("/", async (req, res) => {
             .logo{
             width: 30%;
             }
+            .shortimg{
+              width:20px;
+              height:20px;
+              }
+              .infologo{
+                background:transparent;
+                border:none;
+              }
             
             .maindivdata{
             padding:2rem 4rem;
@@ -223,6 +250,7 @@ router.post("/", async (req, res) => {
          border-radius:5px;
          margin-bottom:2rem;
          cursor:pointer;
+         padding-left:40%;
          }
          .power{
          font-size:12px;
@@ -249,6 +277,7 @@ router.post("/", async (req, res) => {
          .image{
          justify-self:center !important;
          width:60%;
+         margin-left:25%;
          }
          h3{
                 font-family: 'Poppins', sans-serif;
@@ -279,6 +308,9 @@ router.post("/", async (req, res) => {
             }
           .maindivdata{
             padding:2rem 10px;
+            }
+            .btn{
+              padding-left:30%;
             }
             
             
@@ -318,18 +350,23 @@ router.post("/", async (req, res) => {
           
           <hr>
             
-         <div style="display:flex; justify-content:space-between; margin-top:1rem;">
-            <div>
-            <img style="width:60%" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690281267/WhatsApp_Image_2023-07-25_at_3.33.32_PM_xnwnuy.jpg">
-            </div>
-            <div style="display:flex; ">
-            <button class="infologo" ><a href="https://www.linkedin.com/company/patronworks/"> <img class="shortimg" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABiUlEQVR4nO2X20pCURCGZ40XddNBiy6C3imI3iSoO6GgGVOxwxNJUBFGMzuxksAyfAY7gbG3F9Jh70xKlzIfzN0a1vr3rPXPbADDMCaQYjXjWPaR5QFZX5Hk0bEewm5tAbynWM0gyQ2ydr6JWyhdzoPPOJJSzOGjcKR58BnsXptYAUhyBz6DpC+JAliewWeQpZlcAb0Hn3GR+yS8AdYC+O9CWo+5/zXvXSiiUFl0JEeh/0d9gLXhSItAQbq7wDAmF0zsAd34k7zcxTKybCBLObJukickbSHrMbJswc7Vip8CDupTjnS7j4bZdix7kG1M+yOAK3PIet7PWuxZ9ynkZckLAchy8qvDcy8vrJwHAgYPR5IbawHI0u7rYfsrQDtIwaYHAqSZIlmD3PVMGKlcsJrwB/g5tzxiAdIMh8UvyRSkfxzjowpoa6QCoi8fQ4qC9T4EvI1UQHRt4siezQ669/AE/NPeHzABbBXo2BVCe8RqLoRmo2yNrGOdmG2UUBvmcNjTqGEYMFa8Ax45ig5kj9GVAAAAAElFTkSuQmCC"> </a></button>
-               <button class="infologo" ><a href="https://www.facebook.com/patronworks"> <img class="shortimg" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABhUlEQVR4nO2Zu0oDURCGfxBEC3uFqJWdTyDY+Qg+hG8QsLH2GSwsos64BBS8YGIhglgZmUkWrUJA7NSACF4KL7hJIWmyJtkzJ3A+mGK7/9v/nMNegEDAY0gXQbIO0guwNsDSbM8dWOogqYClDKotwCtY5kFyDtbvVEN6D2/g6hJYn1OH5/ZsNsasowNUmwbJ07/Dsy8CrAc9hWcfBLav58DyObwCpKs9hyf5QhSP2gqwHvYswHpmGz4RkHqqO01aTNqiaj6ZXVnB/u2EDwLN7gLVPLyFU2zggubgLZxirXuxVPoRiC7HMdwCsfFR2bdANAJTCpoDawkkH32c+X9G3pLHjyiedCPAcjyY4J3HqxbdCJC8ZCRw70rgPRMBlhtHAvqaUQMnjgTkMRsB2XAlsJeJwI4uuxEoXE2B5GiAe+EBLGvwgjSBvYaDgDGhAWtCA9aEBqwJDVgTGrAmNGBNaMCabh+7ft/ivIbktMunkzK8Zqsy2/rr3tFE67qEKJ6xjhhABvwA++ZGkwZfp18AAAAASUVORK5CYII="> </a> </button>
-         
-            </div>
-            </div>
-            
-                 </div>
+          <div style="display:flex; justify-content:space-between; margin-top:1rem;">
+          <div>
+          <img style="width:60%" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690281267/WhatsApp_Image_2023-07-25_at_3.33.32_PM_xnwnuy.jpg">
+          </div>
+          <div style="display:flex; margin-left:45%;">
+          <a style="margin-right:10px; href="https://www.linkedin.com/company/patronworks/">
+            <img class="shortimg" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690439086/WhatsApp_Image_2023-07-27_at_11.12.37_AM_1_whbn0t.jpg" alt="LinkedIn">
+          </a>
+          
+          <a href="https://www.facebook.com/patronworks">
+            <img class="shortimg" src="https://res.cloudinary.com/drfdk5lxw/image/upload/v1690439056/WhatsApp_Image_2023-07-27_at_11.12.37_AM_yedkyi.jpg" alt="Facebook">
+          </a>
+        </div>
+        
+                
+          
+               </div>
             </div>
             </div>
             </body>
