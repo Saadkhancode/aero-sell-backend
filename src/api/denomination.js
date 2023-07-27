@@ -40,22 +40,21 @@ export const postBillDenomination = async (req, res) => {
 // API to update a bill denomination by ID
 // API to update a bill denomination by ID
 export const updateBillDenomination = async (req, res) => {
-    try {
-      const billDenominationId = req.params._id;
-      const { type, quantity, total, id } = req.body;
-      // Find the bill denomination by ID and update its properties
-      const updatedBillDenomination = await BillDenomination.findByIdAndUpdate(
-        billDenominationId,
-        { type, quantity, total, id },
-        { new: true }
-      );
-      if (!updatedBillDenomination) {
-        return res.status(404).json({ message: 'Bill denomination not found' });
-      }
-      res.json(updatedBillDenomination);
-    } catch (err) {
-      res.status(500).json({ message: 'Error updating bill denomination', error: err });
-    }
+    const { denominations, totalCashOnhand } = req.body;
+
+    // Here, you can update the data in your MongoDB collection
+    // You can loop through 'denominations' and update each entry
+    // For example:
+    const updatedres=   await BillDenomination.findByIdAndUpdate({_id:req.params._id},{ 
+      $set:{denominations:denominations,totalCashOnhand:totalCashOnhand},
+      $currentDate: { updatedAt: true }
+      });
+
+if(updatedres){
+  res.status(200).json({ message: 'Data updated successfully',updatedres});
+}else {
+    res.status(500).json({ message: 'Error updating data' });
+  }
   };
   
 // API to delete a bill denomination by ID
