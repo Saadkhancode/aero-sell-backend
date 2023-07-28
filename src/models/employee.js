@@ -16,6 +16,9 @@ const employeeSchema = new mongoose.Schema({
     email: {
         type: String
     },
+    employeeId: {
+        type: String
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
