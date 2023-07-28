@@ -77,7 +77,7 @@ const customerSchema = new mongoose.Schema({
         mail: {
             type: Boolean
         },
-        Email: {
+        email: {
             type: Boolean
         }
     },

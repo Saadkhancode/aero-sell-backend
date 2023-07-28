@@ -41,8 +41,8 @@ export const getOrderItems = async (req, res) => {
 }
 
 export const postOrderItem = async (req, res) => {
-    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split } = req.body;
-    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split });
+    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax } = req.body;
+    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax });
     let prod = []
     prod = product
     await data.save().then(async (result) => {
@@ -83,6 +83,7 @@ export const postOrderItem = async (req, res) => {
                 lineValue: result.lineValue,
                 units: result.units,
                 text: result.text,
+                tax: result.tax,
                 userId: result.userId,
                 customerId: result.customerId,
                 paymentType: result.paymentType,
@@ -109,6 +110,7 @@ export const postOrderItem = async (req, res) => {
                 lineValue: result.lineValue,
                 units: result.units,
                 text: result.text,
+                tax: result.tax,
                 userId: result.userId,
                 customerId: result.customerId,
                 paymentType: result.paymentType,

@@ -41,8 +41,8 @@ export const searchCustomer = async (req, res) => {
 }
 
 export const postCustomer = async (req, res) => {
-    const { CustomerId, userId, FirstName, LastName, Phone, Address1, Address2, Address3, postalCode, City, State, CompanyName, Membership, CustomerLoyalty } = req.body;
-    const customerData = await new customer({ CustomerId, userId, FirstName, LastName, Phone, Address1, Address2, Address3, postalCode, City, State, CompanyName, Membership, CustomerLoyalty });
+    const { CustomerId, userId, FirstName, LastName, Phone, Address1, Address2, Address3, postalCode, City, State, CompanyName,Email, Membership, CustomerLoyalty } = req.body;
+    const customerData = await new customer({ CustomerId, userId, FirstName, LastName, Phone, Address1, Address2, Address3, postalCode, City, State, CompanyName,Email, Membership, CustomerLoyalty });
     await customerData.save().then(result => {
         console.log(result, "Customer data save to database")
         res.json({
@@ -58,6 +58,7 @@ export const postCustomer = async (req, res) => {
             City: result.City,
             State: result.State,
             CompanyName: result.CompanyName,
+            Email : result.Email,
             Membership: result.Membership,
             CustomerLoyalty: result.CustomerLoyalty
             // CardNo:result.CardNo,

@@ -37,6 +37,15 @@ const orderItemSchema = new mongoose.Schema({
         type: String,
         enum: ['physical', 'online']
     },
+    tax: [{
+        name: {
+            type: String
+        },
+
+        addtax: {
+            type: Number
+        }
+    }],
     productWithQty: [{
         productId: {
             type: String,//stringt
