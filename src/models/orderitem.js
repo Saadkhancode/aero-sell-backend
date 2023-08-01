@@ -17,6 +17,9 @@ const orderItemSchema = new mongoose.Schema({
         type: String,
         default: 'pending'
     },
+    displayStatus: {
+        type: [],
+    },
     split: {
         type: Object,
         default: {}
