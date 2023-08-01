@@ -19,8 +19,8 @@ export const getEmployeeById = async (req, res) => {
 
 }
 export const postEmployee = async (req, res) => {
-    const { userName, firstName, lastName, email, password,confirmPassword,  userId,role } = req.body;
-    const data = await new employee({ userName, firstName, lastName,confirmPassword, email, password, userId,role});
+    const { userName, firstName, lastName, email, password,confirmPassword, employeeId, userId,role } = req.body;
+    const data = await new employee({ userName, firstName, lastName,confirmPassword, email, password,employeeId, userId,role});
     await data.save().then(result => {
         console.log(result, "Employee data save to database")
         res.json({
@@ -28,6 +28,7 @@ export const postEmployee = async (req, res) => {
             firstName: result.firstName,
             lastName: result.lastName,
             email: result.email,
+            employeeId: result.employeeId,
             password: result.password,
             userId:result.userId,
             confirmPassword:result.confirmPassword,
@@ -39,15 +40,16 @@ export const postEmployee = async (req, res) => {
     })
 }
 export const employeeLogin=async(req,res)=>{
-    const {password}=req.body
-     const employe= await employee.findOne({password});
+    const {employeeId}=req.body
+     const employe= await employee.findOne({employeeId});
      if (!employe) {
         return res.status(400).send({ message: "employee does'nt Exists" });
       }
-      if (employe.password !== password) {
-        return res.status(400).send({ message: "wrong password" });
+      if (employe.employeeId != employeeId) {
+        return res.status(400).send({ message: "wrong employeeId" });
+      }else if(employe.employeeId == employeeId){
+          res.status(200).json({ message: "Employee Login Successfully",userId:employe.userId,startDate:employe.startDate,employeId:employe._id,firstName:employe.firstName,lastName:employe.lastName, employeeId:employe.employeeId});
       }
-     res.status(200).json({ message: "Employee Login Successfully",userId:employe.userId,startDate:employe.startDate,employeId:employe._id,firstName:employe.firstName,lastName:employe.lastName});
 
 }
 export const updateEmployee = async (req, res) => {
