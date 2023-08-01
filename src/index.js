@@ -8,6 +8,7 @@ import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { Server } from 'socket.io';
+import onvif from 'node-onvif';
 
 import blog from './api-routes/blog-route.js';
 import category from './api-routes/category-route.js';
@@ -66,7 +67,7 @@ app.use('/api/v1/activate-account', userRegisterWithEmailVerification)
 //user forgot and reset-password Endpoints
 app.use('/api/v1/reset-password', passwordreset)
 //All APi's Endponits
-app.use('/api/v1', Auth, category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables, parentcategory, customer, Checkout, modifier, tableReservation, emailMarketing, smsMarketing, Loyaltyoffers, customization, logo, blog, contactus, employeTimeStamp, reciept, coupens, chatRoute,billdenomination)
+app.use('/api/v1', Auth, category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables, parentcategory, customer, Checkout, modifier, tableReservation, emailMarketing, smsMarketing, Loyaltyoffers, customization, logo, blog, contactus, employeTimeStamp, reciept, coupens, chatRoute, billdenomination)
 let NODESERVER = null;
 //Port
 if (process.env.NODE_ENV === 'production') {
@@ -75,36 +76,36 @@ if (process.env.NODE_ENV === 'production') {
     // Execute the FFmpeg command to stream the video
     const ffmpegCommand = `ffmpeg -i "${streamUrl}" -f mpegts -codec:v mpeg1video -s 640x480 -b:v 1000k -bf 0 -muxdelay 0.001 http://localhost:3333/stream`;
     const ffmpegProcess = exec(ffmpegCommand);
-    
+
     ffmpegProcess.stderr.on('data', (data) => {
-      console.error(`FFmpeg stderr: ${data}`);
+        console.error(`FFmpeg stderr: ${data}`);
     });
-    
+
     ffmpegProcess.on('close', (code) => {
-      console.log(`FFmpeg process exited with code ${code}`);
+        console.log(`FFmpeg process exited with code ${code}`);
     });
-    
+
     // Timer to capture a snapshot every 10 minutes
-    // setInterval(captureSnapshot, 10 * 60 * 1000);
-    
-    // function captureSnapshot() {
-    //   const snapshotFileName = `snapshot_${Date.now()}.jpg`;
-    //   const snapshotCommand = `ffmpeg -i "${streamUrl}" -vframes 1 -q:v 2 ${snapshotFileName}`;
-    
-    //   exec(snapshotCommand, (error, stdout, stderr) => {
-    //     if (error) {
-    //       console.error(`Snapshot capture error: ${error}`);
-    //     } else {
-    //       console.log(`Snapshot captured: ${snapshotFileName}`);
-    //     }
-    //   });
-    // }
-    
+    setInterval(captureSnapshot, 10 * 60 * 1000);
+
+    function captureSnapshot() {
+        const snapshotFileName = `snapshot_${Date.now()}.jpg`;
+        const snapshotCommand = `ffmpeg -i "${streamUrl}" -vframes 1 -q:v 2 ${snapshotFileName}`;
+
+        exec(snapshotCommand, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Snapshot capture error: ${error}`);
+            } else {
+                console.log(`Snapshot captured: ${snapshotFileName}`);
+            }
+        });
+    }
+
     app.get('/stream', (req, res) => {
-      res.setHeader('Content-Type', 'video/mp4');
-    
-      // FFmpeg output stream piped to the response
-      ffmpegProcess.stdout.pipe(res);
+        res.setHeader('Content-Type', 'video/mp4');
+
+        // FFmpeg output stream piped to the response
+        ffmpegProcess.stdout.pipe(res);
     });
     app.use('*', (req, res) => {
         return res.status(404).json({
@@ -117,45 +118,37 @@ if (process.env.NODE_ENV === 'production') {
         console.log(`Server is running on port: ${port}`);
     });
 } else if (process.env.NODE_ENV === 'development') {
-    // Command to stream RTSP using FFmpeg
-    const streamUrl = 'rtsp://zephyr.rtsp.stream/pattern?streamKey=1bf02385ec5fded64098f9902885649d'; // Replace with your RTSP stream URL
-    const command = `ffmpeg -i ${streamUrl} -f mpegts -codec:v mpeg1video -s 640x480 -b:v 1000k -bf 0 -muxdelay 0.001 http://localhost:4444/stream`;
-
-    // Execute the FFmpeg command
-    const ffmpegProcess = exec(command);
-
-    ffmpegProcess.stderr.on('data', (data) => {
-        console.error(`FFmpeg stderr: ${data}`);
-    });
-
-    ffmpegProcess.on('close', (code) => {
-        console.log(`FFmpeg process exited with code ${code}`);
-    });
-    // Timer to capture snapshot every 10 minutes
-    // setInterval(captureSnapshot, 10 * 60 * 1000);
-
-    // function captureSnapshot() {
-    //     const snapshotFileName = `snapshot_${Date.now()}.jpg`;
-
-    //     // Command to capture snapshot using FFmpeg
-    //     const snapshotCommand = `ffmpeg -i ${streamUrl} -vframes 1 -q:v 2 ${snapshotFileName}`;
-
-    //     exec(snapshotCommand, (error, stdout, stderr) => {
-    //         if (error) {
-    //             console.error(`Snapshot capture error: ${error}`);
-    //         } else {
-    //             console.log(`Snapshot captured: ${snapshotFileName}`);
-    //         }
-    //     });
-    // }
-    app.get('/stream', (req, res) => {
-        res.writeHead(200, {
-            'Content-Type': 'video/mp2t',
-            'Transfer-Encoding': 'chunked',
-          });
-        
-          // FFmpeg output stream piped to the response
-          ffmpegProcess.stdout.pipe(res);
+    app.get('/getCameraStreamUrl', async (req, res) => {
+        const { cameraAddress, cameraPort, cameraUsername, cameraPassword } = req.query;
+      
+        try {
+          // Discover the ONVIF camera
+          console.log('Start the discovery process.');
+          const device_info_list = await onvif.startProbe();
+      
+          if (device_info_list.length === 0) {
+            return res.status(404).json({ error: 'No devices were found.' });
+          }
+      
+          // Assuming there's at least one camera discovered
+          const cam = new onvif.OnvifDevice({
+            xaddr: `http://${cameraAddress}:${cameraPort}/onvif/device_service`,
+            user: cameraUsername,
+            pass: cameraPassword,
+          });   
+      
+          await cam.init();
+      
+          // Get the UDP stream URL
+          const streamUrl = cam.getUdpStreamUrl();
+          console.log('Stream URL:', streamUrl);
+      
+          // Respond with the stream URL
+          res.json({ streamUrl });
+        } catch (error) {
+          console.error('Error discovering camera or fetching stream URL:', error);
+          res.status(500).json({ error: 'Error discovering camera or fetching stream URL' });
+        }
       });
     app.use('*', (req, res) => {
         return res.status(404).json({
