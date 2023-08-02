@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
 dotenv.config()
-const sendMail = async (email, subject, html) => {
+const sendMail = async (email, subject, html,attachment) => {
     let domain;
     if (process.env.NODE_ENV === 'production') {
         domain = true
@@ -24,7 +24,8 @@ const sendMail = async (email, subject, html) => {
         await transporter.sendMail({
             to: email,
             subject: subject,
-            html: html
+            html: html,
+            attachments:attachment
         })
         console.log("Send Eamil Success");
     } catch (error) {
