@@ -45,6 +45,7 @@ import Auth from './api-routes/user-route.js';
 import userRegisterWithEmailVerification from './api/emailVerification.js';
 import passwordreset from './api/reset-password.js';
 import recieptExampt from './api-routes/reciept-exampt.js'
+import camera from './api-routes/camera-route.js'
 
 const app = express();
 dotenv.config();
@@ -68,7 +69,7 @@ app.use('/api/v1/activate-account', userRegisterWithEmailVerification)
 //user forgot and reset-password Endpoints
 app.use('/api/v1/reset-password', passwordreset)
 //All APi's Endponits
-app.use('/api/v1', Auth, category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables, parentcategory, customer, Checkout, modifier, tableReservation, emailMarketing, smsMarketing, Loyaltyoffers, customization, logo, blog, contactus, employeTimeStamp, reciept, coupens, chatRoute, billdenomination,recieptExampt)
+app.use('/api/v1', Auth, category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables, parentcategory, customer, Checkout, modifier, tableReservation, emailMarketing, smsMarketing, Loyaltyoffers, customization, logo, blog, contactus, employeTimeStamp, reciept, coupens, chatRoute, billdenomination,recieptExampt,camera)
 let NODESERVER = null;
 //Port
 if (process.env.NODE_ENV === 'production') {

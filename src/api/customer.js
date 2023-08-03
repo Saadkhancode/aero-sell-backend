@@ -10,6 +10,10 @@ export const getCustomer = async (req, res) => {
     res.send(customerData);
 
 }
+export const getCustomerById = async (req, res) => {
+    let customerData = await customer.find(req.params)
+    res.send(customerData);
+}
 export const searchCustomer = async (req, res) => {
     const { userId, FirstName, LastName, Email, Phone, Address1, City, State, PostalCode, CompanyName, CustomerId } = req.params
     console.log('req.params: ', req.params);
