@@ -9,9 +9,9 @@ const cameraSchema=new mongoose.Schema({
     },
     port:{
         type:Number
-    },
+    },  
     ipAddress:{
-        type:Number
+        type:String
     },
     userId:{
         type:mongoose.Schema.Types.ObjectId,
