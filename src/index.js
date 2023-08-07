@@ -44,6 +44,8 @@ import tax from './api-routes/tax-route.js';
 import Auth from './api-routes/user-route.js';
 import userRegisterWithEmailVerification from './api/emailVerification.js';
 import passwordreset from './api/reset-password.js';
+import recieptExampt from './api-routes/reciept-exampt.js'
+import camera from './api-routes/camera-route.js'
 
 const app = express();
 dotenv.config();
@@ -67,7 +69,7 @@ app.use('/api/v1/activate-account', userRegisterWithEmailVerification)
 //user forgot and reset-password Endpoints
 app.use('/api/v1/reset-password', passwordreset)
 //All APi's Endponits
-app.use('/api/v1', Auth, category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables, parentcategory, customer, Checkout, modifier, tableReservation, emailMarketing, smsMarketing, Loyaltyoffers, customization, logo, blog, contactus, employeTimeStamp, reciept, coupens, chatRoute, billdenomination)
+app.use('/api/v1', Auth, category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables, parentcategory, customer, Checkout, modifier, tableReservation, emailMarketing, smsMarketing, Loyaltyoffers, customization, logo, blog, contactus, employeTimeStamp, reciept, coupens, chatRoute, billdenomination,recieptExampt,camera)
 let NODESERVER = null;
 //Port
 if (process.env.NODE_ENV === 'production') {
@@ -164,6 +166,35 @@ if (process.env.NODE_ENV === 'production') {
 
 console.log('NODESERVER: ', NODESERVER);
 
+// const io = new Server(NODESERVER, {
+//     pingTimeout: 60000,
+//     cors: {
+//         origin: [process.env.LOCAL_LINK1, process.env.LOCAL_LINK2, process.env.PROD_LINK1, process.env.PROD_LINK2],
+//         // credentials: true,
+//     },
+// });
+
+// io.on("connection", (socket) => {
+//     socket.on("setup", (userData) => {
+//         socket.join(userData.userId)
+//         socket.emit("me", userData.userId)
+//         socket.emit("connected")
+//     })
+
+//     socket.on("new_message", (newMessageRecieved) => {
+//         var chat = newMessageRecieved.chat;
+//         if (!chat) return console.log("chat.users not defined");
+
+//         if (chat.Admin == newMessageRecieved.senderId) {
+//             socket.in(chat.user).emit("messagerecieved", newMessageRecieved);
+//         }
+//         if (chat.user == newMessageRecieved.senderId) {
+//             socket.in(chat.Admin).emit("messagerecieved", newMessageRecieved);
+//         }
+//     });
+
+
+// })
 const io = new Server(NODESERVER, {
     pingTimeout: 60000,
     cors: {
@@ -173,24 +204,28 @@ const io = new Server(NODESERVER, {
 });
 
 io.on("connection", (socket) => {
-    socket.on("setup", (userData) => {
-        socket.join(userData.userId)
-        socket.emit("me", userData.userId)
-        socket.emit("connected")
-    })
+    console.log("A user connected:", socket.id);
 
-    socket.on("new_message", (newMessageRecieved) => {
-        var chat = newMessageRecieved.chat;
+    socket.on("setup", (userData) => {
+        socket.join(userData.userId);
+        socket.emit("me", userData.userId);
+        socket.emit("connected");
+    });
+
+    socket.on("new_message", (newMessageReceived) => {
+        var chat = newMessageReceived.chat;
         if (!chat) return console.log("chat.users not defined");
 
-        if (chat.Admin == newMessageRecieved.senderId) {
-            socket.in(chat.user).emit("messagerecieved", newMessageRecieved);
+        if (chat.Admin == newMessageReceived.senderId) {
+            io.to(chat.user).emit("messagereceived", newMessageReceived);
         }
-        if (chat.user == newMessageRecieved.senderId) {
-            socket.in(chat.Admin).emit("messagerecieved", newMessageRecieved);
+        if (chat.user == newMessageReceived.senderId) {
+            io.to(chat.Admin).emit("messagereceived", newMessageReceived);
         }
     });
 
-
-})
+    socket.on("disconnect", () => {
+        console.log("A user disconnected:", socket.id);
+    });
+});
 
