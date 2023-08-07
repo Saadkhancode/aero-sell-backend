@@ -45,6 +45,13 @@ const productSchema = new mongoose.Schema({
     fullDescription: {
         type: String
     },
+    ProductId: {
+        type: String,
+      },
+    unit: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'mu'
+    },
     order: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'order'
