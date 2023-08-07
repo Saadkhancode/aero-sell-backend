@@ -8,6 +8,11 @@ export const getCameras = async (req, res) => {
     const cameras = await cameraModel.find(filter)
     res.send(cameras)
 }
+export const getCamerasById = async (req, res) => {
+
+    const cameras = await cameraModel.find({_id:req.params._id})
+    res.send(cameras)
+}
 export const postCameras = async (req, res) => {
     const { username, password, port, ipAddress,userId } = req.body
     await new cameraModel({ username, password, port, ipAddress ,userId}).save().then(ress => {
