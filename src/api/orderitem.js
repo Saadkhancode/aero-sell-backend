@@ -41,8 +41,8 @@ export const getOrderItems = async (req, res) => {
 }
 
 export const postOrderItem = async (req, res) => {
-    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax } = req.body;
-    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax });
+    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split , displayStatus, tax } = req.body;
+    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, displayStatus, tax });
     let prod = []
     prod = product
     await data.save().then(async (result) => {
@@ -67,6 +67,7 @@ export const postOrderItem = async (req, res) => {
             res.json({
                 orderId: result.orderId,
                 product: result.product,
+                displayStatus: result.displayStatus,
                 table: result.table,
                 split:result.split,
                 selectedModifiers: result.selectedModifiers,
@@ -97,6 +98,7 @@ export const postOrderItem = async (req, res) => {
                 orderId: result.orderId,
                 product: result.product,
                 dueamount: result.dueamount,
+                displayStatus: result.displayStatus,
                 loyalityOffer:result.loyalityOffer,
                 couponOffer : result.couponOffer,
                 points: result.points,
