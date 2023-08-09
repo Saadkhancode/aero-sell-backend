@@ -166,6 +166,35 @@ if (process.env.NODE_ENV === 'production') {
 
 console.log('NODESERVER: ', NODESERVER);
 
+// const io = new Server(NODESERVER, {
+//     pingTimeout: 60000,
+//     cors: {
+//         origin: [process.env.LOCAL_LINK1, process.env.LOCAL_LINK2, process.env.PROD_LINK1, process.env.PROD_LINK2],
+//         // credentials: true,
+//     },
+// });
+
+// io.on("connection", (socket) => {
+//     socket.on("setup", (userData) => {
+//         socket.join(userData.userId)
+//         socket.emit("me", userData.userId)
+//         socket.emit("connected")
+//     })
+
+//     socket.on("new_message", (newMessageRecieved) => {
+//         var chat = newMessageRecieved.chat;
+//         if (!chat) return console.log("chat.users not defined");
+
+//         if (chat.Admin == newMessageRecieved.senderId) {
+//             socket.in(chat.user).emit("messagerecieved", newMessageRecieved);
+//         }
+//         if (chat.user == newMessageRecieved.senderId) {
+//             socket.in(chat.Admin).emit("messagerecieved", newMessageRecieved);
+//         }
+//     });
+
+
+// })
 const io = new Server(NODESERVER, {
     pingTimeout: 60000,
     cors: {
@@ -175,24 +204,28 @@ const io = new Server(NODESERVER, {
 });
 
 io.on("connection", (socket) => {
-    socket.on("setup", (userData) => {
-        socket.join(userData.userId)
-        socket.emit("me", userData.userId)
-        socket.emit("connected")
-    })
+    console.log("A user connected:", socket.id);
 
-    socket.on("new_message", (newMessageRecieved) => {
-        var chat = newMessageRecieved.chat;
+    socket.on("setup", (userData) => {
+        socket.join(userData.userId);
+        socket.emit("me", userData.userId);
+        socket.emit("connected");
+    });
+
+    socket.on("new_message", (newMessageReceived) => {
+        var chat = newMessageReceived.chat;
         if (!chat) return console.log("chat.users not defined");
 
-        if (chat.Admin == newMessageRecieved.senderId) {
-            socket.in(chat.user).emit("messagerecieved", newMessageRecieved);
+        if (chat.Admin == newMessageReceived.senderId) {
+            io.to(chat.user).emit("messagereceived", newMessageReceived);
         }
-        if (chat.user == newMessageRecieved.senderId) {
-            socket.in(chat.Admin).emit("messagerecieved", newMessageRecieved);
+        if (chat.user == newMessageReceived.senderId) {
+            io.to(chat.Admin).emit("messagereceived", newMessageReceived);
         }
     });
 
-
-})
+    socket.on("disconnect", () => {
+        console.log("A user disconnected:", socket.id);
+    });
+});
 

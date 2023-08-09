@@ -34,7 +34,7 @@ export const updateCameras= async (req, res) => {
         { new: true }
     );
     if (data) {
-        res.send({ message: "camera data updated successfully" });
+        res.send({ message: "camera data updated successfully" ,data});
     } else {
         res.send({ message: "camera data cannot be updated successfully" })
     }
