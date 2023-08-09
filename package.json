@@ -24,6 +24,7 @@
     "fs": "^0.0.1-security",
     "googleapis": "^107.0.0",
     "helmet": "^5.0.2",
+    "html-pdf": "^3.0.1",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.1",
