@@ -1,7 +1,7 @@
-import orderitem from '../models/orderitem.js'
-import customer from '../models/customer.js'
-import Product from '../models/product.js'
-import sendMail from '../middlewares/send-email.js'
+import sendMail from '../middlewares/send-email.js';
+import customer from '../models/customer.js';
+import orderitem from '../models/orderitem.js';
+import Product from '../models/product.js';
 
 export const getOrderItemByUserId = async (req, res) => {
     let filter = {}
@@ -62,7 +62,7 @@ export const postOrderItem = async (req, res) => {
             }
         })
         if (customerById) {
-            const customerdata = await customer.findByIdAndUpdate(customerById, { $set: { "CustomerLoyalty.Points": customerById.CustomerLoyalty.Points + customerPoints } })
+            const customerdata = await customer.findByIdAndUpdate(customerById, { $set: { "CustomerLoyalty.Points":!isNaN( customerById?.CustomerLoyalty?.Points) + customerPoints } })
             console.log("customerAfterAddedPoints", customerdata);
             res.json({
                 orderId: result.orderId,
