@@ -1,5 +1,4 @@
-
-import customer from '../models/customer.js'
+import customer from '../models/customer.js';
 
 export const getCustomer = async (req, res) => {
     let filter = {}
@@ -64,7 +63,8 @@ export const postCustomer = async (req, res) => {
             CompanyName: result.CompanyName,
             Email : result.Email,
             Membership: result.Membership,
-            CustomerLoyalty: result.CustomerLoyalty
+            CustomerLoyalty: result.CustomerLoyalty,
+            _id: result._id 
             // CardNo:result.CardNo,
             // Type:result.Type,
             // StartDate:result.StartDate,
