@@ -22,7 +22,7 @@ export const getOrderItemOrderStatus = async (req,res)=>{
         filter = { userId: req.query.userId.split(',') }
     }
     let data = await orderitem.find(filter).populate({ path: "product", populate: { path: "categoryId", model: "category", populate: { path: "displayManagerId", model: "display" } } }).populate('customerId').populate("selectedModifiers").populate('paymentType').populate('table').populate({ path: "orderId", populate: { path: "employeeId", model: "employee"},populate: { path: "recieptId", model: "reciept"}}).populate('ReservedTable')
-      let onlineOrders=data?.filter((item)=> item.orderStatus=='Online')
+      let onlineOrders=data?.filter((item)=> item.orderStatus=='online')
       console.log('onlineOrders: ', onlineOrders);
     
     res.send(onlineOrders);

@@ -73,42 +73,6 @@ app.use('/api/v1', Auth, category, check, device, display, employee, menu, mu, o
 let NODESERVER = null;
 //Port
 if (process.env.NODE_ENV === 'production') {
-    const streamUrl = 'rtsp://zephyr.rtsp.stream/pattern?streamKey=1bf02385ec5fded64098f9902885649d'; // Replace with your RTSP stream URL
-
-    // Execute the FFmpeg command to stream the video
-    const ffmpegCommand = `ffmpeg -i "${streamUrl}" -f mpegts -codec:v mpeg1video -s 640x480 -b:v 1000k -bf 0 -muxdelay 0.001 http://localhost:3333/stream`;
-    const ffmpegProcess = exec(ffmpegCommand);
-
-    ffmpegProcess.stderr.on('data', (data) => {
-        console.error(`FFmpeg stderr: ${data}`);
-    });
-
-    ffmpegProcess.on('close', (code) => {
-        console.log(`FFmpeg process exited with code ${code}`);
-    });
-
-    // Timer to capture a snapshot every 10 minutes
-    setInterval(captureSnapshot, 10 * 60 * 1000);
-
-    function captureSnapshot() {
-        const snapshotFileName = `snapshot_${Date.now()}.jpg`;
-        const snapshotCommand = `ffmpeg -i "${streamUrl}" -vframes 1 -q:v 2 ${snapshotFileName}`;
-
-        exec(snapshotCommand, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Snapshot capture error: ${error}`);
-            } else {
-                console.log(`Snapshot captured: ${snapshotFileName}`);
-            }
-        });
-    }
-
-    app.get('/stream', (req, res) => {
-        res.setHeader('Content-Type', 'video/mp4');
-
-        // FFmpeg output stream piped to the response
-        ffmpegProcess.stdout.pipe(res);
-    });
     app.use('*', (req, res) => {
         return res.status(404).json({
             success: false,
