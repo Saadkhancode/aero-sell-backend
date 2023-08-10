@@ -1,5 +1,4 @@
-
-import customer from '../models/customer.js'
+import customer from '../models/customer.js';
 
 export const getCustomer = async (req, res) => {
     let filter = {}
@@ -9,6 +8,10 @@ export const getCustomer = async (req, res) => {
     let customerData = await customer.find(filter)
     res.send(customerData);
 
+}
+export const getCustomerById = async (req, res) => {
+    let customerData = await customer.find(req.params)
+    res.send(customerData);
 }
 export const searchCustomer = async (req, res) => {
     const { userId, FirstName, LastName, Email, Phone, Address1, City, State, PostalCode, CompanyName, CustomerId } = req.params
@@ -60,7 +63,8 @@ export const postCustomer = async (req, res) => {
             CompanyName: result.CompanyName,
             Email : result.Email,
             Membership: result.Membership,
-            CustomerLoyalty: result.CustomerLoyalty
+            CustomerLoyalty: result.CustomerLoyalty,
+            _id: result._id 
             // CardNo:result.CardNo,
             // Type:result.Type,
             // StartDate:result.StartDate,
