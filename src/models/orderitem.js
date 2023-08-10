@@ -35,7 +35,7 @@ const orderItemSchema = new mongoose.Schema({
     },
     orderStatus: {
         type: String,
-        enum: ['physical', 'online']
+        enum: ['physical', 'online','Drive Thru']
     },
     tax: [{
         name: {
@@ -129,7 +129,30 @@ const orderItemSchema = new mongoose.Schema({
     updatedAt: {
         type: Date,
         default: Date.now
+    },
+    customername:{
+    type:String
+    },
+    vehicle:{
+        type:String
+    },
+    subTotal:{
+        type:Number
+    },
+    orderNo:{
+        type:Number
+    },
+    total:{
+        type:Number
+    },
+    orderDateTime:{
+        type:Date
+    },
+    Color:{
+        type:String
     }
+   
+
 })
 const orderitem = mongoose.model('orderitem', orderItemSchema);
 export default orderitem;

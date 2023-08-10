@@ -68,6 +68,9 @@ const productSchema = new mongoose.Schema({
     },
     hasPicture: {
         type: Boolean
+    },
+    value:{
+        type:Number
     }
 
 })

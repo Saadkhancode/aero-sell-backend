@@ -41,8 +41,8 @@ export const getOrderItems = async (req, res) => {
 }
 
 export const postOrderItem = async (req, res) => {
-    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax } = req.body;
-    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax });
+    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax , Color,customername, total,subTotal, vehicle, } = req.body;
+    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax, Color, customername , total,subTotal, vehicle, });
     let prod = []
     prod = product
     await data.save().then(async (result) => {
@@ -90,7 +90,14 @@ export const postOrderItem = async (req, res) => {
                 createdAt: result.createdAt,
                 updatedAt: result.updatedAt,
                 orderStatus:result.orderStatus,
-                ReservedTable:result.ReservedTable
+                ReservedTable:result.ReservedTable,
+                Color:result.Color,
+                customername:result.customername,
+                vehicle:result.vehicle,
+                total:result.total,
+                subTotal:result.subTotal
+
+                
             })
         } else {
             res.json({
@@ -117,7 +124,12 @@ export const postOrderItem = async (req, res) => {
                 createdAt: result.createdAt,
                 updatedAt: result.updatedAt,
                 orderStatus:result.orderStatus,
-                ReservedTable:result.ReservedTable
+                ReservedTable:result.ReservedTable,
+                Color:result.Color,
+                customername:result.customername,
+                vehicle:result.vehicle,
+                total:result.total,
+                subTotal:result.subTotal
             })
         }
 
