@@ -41,8 +41,8 @@ export const getOrderItems = async (req, res) => {
 }
 
 export const postOrderItem = async (req, res) => {
-    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax , Color,customername, total,subTotal, vehicle, } = req.body;
-    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax, Color, customername , total,subTotal, vehicle, });
+    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax , Color,customername, vehicle,taxfake } = req.body;
+    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax, Color, customername, vehicle,taxfake });
     let prod = []
     prod = product
     await data.save().then(async (result) => {
@@ -51,7 +51,7 @@ export const postOrderItem = async (req, res) => {
         console.log("prod",prod);
         prod.map(async (item) => {
             const products = await Product.findOne({ _id: item._id }).populate('userId')
-            await Product.findOneAndUpdate({_id:products._id}, { $set: { "totalQuantity":!isNaN( products.totalQuantity) - item.quantity } })
+            await Product.findOneAndUpdate({_id:products._id}, { $set: { "totalQuantity": products.totalQuantity - item.quantity } })
             let filteredProductsName = []
             let userEmail = products.userId.email
             if (products.totalQuantity <= 5) {
@@ -95,10 +95,7 @@ export const postOrderItem = async (req, res) => {
                 Color:result.Color,
                 customername:result.customername,
                 vehicle:result.vehicle,
-                total:result.total,
-                subTotal:result.subTotal
-
-                
+                taxfake:result.taxfake
             })
         } else {
             res.json({
@@ -130,8 +127,6 @@ export const postOrderItem = async (req, res) => {
                 Color:result.Color,
                 customername:result.customername,
                 vehicle:result.vehicle,
-                total:result.total,
-                subTotal:result.subTotal
             })
         }
 

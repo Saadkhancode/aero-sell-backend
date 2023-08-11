@@ -38,7 +38,7 @@ const orderItemSchema = new mongoose.Schema({
     },
     orderStatus: {
         type: String,
-        enum: ['physical', 'online','Drive Thru']
+        enum: ['physical', 'online','drivethru']
     },
     tax: [{
         name: {
@@ -49,6 +49,9 @@ const orderItemSchema = new mongoose.Schema({
             type: Number
         }
     }],
+    taxfake:{
+           type:Number
+    },
     productWithQty: [{
         productId: {
             type: String,//stringt
@@ -139,17 +142,8 @@ const orderItemSchema = new mongoose.Schema({
     vehicle:{
         type:String
     },
-    subTotal:{
-        type:Number
-    },
     orderNo:{
         type:Number
-    },
-    total:{
-        type:Number
-    },
-    orderDateTime:{
-        type:Date
     },
     Color:{
         type:String
