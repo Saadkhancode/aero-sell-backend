@@ -38,7 +38,7 @@ const orderItemSchema = new mongoose.Schema({
     },
     orderStatus: {
         type: String,
-        enum: ['physical', 'online','drivethru']
+        enum: ['physical', 'online','drivethru' , 'Dine in' , 'Take Out']
     },
     tax: [{
         name: {
