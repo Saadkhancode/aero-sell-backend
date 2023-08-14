@@ -41,8 +41,8 @@ export const getOrderItems = async (req, res) => {
 }
 
 export const postOrderItem = async (req, res) => {
-    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax , Color,customername, vehicle,taxfake } = req.body;
-    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax, Color, customername, vehicle,taxfake });
+    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax , Color,customername, vehicle,taxfake, OrderNo } = req.body;
+    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax, Color, customername, vehicle,taxfake, OrderNo });
     let prod = []
     prod = product
     await data.save().then(async (result) => {
@@ -96,7 +96,9 @@ export const postOrderItem = async (req, res) => {
                 Color:result.Color,
                 customername:result.customername,
                 vehicle:result.vehicle,
-                taxfake:result.taxfake
+                taxfake:result.taxfake,
+                OrderNo:result.OrderNo,
+
             })
         } else {
             res.json({
@@ -109,6 +111,7 @@ export const postOrderItem = async (req, res) => {
                 points: result.points,
                 split:result.split,
                 Status:result.Status,
+                OrderNo:result.OrderNo,
                 taxValue: result.taxValue,
                 productWithQty: result.productWithQty,
                 priceExclTax: result.priceExclTax,
