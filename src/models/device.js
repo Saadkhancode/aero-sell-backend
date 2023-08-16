@@ -11,6 +11,9 @@ const deivceSchema = new mongoose.Schema({
         type:Boolean,
         default:true
     },
+    Address:{
+        type:String
+    },
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
