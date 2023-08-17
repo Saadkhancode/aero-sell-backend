@@ -8,16 +8,37 @@ const deivceSchema = new mongoose.Schema({
         type: String
     },
     active: {
-        type:Boolean,
-        default:true
+        type: String,
+        default: true
     },
-    Address:{
-        type:String
+    Line1: {
+        type: String
     },
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:'user'
+    Line2: {
+        type: String
+    },
+    City: {
+        type: String
+    },
+    Phoneno: {
+        type: String
+    },
+    State: {
+        type: String
+    },
+    PostalCode: {
+        type: String
+    },
+    Country: {
+        type: String
+    },
+    image: {
+        type: String
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
     },
     createdDate: {
         type: Date,
