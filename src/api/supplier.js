@@ -9,7 +9,7 @@ export const getSuppliers = async (req, res) => {
     res.send(data);
 }
 export const getSupplier = async (req, res) => {
-    let data = await Supplier.findOne(req.params);
+    let data = await SupplierModel.findOne(req.params);
     res.send(data);
 }
 
