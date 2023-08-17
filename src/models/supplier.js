@@ -1,7 +1,7 @@
 import mongoose, { mongo } from "mongoose";
 const supplierSchema=new mongoose.Schema({
     SupplierID:{
-        type:Number
+        type:String
     },
     SupplierName:{
         type:String
