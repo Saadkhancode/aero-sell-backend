@@ -5,7 +5,7 @@ export const getIngredients = async (req, res) => {
     if (req.query.userId) {
         filter = { userId: req.query.userId.split(',') }
     }
-    let data = await IngredientModel.find(filter);
+    let data = await IngredientModel.find(filter).populate('UnitofMeasurement');
     res.send(data);
 }
 export const getIngredient = async (req, res) => {
