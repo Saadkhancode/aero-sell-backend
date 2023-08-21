@@ -5,40 +5,40 @@ const timeStamp = new Date(Date.UTC(current.getFullYear(),
     current.getMinutes(), current.getSeconds(), current.getMilliseconds()));
 const orderSchema = new mongoose.Schema({
     tableNo: {
-        type:Number
+        type: Number
     },
-    tableName:{
-        type:String
+    tableName: {
+        type: String
     },
-    orderNo:{
-        type:Number
+    orderNo: {
+        type: Number
     },
-    distype:{
-        type:Boolean,
+    distype: {
+        type: Boolean,
     },
-    dueamount:{
-        type:Number,
+    dueamount: {
+        type: Number,
     },
-    discount:{
-        type:Number
+    discount: {
+        type: Number
     },
-    loyalty:{
-        type:Number
+    loyalty: {
+        type: Number
     },
     orderDate: {
         type: Date,
-        default:Date.now
+        default: Date.now
     },
     startDate: {
         type: Date,
-        default:Date.now
+        default: Date.now
     },
     currentOrderId: {
         type: String,
     },
-    isHold:{
-       type:Boolean,
-       default:false
+    isHold: {
+        type: Boolean,
+        default: false
     },
     orderValueExclTax: {
         type: Number
@@ -53,34 +53,36 @@ const orderSchema = new mongoose.Schema({
         type: Number
     },
     orderStatus: {
-        type: String, 
-        enum:['new','proccessing','done']
+        type: String,
+        enum: ['new', 'proccessing', 'done']
     },
     orderType: {
         type: String,
-        enum:['standard','notification'] 
+        enum: ['standard', 'notification']
+    }, Tips: {
+        type: Number
     },
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:'user'
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
     },
     recieptId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'reciept'
-        
+
     },
-    operator:{
-        type:String
+    operator: {
+        type: String
     },
-    employeeId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'employee'
+    employeeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'employee'
     },
-    customerId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'customer'
+    customerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'customer'
     }
 
 
