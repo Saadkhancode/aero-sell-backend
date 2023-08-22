@@ -37,6 +37,12 @@ const employeeSchema = new mongoose.Schema({
     startDate: {
         type: Date,
         default: timeStamp
+    },
+    hourlyRate: {
+        type : Number
+    },
+    employeeType: {
+        type : String
     }
 }, { timestamps: true })
 const employee = mongoose.model("employee", employeeSchema);

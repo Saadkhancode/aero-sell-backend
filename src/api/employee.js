@@ -19,8 +19,8 @@ export const getEmployeeById = async (req, res) => {
 
 }
 export const postEmployee = async (req, res) => {
-    const { userName, firstName, lastName, email, password,confirmPassword, employeeId, userId,role } = req.body;
-    const data = await new employee({ userName, firstName, lastName,confirmPassword, email, password,employeeId, userId,role});
+    const { userName, firstName, lastName, email, password,confirmPassword, employeeId, userId,role,hourlyRate,employeeType } = req.body;
+    const data = await new employee({ userName, firstName, lastName,confirmPassword, email, password,employeeId, userId,role,hourlyRate,employeeType});
     await data.save().then(result => {
         console.log(result, "Employee data save to database")
         res.json({
@@ -32,7 +32,9 @@ export const postEmployee = async (req, res) => {
             password: result.password,
             userId:result.userId,
             confirmPassword:result.confirmPassword,
-            role:result.role
+            role:result.role,
+            hourlyRate:result.hourlyRate,
+            employeeType: result.employeeType
         })
     }).catch(err => {
         res.status(400).send('unable to save database');
@@ -48,7 +50,7 @@ export const employeeLogin=async(req,res)=>{
       if (employe.employeeId != employeeId) {
         return res.status(400).send({ message: "wrong employeeId" });
       }else if(employe.employeeId == employeeId){
-          res.status(200).json({ message: "Employee Login Successfully",userId:employe.userId,startDate:employe.startDate,employeId:employe._id,firstName:employe.firstName,lastName:employe.lastName, employeeId:employe.employeeId});
+          res.status(200).json({ message: "Employee Login Successfully",userId:employe.userId,startDate:employe.startDate,employeId:employe._id,firstName:employe.firstName,lastName:employe.lastName, employeeId:employe.employeeId, hourlyRate:employe.hourlyRate, employeeType:employe.employeeType});
       }
 
 }
