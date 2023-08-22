@@ -105,3 +105,13 @@ export const deleteEmployee = async (req, res) => {
         res.send({ message: "employee data cannot delete successfully" })
     }
 }
+export const deleteEmployeeType  = async (req, res) => {
+    console.log(req.params)
+    let data = await employeeType.deleteOne(req.params)
+    if (data) {
+        res.send({ message: "employee data delete successfully" });
+    }
+    else {
+        res.send({ message: "employee data cannot delete successfully" })
+    }
+}
