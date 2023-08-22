@@ -9,7 +9,7 @@ export const getIngredients = async (req, res) => {
     res.send(data);
 }
 export const getIngredient = async (req, res) => {
-    let data = await IngredientModel.findOne(req.params);
+    let data = await IngredientModel.findOne(req.params).populate('UnitofMeasurement');
     res.send(data);
 }
 
@@ -30,7 +30,7 @@ export const postIngredient = async (req, res) => {
 
         const data = new IngredientModel({ IngredientID, IngredientName, userId,Description,UnitofMeasurement,Unitprice,Supplier,CurrentStock ,ThresholdLevel,Allergens,ShelfLife,StorageInstructions,CategoryType,Alternative,NutritionalInformation,Notes,Active });
         const result = await data.save();
-        console.log(result, "Ingredient data saved to the database")
+        console.log(result,{ message: "Ingredient data delete successfully" })
         res.json({
             IngredientID: result.IngredientID,
             IngredientName: result.IngredientName,
@@ -51,7 +51,7 @@ export const postIngredient = async (req, res) => {
             Active:result.Active
         });
     } catch (err) {
-        res.status(400).send('Unable to save to the database');
+        res.status(400).send({ message: "Ingredient data delete successfully" });
         console.log(err);
     }
 };
