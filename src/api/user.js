@@ -1,5 +1,5 @@
 import { superUser, User } from '../models/User.js'
-import employee from '../models/employee.js'
+import {employee} from '../models/employee.js'
 import jwt from "jsonwebtoken";
 
 

@@ -37,7 +37,25 @@ const employeeSchema = new mongoose.Schema({
     startDate: {
         type: Date,
         default: timeStamp
+    },
+    hourlyRate: {
+        type : Number
+    },
+    employeeType: {
+        type : mongoose.Schema.Types.ObjectId,
+        ref:'EmployeeType'
     }
 }, { timestamps: true })
+const EmployeeTypeSchema=new mongoose.Schema({
+    name:{
+        type:String
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
+    }
+})
 const employee = mongoose.model("employee", employeeSchema);
-export default employee;
+const employeeType = mongoose.model("EmployeeType", EmployeeTypeSchema);
+export {employee,employeeType};
