@@ -1,6 +1,18 @@
-import employee from '../models/employee.js';
+import {employee,employeeType} from '../models/employee.js';
 
 
+export const getEmployeeType = async (req, res) => {
+    let filter={}
+    if(req.query.userId){
+     filter={userId:req.query.userId.split(',')}
+    }
+    if(req.query.role){
+     filter={role:req.query.role.split(',')}
+    }
+    let data = await employeeType.find(filter).populate('role')
+    res.send(data);
+
+}
 export const getEmployee = async (req, res) => {
     let filter={}
     if(req.query.userId){
@@ -17,6 +29,20 @@ export const getEmployeeById = async (req, res) => {
     let data = await employee.findOne(req.params)
     res.send(data);
 
+}
+export const postEmployeeType = async (req, res) => {
+    const { userId,name } = req.body;
+    const data = await new employeeType({userId,name});
+    await data.save().then(result => {
+        console.log(result, "Employee data save to database")
+        res.json({
+            name:result.name,
+            userId:result.userId
+        })
+    }).catch(err => {
+        res.status(400).send('unable to save database');
+        console.log(err)
+    })
 }
 export const postEmployee = async (req, res) => {
     const { userName, firstName, lastName, email, password,confirmPassword, employeeId, userId,role,hourlyRate,employeeType } = req.body;

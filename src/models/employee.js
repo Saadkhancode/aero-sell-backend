@@ -42,8 +42,20 @@ const employeeSchema = new mongoose.Schema({
         type : Number
     },
     employeeType: {
-        type : String
+        type : mongoose.Schema.Types.ObjectId,
+        ref:'EmployeeType'
     }
 }, { timestamps: true })
+const EmployeeTypeSchema=new mongoose.Schema({
+    name:{
+        type:String
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
+    }
+})
 const employee = mongoose.model("employee", employeeSchema);
-export default employee;
+const employeeType = mongoose.model("EmployeeType", EmployeeTypeSchema);
+export {employee,employeeType};
