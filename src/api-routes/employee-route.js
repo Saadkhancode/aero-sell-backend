@@ -20,7 +20,7 @@ routes.post('/employeetype', postEmployeeType )
 routes.post('/employeeLogin', employeeLogin )
 routes.put('/employee/:_id', updateEmployee )
 routes.delete('/employee/:_id', deleteEmployee )
-routes.delete('/employeetype/:_id', deleteEmployee )
+routes.delete('/employeetype/:_id', deleteEmployeeType )
 
 
 export default routes
