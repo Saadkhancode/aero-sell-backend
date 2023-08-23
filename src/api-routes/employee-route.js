@@ -8,11 +8,13 @@ import {getEmployee,
     employeeLogin,getEmployeeById,
     getEmployeeType,
     postEmployeeType,
-    deleteEmployeeType
+    deleteEmployeeType,
+    getEmployeeTypeById
 } from "../api/employee.js"
 
 routes.get('/employee', getEmployee )
 routes.get('/employeetype', getEmployeeType )
+routes.get('/employeetype/:_id', getEmployeeTypeById )
 routes.get('/employee/:_id', getEmployeeById )
 
 routes.post('/employee', postEmployee )
