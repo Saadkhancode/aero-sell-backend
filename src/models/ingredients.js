@@ -9,6 +9,9 @@ const ingredientSchema=new mongoose.Schema({
     Description:{
         type:String
     },
+    Expiry:{
+        type:String
+    },
     UnitofMeasurement:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'mu'
