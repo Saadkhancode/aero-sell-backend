@@ -14,7 +14,7 @@ export const getIngredient = async (req, res) => {
 }
 
 export const postIngredient = async (req, res) => {
-    const { IngredientName, userId,Description,UnitofMeasurement,Unitprice,Supplier,CurrentStock ,ThresholdLevel,Allergens,ShelfLife,StorageInstructions,CategoryType,Alternative,NutritionalInformation,Notes,Active } = req.body;
+    const { IngredientName, userId,Description,UnitofMeasurement,Unitprice,Supplier,CurrentStock ,ThresholdLevel,Allergens,ShelfLife,StorageInstructions,CategoryType,Alternative,NutritionalInformation,Notes,Active, Expiry } = req.body;
     try {
         const lastProduct = await IngredientModel.findOne({}, {}, { sort: { '_id': -1 } });
         console.log("last product : ", lastProduct)
@@ -28,10 +28,11 @@ export const postIngredient = async (req, res) => {
         
         const IngredientID = `ING${numericCount.toString().padStart(4, '0')}`;
 
-        const data = new IngredientModel({ IngredientID, IngredientName, userId,Description,UnitofMeasurement,Unitprice,Supplier,CurrentStock ,ThresholdLevel,Allergens,ShelfLife,StorageInstructions,CategoryType,Alternative,NutritionalInformation,Notes,Active });
+        const data = new IngredientModel({ IngredientID, IngredientName, userId,Description,UnitofMeasurement,Unitprice,Supplier,CurrentStock ,ThresholdLevel,Allergens,ShelfLife,StorageInstructions,CategoryType,Alternative,NutritionalInformation,Notes,Active, Expiry});
         const result = await data.save();
         console.log(result,{ message: "Ingredient data delete successfully" })
         res.json({
+            message:"Data successfully saved!",
             IngredientID: result.IngredientID,
             IngredientName: result.IngredientName,
             userId: result.userId,
@@ -48,7 +49,8 @@ export const postIngredient = async (req, res) => {
             Alternative:result.Alternative,
             NutritionalInformation:result.NutritionalInformation,
             Notes:result.Notes,
-            Active:result.Active
+            Active:result.Active,
+            Expiry:result.Expiry
         });
     } catch (err) {
         res.status(400).send({ message: "Ingredient data delete successfully" });
