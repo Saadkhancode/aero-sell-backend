@@ -9,7 +9,7 @@ export const getEmployeeType = async (req, res) => {
     if(req.query.role){
      filter={role:req.query.role.split(',')}
     }
-    let data = await employeeType.find(filter)
+    let data = await employeeType.find(filter).populate('role').populate("employeeType")
     res.send(data);
 
 }
@@ -26,7 +26,12 @@ export const getEmployee = async (req, res) => {
 
 }
 export const getEmployeeById = async (req, res) => {
-    let data = await employee.findOne(req.params)
+    let data = await employee.findOne(req.params).populate('role').populate("employeeType")
+    res.send(data);
+
+}
+export const getEmployeeTypeById = async (req, res) => {
+    let data = await employeeType.findOne(req.params)
     res.send(data);
 
 }
