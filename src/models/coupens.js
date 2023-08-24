@@ -10,6 +10,9 @@ const coupensSchema = new mongoose.Schema({
     discount: {
         type: Number,
     },
+    discountType: {
+        type: String,
+    },
     start: {
         type: Number
     },
