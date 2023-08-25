@@ -19,7 +19,7 @@ const ingredientSchema=new mongoose.Schema({
     UnitPrice:{
         type:Number
     },
-    Supplier:{
+    supplierId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Supplier'
     },
@@ -39,7 +39,8 @@ const ingredientSchema=new mongoose.Schema({
         type:String
     },
     CategoryType:{
-        type:String
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'ingredientCategoryModel'
     },
     Alternative:{
         type:String

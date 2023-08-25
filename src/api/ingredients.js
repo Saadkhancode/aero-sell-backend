@@ -5,18 +5,18 @@ export const getIngredients = async (req, res) => {
     if (req.query.userId) {
         filter = { userId: req.query.userId.split(',') }
     }
-    let data = await IngredientModel.find(filter).populate('UnitofMeasurement');
+    let data = await IngredientModel.find(filter).populate('UnitofMeasurement').populate('CategoryType').populate('supplierId');
     res.send(data);
 }
 export const getIngredient = async (req, res) => {
-    let data = await IngredientModel.findOne(req.params).populate('UnitofMeasurement');
+    let data = await IngredientModel.findOne(req.params).populate('UnitofMeasurement').populate('CategoryType').populate('supplierId');
     res.send(data);
 }
 
 export const postIngredient = async (req, res) => {
-    const { IngredientName, userId,Description,UnitofMeasurement,Unitprice,Supplier,CurrentStock ,ThresholdLevel,Allergens,ShelfLife,StorageInstructions,CategoryType,Alternative,NutritionalInformation,Notes,Active, Expiry } = req.body;
+    const { IngredientName, userId,Description,UnitofMeasurement,Unitprice,supplierId,CurrentStock ,ThresholdLevel,Allergens,ShelfLife,StorageInstructions,CategoryType,Alternative,NutritionalInformation,Notes,Active, Expiry } = req.body;
     try {
-        const lastProduct = await IngredientModel.findOne({}, {}, { sort: { '_id': -1 } });
+        const lastProduct = await IngredientModel.findOne({userId}, {}, { sort: { '_id': -1 } });
         console.log("last product : ", lastProduct)
         
         let numericCount = 1; // Default value if no previous data
@@ -28,7 +28,7 @@ export const postIngredient = async (req, res) => {
         
         const IngredientID = `ING${numericCount.toString().padStart(4, '0')}`;
 
-        const data = new IngredientModel({ IngredientID, IngredientName, userId,Description,UnitofMeasurement,Unitprice,Supplier,CurrentStock ,ThresholdLevel,Allergens,ShelfLife,StorageInstructions,CategoryType,Alternative,NutritionalInformation,Notes,Active, Expiry});
+        const data = new IngredientModel({ IngredientID, IngredientName, userId,Description,UnitofMeasurement,Unitprice,supplierId,CurrentStock ,ThresholdLevel,Allergens,ShelfLife,StorageInstructions,CategoryType,Alternative,NutritionalInformation,Notes,Active, Expiry});
         const result = await data.save();
         console.log(result,{ message: "Ingredient data delete successfully" })
         res.json({
@@ -39,7 +39,7 @@ export const postIngredient = async (req, res) => {
             Description: result.Description,
             UnitofMeasurement: result.UnitofMeasurement,
             Unitprice: result.Unitprice,
-            Supplier: result.Supplier,
+            supplierId: result.supplierId,
             CurrentStock: result.CurrentStock,
             ThresholdLevel: result.ThresholdLevel,
             Allergens:result.Allergens,
