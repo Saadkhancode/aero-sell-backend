@@ -16,7 +16,7 @@ export const getSupplier = async (req, res) => {
 export const postSupplier = async (req, res) => {
     const { SupplierName, userId, EmailAddress, ContactNumber, BussinessAddress, TaxIdentification, OtherInformation, ProductOffered } = req.body;
     try {
-        const lastProduct = await SupplierModel.findOne({}, {}, { sort: { '_id': -1 } });
+        const lastProduct = await SupplierModel.findOne({userId}, {}, { sort: { '_id': -1 } });
         console.log("last product : ", lastProduct)
         
         let numericCount = 1; // Default value if no previous data
