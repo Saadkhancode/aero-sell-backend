@@ -67,7 +67,6 @@ app.use(bodyParser.json())
 
 app.use(helmet({ crossOriginResourcePolicy: false, }));
 app.use(morgan("dev"));
-//Routes
 //uset Email Verification Endpoints
 app.use('/api/v1/activate-account', userRegisterWithEmailVerification)
 //user forgot and reset-password Endpoints
