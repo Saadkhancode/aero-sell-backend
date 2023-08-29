@@ -14,7 +14,7 @@ export const getIngredient = async (req, res) => {
 }
 
 export const postIngredient = async (req, res) => {
-    const { IngredientName, userId,Description,UnitofMeasurement,Unitprice,supplierId,CurrentStock ,ThresholdLevel,Allergens,ShelfLife,StorageInstructions,CategoryType,Alternative,NutritionalInformation,Notes,Active, Expiry } = req.body;
+    const { IngredientName, userId,Description,UnitofMeasurement,supplierId ,ThresholdLevel,Allergens,ShelfLife,StorageInstructions,CategoryType,Alternative,NutritionalInformation,Notes,Active,stockHistory } = req.body;
     try {
         const lastProduct = await IngredientModel.findOne({userId}, {}, { sort: { '_id': -1 } });
         console.log("last product : ", lastProduct)
@@ -28,7 +28,7 @@ export const postIngredient = async (req, res) => {
         
         const IngredientID = `ING${numericCount.toString().padStart(4, '0')}`;
 
-        const data = new IngredientModel({ IngredientID, IngredientName, userId,Description,UnitofMeasurement,Unitprice,supplierId,CurrentStock ,ThresholdLevel,Allergens,ShelfLife,StorageInstructions,CategoryType,Alternative,NutritionalInformation,Notes,Active, Expiry});
+        const data = new IngredientModel({ IngredientID, IngredientName, userId,Description,UnitofMeasurement,supplierId ,ThresholdLevel,Allergens,ShelfLife,StorageInstructions,CategoryType,Alternative,NutritionalInformation,Notes,Active, stockHistory});
         const result = await data.save();
         console.log(result,{ message: "Ingredient data delete successfully" })
         res.json({
@@ -38,9 +38,9 @@ export const postIngredient = async (req, res) => {
             userId: result.userId,
             Description: result.Description,
             UnitofMeasurement: result.UnitofMeasurement,
-            Unitprice: result.Unitprice,
+            // Unitprice: result.Unitprice,
             supplierId: result.supplierId,
-            CurrentStock: result.CurrentStock,
+            // CurrentStock: result.CurrentStock,
             ThresholdLevel: result.ThresholdLevel,
             Allergens:result.Allergens,
             ShelfLife:result.ShelfLife,
@@ -50,7 +50,8 @@ export const postIngredient = async (req, res) => {
             NutritionalInformation:result.NutritionalInformation,
             Notes:result.Notes,
             Active:result.Active,
-            Expiry:result.Expiry
+            // Expiry:result.Expiry
+            stockHistory:result.stockHistory
         });
     } catch (err) {
         res.status(400).send({ message: "Ingredient data delete successfully" });

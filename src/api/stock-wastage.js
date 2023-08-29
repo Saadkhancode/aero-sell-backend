@@ -5,11 +5,11 @@ export const getStockWastages = async (req, res) => {
     if (req.query.userId) {
         filter = { userId: req.query.userId.split(',') }
     }
-    let data = await wastageModel.find(filter);
+    let data = await wastageModel.find(filter).populate('Supplier').populate('IngredientName');
     res.send(data);
 }
 export const getStockWastage = async (req, res) => {
-    let data = await wastageModel.findOne(req.params);
+    let data = await wastageModel.findOne(req.params).populate('Supplier').populate('IngredientName');
     res.send(data);
 }
 
