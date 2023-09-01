@@ -2,6 +2,7 @@ import sendMail from '../middlewares/send-email.js';
 import customer from '../models/customer.js';
 import orderitem from '../models/orderitem.js';
 import Product from '../models/product.js';
+import IngredientModel from '../models/ingredients.js';
 
 export const getOrderItemByUserId = async (req, res) => {
     let filter = {}
@@ -44,13 +45,93 @@ export const postOrderItem = async (req, res) => {
     const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax , Color,customername, vehicle,taxfake, OrderNo } = req.body;
     const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax, Color, customername, vehicle,taxfake, OrderNo });
     let prod = []
+    let ingredientsData = []
     prod = product
+    // return console.log(prod)
     await data.save().then(async (result) => {
         const customerPoints = priceExclTax / 5;
         const customerById = await customer.findById(customerId)
-        console.log("prod",prod);
+        // console.log("prod :::: :::",prod);
+
         prod.map(async (item) => {
-            const products = await Product.findOne({ _id: item._id }).populate('userId')
+            const products = await Product.findOne({ _id: item._id })
+            .populate('userId')
+            .populate({
+              path: "ingredient",
+              populate: { path: "ingredient.ingredientId", model: "ingredientsModel" }
+            });
+          
+        //   console.log("products: ", products);
+          
+          // Check if products has ingredient data
+          if (products.ingredient && products.ingredient.length > 0) {
+            const ingredients = [];
+          
+            // Iterate through each ingredient in the array
+            for (const ingredientItem of products.ingredient) {
+              if (ingredientItem.ingredientId) {
+                const ingredientId = ingredientItem.ingredientId;
+          
+                // Execute the query to retrieve the ingredient data
+                const ingredient = await IngredientModel.findOne({ _id: ingredientId });
+          
+                // Subtract the quantity from each stock entry
+                if (ingredient.stockHistory && ingredient.stockHistory.length > 0) {
+                    const sortedStockHistory = ingredient.stockHistory.sort((a, b) => {
+                      // Convert the expiry date strings to Date objects and compare them
+                      const dateA = new Date(a.expiry);
+                      const dateB = new Date(b.expiry);
+                      return dateA - dateB;
+                    });
+                  
+                    for (const stockItem of sortedStockHistory) {
+                      if (stockItem.stock >= ingredientItem.quantity) {
+                        stockItem.stock -= ingredientItem.quantity;
+                        // console.log("stockItem: ", stockItem);
+                  
+                        // If the stock quantity is now 0, remove the item from the array
+                        if (stockItem.stock === 0) {
+                          const indexToRemove = ingredient.stockHistory.indexOf(stockItem);
+                          if (indexToRemove !== -1) {
+                            ingredient.stockHistory.splice(indexToRemove, 1);
+                          }
+                        }
+                  
+                        // Break the loop since we've deducted the required quantity
+                        break;
+                      } else {
+                        // Deduct the available stock and continue to the next item
+                        ingredientItem.quantity -= stockItem.stock;
+                        stockItem.stock = 0;
+                  
+                        // Remove the item from the array since it's now empty
+                        const indexToRemove = ingredient.stockHistory.indexOf(stockItem);
+                        if (indexToRemove !== -1) {
+                          ingredient.stockHistory.splice(indexToRemove, 1);
+                        }
+                      }
+                    }
+                  
+                    // Save the modified ingredient document
+                    // console.log( ":::::::::::::::: ",ingredient)
+                    await ingredient.save();
+                }
+                
+                
+                // Save the modified ingredient document          
+                // console.log("ingredients : : ",ingredients)
+                ingredients.push(ingredient);
+              }
+            }
+          
+            // console.log("ingredients: ", ingredients);
+          
+            // You can return the array of ingredients or process them as needed
+            return ingredients;
+          }
+          
+          
+          
             await Product.findOneAndUpdate({_id:products._id}, { $set: { "totalQuantity": products.totalQuantity - item.quantity } })
             let filteredProductsName = []
             let userEmail = products.userId.email
