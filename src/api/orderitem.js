@@ -41,8 +41,8 @@ export const getOrderItems = async (req, res) => {
 }
 
 export const postOrderItem = async (req, res) => {
-    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax , Color,customername, vehicle,taxfake, OrderNo } = req.body;
-    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax, Color, customername, vehicle,taxfake, OrderNo });
+    const { orderId, table, product, selectedModifiers,loyalityOffer,couponOffer,ReservedTable, points,orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax , Color,customername, vehicle,taxfake, OrderNo, recieptDiscount } = req.body;
+    const data = await new orderitem({ orderId, table, product,orderStatus, selectedModifiers, loyalityOffer,couponOffer,points,ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType , split, tax, Color, customername, vehicle,taxfake, OrderNo, recieptDiscount });
     let prod = []
     prod = product
     await data.save().then(async (result) => {
@@ -98,6 +98,7 @@ export const postOrderItem = async (req, res) => {
                 vehicle:result.vehicle,
                 taxfake:result.taxfake,
                 OrderNo:result.OrderNo,
+                recieptDiscount: result.recieptDiscount
 
             })
         } else {
@@ -132,6 +133,7 @@ export const postOrderItem = async (req, res) => {
                 Color:result.Color,
                 customername:result.customername,
                 vehicle:result.vehicle,
+                recieptDiscount: result.recieptDiscount
             })
         }
 
