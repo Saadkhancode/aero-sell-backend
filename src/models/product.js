@@ -20,6 +20,17 @@ const productSchema = new mongoose.Schema({
         required: true,
         ref: 'user'
     },
+    ingredient: [{
+        ingredientId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'ingredientsModel', 
+          required: true
+        },
+        quantity: {
+          type: Number,
+          required: true
+        }
+      }],
     totalQuantity: {
         type: Number
     },
