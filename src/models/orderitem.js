@@ -43,6 +43,9 @@ const orderItemSchema = new mongoose.Schema({
         type: String,
         enum: ['physical', 'online','drivethru' , 'dinein' , 'takeout']
     },
+    recieptDiscount:{
+        type:Object
+    },
     tax: [{
         name: {
             type: String
