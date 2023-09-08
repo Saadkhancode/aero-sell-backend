@@ -3,7 +3,8 @@ const routes=express.Router();
 
 import {Checkout,
     createAppSubscription,
-    createHardwareSubscription
+    createHardwareSubscription,
+    getCustomerSubscriptionsByEmail
 } from "../api/checkout.js"
 import { createSellerAccount,
     authorizeSeller,
@@ -19,6 +20,7 @@ import {
 
 
 routes.get('/sellerbalance/:account_id',getSellerBalance)
+routes.get('/subscriptions/:email',getCustomerSubscriptionsByEmail)
 routes.post('/authorize-seller/:userId', authorizeSeller )
 routes.post('/credit', Checkout )
 routes.post('/app-plan',createAppSubscription  )

@@ -37,11 +37,46 @@ export const Checkout = async (req, res) => {
 
 
 };
-// async function getProductByName(name) {
-//   const products = await stripe.products.list();
-//   const product = products.data.find((p) => p.name === name);
-//   return product;
-// }
+// get Apis 
+export const getCustomers = async (req, res) => {
+  try {
+    const customers = await stripe.customers.list({ limit: 100 });
+    res.json(customers.data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Get all subscription plans from Stripe
+export const getSubscriptions = async (req, res) => {
+  try {
+    const plans = await stripe.subscriptions.list({ limit: 100 });
+    res.json(plans.data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+export const getCustomerSubscriptionsByEmail = async (req, res) => {
+  try {
+    const customers = await stripe.customers.list({ email: req.params.email ,limit:100});
+    const customer = customers.data[0];
+
+    if (!customer) {
+      res.status(500).json({message:`Subscription Not Found,
+                                        Please Subscribe
+                                           a Plan`});
+    return
+    }
+    const subscriptions = await stripe.subscriptions.list({ customer: customer.id });
+
+    res.status(200).json({
+      customer: customer,
+      subscriptions: subscriptions.data
+    });
+  } catch (error) {
+    res.status(500).json({error: error})
+  }
+}
 async function getProductByName(name) {
   try {
     const products = await stripe.products.list({
@@ -64,7 +99,7 @@ export const createAppSubscription = async (req, res) => {
   let customer = null;
 
   // Check if customer already exists
-  const existingCustomers = await stripe.customers.list({ email: email,limit:100}).catch(err => {
+  const existingCustomers = await stripe.customers.list({ email: email, limit: 100 }).catch(err => {
     console.error(err);
     res.status(500).json({ error: 'Failed to list existing customers' });
   });
@@ -125,7 +160,7 @@ export const createAppSubscription = async (req, res) => {
 
   // Check if app plan already exists
   let appPlan = null;
-  const existingPlans = await stripe.plans.list({ product: productsData?.id, active: true,limit:100 }).catch(err => {
+  const existingPlans = await stripe.plans.list({ product: productsData?.id, active: true, limit: 100 }).catch(err => {
     console.error(err);
     res.status(500).json({ error: 'Failed to list existing plans' });
   });
@@ -201,7 +236,7 @@ export const createAppSubscription = async (req, res) => {
                <h2 style="font-size: 1rem; margin-bottom: 1rem;">Details of your transaction are as follows:</h2>
     
                <li style="margin-bottom: 1rem; display:flex; justify-content:center">Product : <strong>PatronWorks POS Software(${product.name})</strong></li>
-               <li style="margin-bottom: 1rem; display:flex; justify-content:center">Total Amount : <strong>${amount/100}/month</strong></li>
+               <li style="margin-bottom: 1rem; display:flex; justify-content:center">Total Amount : <strong>${amount / 100}/month</strong></li>
                <li style="margin-bottom: 3rem; display:flex; justify-content:center">Date of Purchase : <strong>${new Date(latestInvoice.status_transitions.paid_at * 1000).toLocaleDateString()}</strong></li>
            </ul>
            <p style="margin-bottom: 3rem;">You can view the full details of your receipt on Stripe by clicking the link
@@ -393,7 +428,7 @@ export const createHardwareSubscription = async (req, res) => {
 
     try {
       // Check if customer already exists
-      const existingCustomers = await stripe.customers.list({ email: email,limit:100 });
+      const existingCustomers = await stripe.customers.list({ email: email, limit: 100 });
       if (existingCustomers.data.length > 0) {
         customer = existingCustomers.data[0];
       } else {
@@ -456,7 +491,7 @@ export const createHardwareSubscription = async (req, res) => {
     let oneTimePlan = null;
     let yearlyPlan = null;
 
-    const existingPlans = await stripe.plans.list({ product: products?.id ,active:true,limit:100});
+    const existingPlans = await stripe.plans.list({ product: products?.id, active: true, limit: 100 });
 
     console.log('existingPlans: ', existingPlans);
 
@@ -550,7 +585,7 @@ export const createHardwareSubscription = async (req, res) => {
                <h2 style="font-size: 1rem; margin-bottom: 1rem;">Details of your transaction are as follows:</h2>
     
                <li style="margin-bottom: 1rem; display:flex; justify-content:center">Product : <strong>PatronWorks POS Hardware(${product.name})</strong></li>
-               <li style="margin-bottom: 1rem; display:flex; justify-content:center">Total Amount : <strong>${amount/100}/month</strong></li>
+               <li style="margin-bottom: 1rem; display:flex; justify-content:center">Total Amount : <strong>${amount / 100}/month</strong></li>
                <li style="margin-bottom: 3rem; display:flex; justify-content:center">Date of Purchase : <strong>${new Date(latestInvoice.status_transitions.paid_at * 1000).toLocaleDateString()}</strong></li>
            </ul>
            <p style="margin-bottom: 3rem;">You can view the full details of your receipt on Stripe by clicking the link
