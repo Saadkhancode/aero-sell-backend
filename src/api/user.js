@@ -17,16 +17,17 @@ export const getSuperUser = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email }) || await superUser.findOne({ email }) || await employee.findOne({ email })
+  const { userId ,superUserId} = req.body;
+  console.log('userId: ', userId);
+  const user = await User.findOne({ userId:userId}) || await superUser.findOne({ superUserId })
   console.log('user: ', user);
   // return
-  if (!user) {
+  if (user.userId != userId || user.superUserId != superUserId) {
     return res.status(400).send({ message: "User not found" });
   }
-  if (user.password !== password) {
-    return res.status(400).send({ message: "Wrong password" });
-  }
+  // if (user.password !== password) {
+  //   return res.status(400).send({ message: "Wrong password" });
+  // }
   console.log('role: ', user.role);
   if (user.role == 'admin' || user.role == 'superadmin') {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
@@ -34,9 +35,6 @@ export const login = async (req, res) => {
     const role = user.role;
     const loginDate = user.createdDate
     return res.send({ message: "user login successfully", token, userId, role, loginDate, email: user.email });
-  } else if (user.role == 'employee') {
-    const userId = { _id: user.userId }
-    return res.status(200).send({ message: "Employee Login Successfully", userId, startDate: user.startDate, employeId: user._id, firstName: user.firstName, lastName: user.lastName, role: user.role });
   }
 
 }

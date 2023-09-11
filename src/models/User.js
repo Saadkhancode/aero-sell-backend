@@ -27,9 +27,9 @@ const UserSchema = new Schema({
     type:Boolean,
     default:true
   } ,
-  // stripe_customer_id:{
-  //   type:String
-  // },
+  userId:{
+    type:String
+  },
   stripe_acess_token:{
     type:String
   },
@@ -62,6 +62,9 @@ const superUserSchema = new Schema({
   },
   role: {
     type: String,
+  },
+  superUserId:{
+    type:String
   }
 })
 
