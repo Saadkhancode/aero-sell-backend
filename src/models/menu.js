@@ -4,11 +4,9 @@ const menuSchema = new mongoose.Schema({
     treeData: {
         type: Array
     } ,
-    //  userId:{
-    //     type:mongoose.Schema.Types.ObjectId,
-    //     ref:'user',
-    //     required:true,
-    // },
+    role:{
+        type:String
+    },
     superUserId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'superUser'
