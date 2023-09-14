@@ -6,7 +6,8 @@ import {getUser,
     login,
     deleteUser,
     updateUser,
-    getUserById
+    getUserById,
+    updateSuperUser
 } from "../api/user.js"
 
 routes.get('/User', getUser )
@@ -15,6 +16,7 @@ routes.get('/user/:_id',getUserById)
 
 routes.post('/login', login )
 routes.put('/user/:_id',updateUser)
+routes.put('/superUser/:_id',updateSuperUser)
 routes.delete('/user/:email',  deleteUser)
 
 
