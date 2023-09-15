@@ -4,6 +4,9 @@ const parentCategorySchema = new mongoose.Schema({
     name: {
         type: String
     } ,
+    parent_pic:{
+        type:String
+    },
      userId:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,

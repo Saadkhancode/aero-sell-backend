@@ -19,7 +19,8 @@ export const getCategoriesById = async (req, res) => {
 }
 export const postCategories = async (req, res) => {
     const { name, extraData, categoryType,  order, hasPicture, active, displayManagerId, parentId, lampixIcon, translation, product, showPictures,userId} = req.body;
-    let data = await new category({ name, extraData, categoryType,  order, hasPicture, active, displayManagerId, parentId, lampixIcon, translation, product, showPictures,userId});
+    const category_pic=req.file ? req.file.location : null
+    let data = await new category({ name, extraData, categoryType,category_pic,order, hasPicture, active, displayManagerId, parentId, lampixIcon, translation, product, showPictures,userId});
     await data.save().then(result => {
         console.log("Category data saved to database");
         res.json({
@@ -27,6 +28,7 @@ export const postCategories = async (req, res) => {
             name: result.name,
             extraData: result.extraData,
             categoryType: result.categoryType,
+            category_pic:result.category_pic,
             order: result.order,
             hasPicture: result.hasPicture,
             active: result.active,
@@ -44,10 +46,11 @@ export const postCategories = async (req, res) => {
     });
 }
 export const updateCategories = async (req, res) => {
+    const category_pic=req.file ? req.file.location : null
     console.log(req.params)
     let data = await category.findByIdAndUpdate(
         { _id: req.params._id }, {
-        $set: req.body
+        $set: req.body,category_pic:category_pic
     },
         { new: true }
     );

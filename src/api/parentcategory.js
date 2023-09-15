@@ -17,12 +17,14 @@ export const getParentCategoriesById = async (req, res) => {
 }
 export const postParentCategories = async (req, res) => {
     const { name,userId } = req.body;
-    let data = await new parentcategory({ name,userId });
+    const parent_pic=req.file ? req.file.location : null
+    let data = await new parentcategory({ name,userId ,parent_pic});
     await data.save().then(result => {
         console.log("Category data saved to database");
         res.json({
             name: result.name,
-            userId:result.userId
+            userId:result.userId,
+            parent_pic:result.parent_pic
         })
     }).catch(err => {
         res.status(400).send("unable to save to database");
@@ -30,10 +32,11 @@ export const postParentCategories = async (req, res) => {
     });
 }
 export const updateParentCategories = async (req, res) => {
+    const parent_pic=req.file ? req.file.location : null
     console.log(req.params)
     let data = await parentcategory.findByIdAndUpdate(
         { _id: req.params._id }, {
-        $set: req.body
+        $set: req.body,parent_pic:parent_pic
     },
         { new: true }
     );
