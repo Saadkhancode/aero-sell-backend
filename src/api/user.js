@@ -38,6 +38,28 @@ export const login = async (req, res) => {
   }
 
 }
+export const loginkiosk = async (req, res) => {
+  const { email,password} = req.body;
+  console.log('email: ', email);
+  const user = await User.findOne({ email:email}) || await superUser.findOne({ email:email })
+  console.log('user: ', user);
+  // return
+  if (user?.email !== email ) {
+    return res.status(400).send({ message: "User not found" });
+  }
+  if (user.password !== password) {
+    return res.status(400).send({ message: "Wrong password" });
+  }
+  console.log('role: ', user.role);
+  if (user.role == 'admin' || user.role == 'superadmin') {
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    const userId = { _id: user._id }
+    const role = user.role;
+    const loginDate = user.createdDate
+    return res.send({ message: "user login successfully", token, userId, role, loginDate, email: user.email });
+  }
+
+}
 
 export const updateUser = async (req, res) => {
   console.log(req.params)
