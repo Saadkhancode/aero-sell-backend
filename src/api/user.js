@@ -17,17 +17,39 @@ export const getSuperUser = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-  const { userId ,superUserId} = req.body;
+  const { userId} = req.body;
   console.log('userId: ', userId);
-  const user = await User.findOne({ userId:userId}) || await superUser.findOne({ superUserId })
+  const user = await User.findOne({ userId:userId}) || await superUser.findOne({ userId:userId })
   console.log('user: ', user);
   // return
-  if (user.userId != userId || user.superUserId != superUserId) {
+  if (user?.userId != userId ) {
     return res.status(400).send({ message: "User not found" });
   }
   // if (user.password !== password) {
   //   return res.status(400).send({ message: "Wrong password" });
   // }
+  console.log('role: ', user.role);
+  if (user.role == 'admin' || user.role == 'superadmin') {
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    const userId = { _id: user._id }
+    const role = user.role;
+    const loginDate = user.createdDate
+    return res.send({ message: "user login successfully", token, userId, role, loginDate, email: user.email });
+  }
+
+}
+export const loginkiosk = async (req, res) => {
+  const { email,password} = req.body;
+  console.log('email: ', email);
+  const user = await User.findOne({ email:email}) || await superUser.findOne({ email:email })
+  console.log('user: ', user);
+  // return
+  if (user?.email !== email ) {
+    return res.status(400).send({ message: "User not found" });
+  }
+  if (user.password !== password) {
+    return res.status(400).send({ message: "Wrong password" });
+  }
   console.log('role: ', user.role);
   if (user.role == 'admin' || user.role == 'superadmin') {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
@@ -53,10 +75,25 @@ export const updateUser = async (req, res) => {
     res.send({ message: "User data cannot be updated successfully" })
   }
 }
+export const updateSuperUser = async (req, res) => {
+  console.log(req.params)
+  let data = await superUser.findByIdAndUpdate(
+    { _id: req.params._id }, {
+    $set: req.body
+  }, { new: true }
+  );
+  if (data) {
+    res.send({ message: "superUser data updated successfully" });
+  }
+  else {
+    res.send({ message: "superUser data cannot be updated successfully" })
+  }
+}
 export const deleteUser = async (req, res) => {
   console.log(req.params)
   const { email } = req.params
-  let data = await User.findOneAndDelete({ email })
+  console.log('email: ', email);
+  let data = await User.findOneAndDelete({ email:email})
   if (data) {
     res.send({ message: "User data delete successfully" });
   } else {

@@ -63,7 +63,7 @@ const superUserSchema = new Schema({
   role: {
     type: String,
   },
-  superUserId:{
+  userId:{
     type:String
   }
 })

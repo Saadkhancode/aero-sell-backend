@@ -1,4 +1,5 @@
 import express  from "express";
+import {awsupload} from "../middlewares/aws-s3-upload.js";
 const routes=express.Router();
 
 import {getCategories,
@@ -11,8 +12,8 @@ import {getCategories,
 routes.get('/category', getCategories )
 routes.get('/category/:_id', getCategoriesById )
 
-routes.post('/category', postCategories )
-routes.put('/category/:_id', updateCategories )
+routes.post('/category',awsupload.single('category_pic') ,postCategories )
+routes.put('/category/:_id',awsupload.single('category_pic'), updateCategories )
 routes.delete('/category/:_id', deleteCategories )
 
 

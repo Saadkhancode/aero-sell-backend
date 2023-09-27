@@ -51,12 +51,20 @@ export const postOrderItem = async (req, res) => {
     const customerPoints = priceExclTax / 5;
     const customerById = await customer.findById(customerId)
     prod.map(async (item) => {
-      const products = await Product.findOne({ _id: item._id })
-        .populate('userId')
-        .populate({
-          path: "ingredient",
-          populate: { path: "ingredient.ingredientId", model: "ingredientsModel" }
-        });
+      console.log('item: ', item);
+      const products = await Product.findById({ _id: item._id })
+      .populate('userId')
+      .populate({
+        path: "ingredient",
+        populate: { path: "ingredient.ingredientId", model: "ingredientsModel" }
+      });
+      console.log('products: ', products);
+      await Product.findByIdAndUpdate({ _id: products._id }, { $set: { "totalQuantity": products.totalQuantity - item.quantity } })
+      let filteredProductsName = []
+      let userEmail = products.userId.email
+      if (products.totalQuantity <= 5) {
+        filteredProductsName.push(products.name)
+      }
       if (products.ingredient && products.ingredient.length > 0) {
         const ingredients = [];
         for (const ingredientItem of products.ingredient) {
@@ -104,12 +112,6 @@ export const postOrderItem = async (req, res) => {
 
 
 
-      await Product.findOneAndUpdate({ _id: products._id }, { $set: { "totalQuantity": products.totalQuantity - item.quantity } })
-      let filteredProductsName = []
-      let userEmail = products.userId.email
-      if (products.totalQuantity <= 5) {
-        filteredProductsName.push(products.name)
-      }
       if (products && userEmail && filteredProductsName) {
         sendMail(userEmail, "Low Stock Alerts", `<h2 style="background-color: #f1f1f1; padding: 20px;width:50%">These Products Are  Low  In  Stock</h2><br><h3 style="background-color: #f1f1f1; width:60%">${filteredProductsName}</h3>`)
       }

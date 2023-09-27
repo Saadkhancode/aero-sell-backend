@@ -7,6 +7,9 @@ const categorySchema = new mongoose.Schema({
     extraData: {
         type: String
     },
+    category_pic:{
+        type:String
+    },
     categoryType: {
         type: String
     },
@@ -19,7 +22,7 @@ const categorySchema = new mongoose.Schema({
         type: Number
     },
     hasPicture: {
-        type: Boolean
+        type: String
     },
     active: {
         type: String
