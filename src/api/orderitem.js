@@ -48,8 +48,8 @@ export const postOrderItem = async (req, res) => {
   let ingredientsData = []
   prod = product
   await data.save().then(async (result) => {
-    const customerPoints = priceExclTax / 5;
-    const customerById = await customer.findById(customerId)
+    // const customerPoints = priceExclTax / 5;
+    // const customerById = await customer.findById(customerId)
     prod.map(async (item) => {
       console.log('item: ', item);
       const products = await Product.findById({ _id: item._id })
@@ -116,21 +116,57 @@ export const postOrderItem = async (req, res) => {
         sendMail(userEmail, "Low Stock Alerts", `<h2 style="background-color: #f1f1f1; padding: 20px;width:50%">These Products Are  Low  In  Stock</h2><br><h3 style="background-color: #f1f1f1; width:60%">${filteredProductsName}</h3>`)
       }
     })
-    if (customerById) {
-      const customerdata = await customer.findByIdAndUpdate(customerById, { $set: { "CustomerLoyalty.Points": !isNaN(customerById?.CustomerLoyalty?.Points) + customerPoints } })
-      console.log("customerAfterAddedPoints", customerdata);
+    // if (customerById) {
+    //   const customerdata = await customer.findByIdAndUpdate(customerById, { $set: { "CustomerLoyalty.Points": !isNaN(customerById?.CustomerLoyalty?.Points) + customerPoints } })
+    //   console.log("customerAfterAddedPoints", customerdata);
+    //   res.json({
+    //     orderId: result.orderId,
+    //     product: result.product,
+    //     displayStatus: result.displayStatus,
+    //     table: result.table,
+    //     split: result.split,
+    //     Status: result.Status,
+    //     selectedModifiers: result.selectedModifiers,
+    //     loyalityOffer: result.loyalityOffer,
+    //     couponOffer: result.couponOffer,
+    //     dueamount: result.dueamount,
+    //     points: result.points,
+    //     taxValue: result.taxValue,
+    //     productWithQty: result.productWithQty,
+    //     priceExclTax: result.priceExclTax,
+    //     productPrice: result.productPrice,
+    //     lineValueExclTax: result.lineValueExclTax,
+    //     lineValueTax: result.lineValueTax,
+    //     lineValue: result.lineValue,
+    //     units: result.units,
+    //     text: result.text,
+    //     tax: result.tax,
+    //     userId: result.userId,
+    //     customerId: result.customerId,
+    //     paymentType: result.paymentType,
+    //     createdAt: result.createdAt,
+    //     updatedAt: result.updatedAt,
+    //     orderStatus: result.orderStatus,
+    //     ReservedTable: result.ReservedTable,
+    //     Color: result.Color,
+    //     customername: result.customername,
+    //     vehicle: result.vehicle,
+    //     taxfake: result.taxfake,
+    //     OrderNo: result.OrderNo,
+
+    //   })
+    // } else {
       res.json({
         orderId: result.orderId,
         product: result.product,
+        dueamount: result.dueamount,
         displayStatus: result.displayStatus,
-        table: result.table,
-        split: result.split,
-        Status: result.Status,
-        selectedModifiers: result.selectedModifiers,
         loyalityOffer: result.loyalityOffer,
         couponOffer: result.couponOffer,
-        dueamount: result.dueamount,
         points: result.points,
+        split: result.split,
+        Status: result.Status,
+        OrderNo: result.OrderNo,
         taxValue: result.taxValue,
         productWithQty: result.productWithQty,
         priceExclTax: result.priceExclTax,
@@ -151,45 +187,7 @@ export const postOrderItem = async (req, res) => {
         Color: result.Color,
         customername: result.customername,
         vehicle: result.vehicle,
-        taxfake: result.taxfake,
-        OrderNo: result.OrderNo,
-
       })
-    } else {
-      res.json({
-        orderId: result.orderId,
-        product: result.product,
-        dueamount: result.dueamount,
-        displayStatus: result.displayStatus,
-        loyalityOffer: result.loyalityOffer,
-        couponOffer: result.couponOffer,
-        points: result.points,
-        split: result.split,
-        Status: result.Status,
-        OrderNo: result.OrderNo,
-        taxValue: result.taxValue,
-        productWithQty: result.productWithQty,
-        priceExclTax: result.priceExclTax,
-        productPrice: result.productPrice,
-        lineValueExclTax: result.lineValueExclTax,
-        lineValueTax: result.lineValueTax,
-        lineValue: result.lineValue,
-        units: result.units,
-        text: result.text,
-        tax: result.tax,
-        userId: result.userId,
-        customerId: result.customerId,
-        paymentType: result.paymentType,
-        createdAt: result.createdAt,
-        updatedAt: result.updatedAt,
-        orderStatus: result.orderStatus,
-        ReservedTable: result.ReservedTable,
-        Color: result.Color,
-        customername: result.customername,
-        vehicle: result.vehicle,
-      })
-    }
-
   }).catch(err => {
     res.status(400).send('unable to save database');
     console.log(err)
