@@ -72,6 +72,7 @@ export const postCustomer = async (req, res) => {
         console.log(err)
     })
 }
+//any
 export const updateCustomer = async (req, res) => {
 
     console.log(req.params.id)
