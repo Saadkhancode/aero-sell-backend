@@ -89,6 +89,16 @@ const productSchema = new mongoose.Schema({
     },
     value:{
         type:Number
+    },
+    startTime:{
+        type:String
+    },
+    endTime:{
+        type:String
+    },
+    courseDate:{
+        type:String
+
     }
 
 })
