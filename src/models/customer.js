@@ -53,6 +53,9 @@ const customerSchema = new mongoose.Schema({
     ConfirmPassword:{
         type:String
     },
+    isActive:{
+        type:Boolean
+    },
     CustomerLoyalty:{
         
     CardNo: {
@@ -81,6 +84,9 @@ const customerSchema = new mongoose.Schema({
             type: Boolean
         }
     },
+    ActivateCard:{
+        type:Boolean
+    },
     BirthDate: {
         type: Date,
         default:timeStamp
@@ -98,15 +104,18 @@ const customerSchema = new mongoose.Schema({
     Purchases:{
       type:Number
     },
+    SpentAmount:{
+        type:Number
+    },
     Gender: {
         type: String
     },
-    History: [{
-        type: String
-    }],
-    Notes: [{
-        type: String
-    }]
+    // History: [{
+    //     type: String
+    // }],
+    // Notes: [{
+    //     type: String
+    // }]
 }
 })
 
