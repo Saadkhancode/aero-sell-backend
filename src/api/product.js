@@ -34,10 +34,11 @@ export const getProductByKey = async (req, res) => {
     res.send(isLock);
 }
 
-export const postProduct = async (req, res) => {
-    const { lavel, rows, cols, categoryParents, barCode, name,ingredient, price, retailPrice, shortDescription, fullDescription, order, active, categoryId, hasPicture, productPictureId, totalQuantity, productId, productType, userId, unit, startTime, endTime, courseDate } = req.body;
+export const postProduct = async (req, res) => {                                                                                
+    const { lavel, rows, cols, categoryParents, barCode, name,ingredient, price, retailPrice, shortDescription, fullDescription, order, active, categoryId, hasPicture, productPictureId, totalQuantity, productId, productType, userId, unit,   } = req.body;
     // let ingredientparse= JSON.parse(req.body?.ingredient)
     const ingredientparse = req.body.ingredient ? JSON.parse(req.body.ingredient) : undefined;
+    const courseDate1 = req.body.courseDate ? JSON.parse(req.body.courseDate) : undefined;
     // return console.log("product data : ",req.body)RS
    const Product_pic = req.file ? req.file.location : null
     try {
@@ -54,7 +55,7 @@ export const postProduct = async (req, res) => {
         const ProductId = `PR${numericCount.toString().padStart(4, '0')}`
 
 
-        const productData = new product({ lavel, rows, cols, categoryParents,ingredient:ingredientparse, totalQuantity, barCode, name, price, retailPrice, shortDescription, fullDescription, order, active, categoryId, hasPicture, productPictureId, productId, productType, userId, Product_pic, unit, ProductId, startTime, endTime, courseDate });
+        const productData = new product({ lavel, rows, cols, categoryParents,ingredient:ingredientparse, totalQuantity, barCode, name, price, retailPrice, shortDescription, fullDescription, order, active, categoryId, hasPicture, productPictureId, productId, productType, userId, Product_pic, unit, ProductId, courseDate:courseDate1 });
         const savedProduct = await productData.save();
 
         res.json({
@@ -79,9 +80,8 @@ export const postProduct = async (req, res) => {
             productType: savedProduct.productType,
             userId: savedProduct.userId,
             Product_pic: savedProduct.Product_pic,
-            startTime:savedProduct.startTime,
-            endTime:savedProduct.endTime, 
             courseDate:savedProduct.courseDate
+
         });
     } catch (error) {
         console.error('Error:', error);
