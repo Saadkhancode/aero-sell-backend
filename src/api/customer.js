@@ -9,6 +9,7 @@ export const getCustomer = async (req, res) => {
     res.send(customerData);
 
 }
+//
 export const getCustomerById = async (req, res) => {
     let customerData = await customer.find(req.params)
     res.send(customerData);
