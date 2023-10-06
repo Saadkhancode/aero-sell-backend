@@ -1,8 +1,7 @@
 import sendMail from '../middlewares/send-email.js';
-import customer from '../models/customer.js';
+import IngredientModel from '../models/ingredients.js';
 import orderitem from '../models/orderitem.js';
 import Product from '../models/product.js';
-import IngredientModel from '../models/ingredients.js';
 
 export const getOrderItemByUserId = async (req, res) => {
   let filter = {}
@@ -50,6 +49,7 @@ export const postOrderItem = async (req, res) => {
   await data.save().then(async (result) => {
     // const customerPoints = priceExclTax / 5;
     // const customerById = await customer.findById(customerId)
+    if (Array.isArray(prod) && prod.length > 0) {
     prod.map(async (item) => {
       console.log('item: ', item);
       const products = await Product.findById({ _id: item._id })
@@ -116,6 +116,9 @@ export const postOrderItem = async (req, res) => {
         sendMail(userEmail, "Low Stock Alerts", `<h2 style="background-color: #f1f1f1; padding: 20px;width:50%">These Products Are  Low  In  Stock</h2><br><h3 style="background-color: #f1f1f1; width:60%">${filteredProductsName}</h3>`)
       }
     })
+  }else{
+    console.warn('Invalid or empty "product" array');
+  }
     // if (customerById) {
     //   const customerdata = await customer.findByIdAndUpdate(customerById, { $set: { "CustomerLoyalty.Points": !isNaN(customerById?.CustomerLoyalty?.Points) + customerPoints } })
     //   console.log("customerAfterAddedPoints", customerdata);
