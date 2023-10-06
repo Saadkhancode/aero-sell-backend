@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 var current = new Date();
 const timeStamp = new Date(Date.UTC(current.getFullYear(),
     current.getMonth(), current.getDate(), current.getHours(),
@@ -83,6 +84,16 @@ const orderItemSchema = new mongoose.Schema({
         },
         discountTypePr: {
             type: Boolean
+        },
+        userDate:{
+            type:String
+        },
+        userendTime:{
+            type:String
+        },
+        userstartTime:{
+            type:String
+
         }
 
     }],
