@@ -15,7 +15,6 @@ export const printReceipt = async (req, res) => {
 
   })
   console.log('printer: ', printer);
-  return
   // Get the current module's directory name
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
