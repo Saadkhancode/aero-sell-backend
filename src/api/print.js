@@ -60,3 +60,56 @@ const generateReceiptPDF = async (htmlContent, pdfPath) => {
     await browser.close();
   }
 };
+// import pkg from "pdf-to-printer";
+// import puppeteer from 'puppeteer';
+// import fs from "fs";
+// import path from "path";
+// import AWS from 'aws-sdk';  // Import AWS SDK
+
+// const { print, getDefaultPrinter } = pkg;
+
+// const s3 = new AWS.S3();
+
+// export const printReceipt = async (req, res) => {
+//   const { content } = req.body;
+//   const pdfPath = `${Date.now()}Receipt.pdf`;
+
+//   try {
+//     // Generate the PDF
+//     const pdfBuffer = await generateReceiptPDF(content, pdfPath);
+
+//     // Upload the PDF to AWS S3
+//     const s3Params = {
+//       Bucket: 'patronworks',
+//       Key: pdfPath,
+//       Body: pdfBuffer,
+//     };
+
+//     await s3.upload(s3Params).promise();
+
+//     // Print the PDF using the default printer
+//     const options = {};
+//     await pkg.print(pdfPath, options).then(() => {
+//       console.log('Print done');
+//       res.status(200).json("Print successful");
+//     }).catch(err => {
+//       console.log('Error while printing:', err);
+//       res.status(400).send("Error while printing");
+//     });
+//   } finally {
+//     // Optionally, you can delete the temporary file
+//   }
+// };
+
+// const generateReceiptPDF = async (htmlContent, pdfPath) => {
+//   const browser = await puppeteer.launch({ headless: true });
+//   const page = await browser.newPage();
+
+//   try {
+//     await page.setContent(htmlContent);
+//     const pdfBuffer = await page.pdf({ format: 'Letter' });
+//     return pdfBuffer;
+//   } finally {
+//     await browser.close();
+//   }
+// };
