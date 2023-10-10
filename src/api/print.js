@@ -1,43 +1,62 @@
 import pkg from "pdf-to-printer";
+import puppeteer from 'puppeteer';
 import fs from "fs";
 import path from "path";
+import url from 'url'; // Import url module
 
-import { fileURLToPath } from 'url';
-const {print,getDefaultPrinter,getPrinters} = pkg;
+const { print, getDefaultPrinter } = pkg;
+
 export const printReceipt = async (req, res) => {
+  const { content } = req.body;
   const options = {};
- 
-  const printer=pkg.getDefaultPrinter().then(res=>{
-    console.log('res: ', res);
 
-  }).catch(err=>{
-    console.log('err: ', err);
-
-  })
-  console.log('printer: ', printer);
-  const __filename = fileURLToPath(import.meta.url);
+  // Get the directory name using import.meta.url
+  const __filename = url.fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
 
-  // Define the directory for temporary files
-  const tmpDir = path.join(__dirname, 'tmp');
+  const pdfPath = path.join(__dirname, 'tmp', `${Date.now()}Receipt.pdf`);
 
-  // Ensure the directory exists (create if it doesn't)
-  if (!fs.existsSync(tmpDir)) {
-    fs.mkdirSync(tmpDir);
+  try {
+    // Generate the PDF and save it to a temporary file
+    await generateReceiptPDF(content, pdfPath);
+
+    const defaultPrinter = await pkg.getDefaultPrinter().catch(err => {
+      console.log('Error getting default printer:', err);
+      res.status(400).send("Error getting default printer");
+      return;
+    });
+
+    if (!defaultPrinter) {
+      console.log('No default printer found.');
+      res.status(400).send("No default printer found");
+      return;
+    }
+
+    console.log('Default printer: ', defaultPrinter);
+
+    // Print the PDF using the default printer
+    await pkg.print(pdfPath, options).then(() => {
+      console.log('Print done');
+      res.status(200).json("Print successful");
+    }).catch(err => {
+      console.log('Error while printing:', err);
+      res.status(400).send("Error while printing");
+    });
+  } finally {
+    // Delete the temporary file
+    fs.unlinkSync(pdfPath);
   }
+};
 
-  // Generate a unique filename with an absolute path
-  const uniqueFilename = path.join(tmpDir, `${Math.random().toString(36).substr(7)}.pdf`);
+const generateReceiptPDF = async (htmlContent, pdfPath) => {
+  const browser = await puppeteer.launch({ headless: 'new' });
+  const page = await browser.newPage();
 
-  fs.writeFileSync(uniqueFilename, req.body.content, 'binary');
-  await ptp.print(uniqueFilename, options).then(res=>{
-    Console.log('print done')
-    fs.unlinkSync(uniqueFilename);
-    res.status(200).json("print successfull");
-    return
-  }).catch(err=>{
-    console.log('error while printing');
-    fs.unlinkSync(uniqueFilename);
-    res.status(200).send("error while printing");
-  });
-}
+  try {
+    console.log('html content',htmlContent)
+    await page.setContent(htmlContent);
+    await page.pdf({ path: pdfPath, format: 'Letter' });
+  } finally {
+    await browser.close();
+  }
+};
