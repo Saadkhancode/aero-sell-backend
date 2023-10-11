@@ -14,7 +14,15 @@ export const printReceipt = async (req, res) => {
   const __filename = url.fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
 
-  const pdfPath = path.join(__dirname, 'tmp', `${Date.now()}Receipt.pdf`);
+  // Define the target directory for PDF files
+  const pdfDirectory = path.join(__dirname, 'tmp');
+
+  // Ensure the target directory exists or create it
+  if (!fs.existsSync(pdfDirectory)) {
+    fs.mkdirSync(pdfDirectory, { recursive: true });
+  }
+
+  const pdfPath = path.join(pdfDirectory, `${Date.now()}Receipt.pdf`);
 
   try {
     // Generate the PDF and save it to a temporary file
