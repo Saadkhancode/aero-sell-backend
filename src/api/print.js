@@ -10,7 +10,7 @@ export const printReceipt = async (req, res) => {
   const { content } = req.body;
   const options = {};
 
-  // Get the directory name using import.meta.url
+  // Get the directory name using import.met
   const __filename = url.fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
 
