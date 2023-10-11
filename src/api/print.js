@@ -43,7 +43,6 @@ export const printReceipt = async (req, res) => {
       res.status(400).send("Error while printing");
     });
   } finally {
-    // Delete the temporary file
     fs.unlinkSync(pdfPath);
   }
 };
