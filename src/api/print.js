@@ -78,32 +78,32 @@ const { print } = pkg;
 
 export const printReceipt = async (req, res) => {
   const { content } = req.body;
-  const pdfPath = `${Date.now()}Receipt.pdf`;
-
+  const pdfPath = `Receipt.pdf`;
   try {
     // Generate the PDF and save to a temporary file
-    await generateReceiptPDF(content, pdfPath);
-
+  await generateReceiptPDF(content, pdfPath);
     // Print the PDF using the default printer
     await print(pdfPath);
-
     console.log('Print done');
     res.status(200).json("Print successful");
   } catch (error) {
     console.log('Error while printing:', error);
     res.status(400).send("Error while printing");
-  }finally{
-    fs.unlinkSync(pdfPath);
   }
+  // finally{
+  //   fs.unlinkSync(pdfPath);
+  // }
 };
 
 const generateReceiptPDF = async (htmlContent, pdfPath) => {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
-
+ 
   try {
     await page.setContent(htmlContent);
-    await page.pdf({ path: pdfPath, format: 'Letter' });  // Save PDF to a file
+    await page.pdf({ path: pdfPath, format: 'Letter' }); 
+     // Save PDF to a file
+    
   } finally {
     await browser.close();
   }
