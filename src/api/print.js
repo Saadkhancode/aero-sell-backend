@@ -91,9 +91,10 @@ export const printReceipt = async (req, res) => {
   } catch (error) {
     console.log('Error while printing:', error);
     res.status(400).send("Error while printing");
-  }finally{
-    fs.unlinkSync(pdfPath);
   }
+  // finally{
+  //   fs.unlinkSync(pdfPath);
+  // }
 };
 
 const generateReceiptPDF = async (htmlContent, pdfPath) => {
