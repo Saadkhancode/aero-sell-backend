@@ -72,7 +72,7 @@ import fs from 'fs';
 import path from 'path';
 import pkg from 'pdf-to-printer';
 import AWS from 'aws-sdk';
-
+import url from 'url'; // Import url module
 const s3 = new AWS.S3();
 const { print } = pkg;
 
@@ -94,7 +94,7 @@ export const printReceipt = async (req, res) => {
   try {
 
     await generateReceiptPDF(content, pdfPath);
-
+    res.setHeader('Content-Type', 'application/pdf');
     await print(pdfPath);
     console.log('Print done');
     res.status(200).json("Print successful");
