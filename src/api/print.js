@@ -71,7 +71,7 @@ import pkg from "pdf-to-printer";
 import puppeteer from 'puppeteer';
 import fs from "fs";
 import path from "path";
-import AWS from 'aws-sdk';  // Import AWS SDK
+import AWS from 'aws-sdk';
 
 const { print, getDefaultPrinter } = pkg;
 
@@ -82,13 +82,16 @@ export const printReceipt = async (req, res) => {
   const pdfPath = `${Date.now()}Receipt.pdf`;
 
   try {
-    // Generate the PDF
-    const pdfBuffer = await generateReceiptPDF(content, pdfPath);
-const file=`https://patronworks.s3.us-west-2.amazonaws.com}/${pdfPath}`
+    // Generate the PDF and save to a temporary file
+    await generateReceiptPDF(content, pdfPath);
+
+    // Read the PDF file as a buffer
+    const pdfBuffer = fs.readFileSync(pdfPath);
+
     // Upload the PDF to AWS S3
     const s3Params = {
       Bucket: 'patronworks',
-      Key: file,
+      Key: pdfPath,
       Body: pdfBuffer,
     };
 
@@ -105,6 +108,7 @@ const file=`https://patronworks.s3.us-west-2.amazonaws.com}/${pdfPath}`
     });
   } finally {
     // Optionally, you can delete the temporary file
+    fs.unlinkSync(pdfPath);
   }
 };
 
@@ -114,9 +118,9 @@ const generateReceiptPDF = async (htmlContent, pdfPath) => {
 
   try {
     await page.setContent(htmlContent);
-    const pdfBuffer = await page.pdf({ format: 'Letter' });
-    return pdfBuffer;
+    await page.pdf({ path: pdfPath, format: 'Letter' });  // Save PDF to a file
   } finally {
     await browser.close();
   }
 };
+
