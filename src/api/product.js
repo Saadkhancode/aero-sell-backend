@@ -90,8 +90,11 @@ export const postProduct = async (req, res) => {
 }
 
 export const updateProduct = async (req, res) => {
-    const { lavel, rows, cols, categoryParents, barCode, name, Product_pic, price, retailPrice, shortDescription, fullDescription, order, active, categoryId, hasPicture, productPictureId, totalQuantity, productId, productType, userId, unit } = req.body;
-    let ingredientparse= JSON.parse(req.body.ingredient)
+    const { lavel, rows, cols, categoryParents, barCode, name, Product_pic, price, retailPrice, shortDescription, fullDescription, order, active, categoryId, hasPicture, productPictureId, totalQuantity, productId, productType, userId, unit,  } = req.body;
+    // let ingredientparse= JSON.parse(req.body.ingredient)
+    let ingredientparse = req.body.ingredient ? JSON.parse(req.body.ingredient) : undefined;
+    const courseDate1 = req.body.courseDate ? JSON.parse(req.body.courseDate) : undefined;
+
 
     const Product = await product.findById({ _id: req.params._id });
     if (!Product) {
@@ -99,7 +102,9 @@ export const updateProduct = async (req, res) => {
     }
     let userId1
     if (Product.price != price) {
-        let ingredientparse= JSON.parse(req.body.ingredient)
+        // let ingredientparse= JSON.parse(req.body.ingredient)
+    let ingredientparse = req.body.ingredient ? JSON.parse(req.body.ingredient) : undefined;
+
 
         await product.findByIdAndUpdate({ _id: req.params._id }, {
             $set: { "isLock": true , ingredient:ingredientparse}
@@ -111,7 +116,7 @@ export const updateProduct = async (req, res) => {
         });
         const { lavel, rows, cols, categoryParents, barCode, name, Product_pic, price, retailPrice, shortDescription, fullDescription, order, active, categoryId, hasPicture, productPictureId, totalQuantity, productId, productType, userId, unit } = req.body;
 
-        const newProduct = await new product({ lavel, rows, cols, categoryParents, totalQuantity,ingredient:ingredientparse, barCode, name, price, retailPrice, shortDescription, fullDescription, order, active, categoryId, hasPicture, productPictureId, productId, productType, userId: userId1, Product_pic, unit });
+        const newProduct = await new product({ lavel, rows, cols, categoryParents, totalQuantity,ingredient:ingredientparse, barCode, name, price, retailPrice, shortDescription, fullDescription, order, active, categoryId, hasPicture, productPictureId, productId, productType, userId: userId1, Product_pic, unit,courseDate:courseDate1  });
         await newProduct.save().then(result => {
             return res.send({ message: "Product data saved successfully." });
         }).catch(error => {
@@ -119,9 +124,11 @@ export const updateProduct = async (req, res) => {
             return res.status(500).send({ message: "Error saving product data." });
         });
     } else {
-        let ingredientparse= JSON.parse(req.body.ingredient)
+    let ingredientparse = req.body.ingredient ? JSON.parse(req.body.ingredient) : undefined;
+        let courseDate2 = req.body.courseDate?JSON.parse(req.body.courseDate):undefined
+        const Product_pic = req.file ? req.file.location : null
         await product.findByIdAndUpdate({ _id: req.params._id }, {
-            $set: req.body, Product_pic: Product_pic, isLock: false, ingredient:ingredientparse,
+            $set: req.body, Product_pic: Product_pic, isLock: false, ingredient:ingredientparse,courseDate:courseDate2
 
         }, { new: true }).then(result => {
             return res.send({ message: "Product data updated successfully." });
