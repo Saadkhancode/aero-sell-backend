@@ -70,7 +70,7 @@
 import pkg from "pdf-to-printer";
 import puppeteer from 'puppeteer';
 import fs from "fs";
-import path from "path";
+// import path from "path";
 import AWS from 'aws-sdk';
 
 const { print, getDefaultPrinter } = pkg;
