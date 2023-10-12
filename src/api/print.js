@@ -84,7 +84,6 @@ export const printReceipt = async (req, res) => {
     // Generate the PDF and save to a temporary file
     await generateReceiptPDF(content, pdfPath);
 
-    // Print the PDF using the default printer
     await print(pdfPath);
 
     console.log('Print done');
