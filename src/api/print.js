@@ -85,26 +85,31 @@ export const printReceipt = async (req, res) => {
   // Define the target directory for PDF files
   const pdfDirectory = path.join(__dirname, 'tmp');
 
+  // Ensure the target directory exists or create it
   if (!fs.existsSync(pdfDirectory)) {
     fs.mkdirSync(pdfDirectory, { recursive: true });
   }
 
   const pdfPath = path.join(pdfDirectory, `${Date.now()}Receipt.pdf`);
+  try {
 
     await generateReceiptPDF(content, pdfPath);
     res.setHeader('Content-Type', 'application/pdf');
-    await print(pdfPath).then(res=>{
-      res.status(200).json("Print successful",res);
-
-    }).catch(err=>{
-    res.status(400).send("Error while printing",err);
-    }).finally(()=>{
-      fs.unlinkSync(pdfPath);
-    })
+    await print(pdfPath);
+    console.log('Print done');
+    res.status(200).send("Print successful");
+    return;
+  } catch (error) {
+    console.log('Error while printing:', error);
+    res.status(400).send("Error while printing");
+  }
+  finally{
+    fs.unlinkSync(pdfPath);
+  }
 };
 
 const generateReceiptPDF = async (htmlContent, pdfPath) => {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({ headless: 'new' });
   const page = await browser.newPage();
 
   try {
