@@ -115,7 +115,6 @@ const generateReceiptPDF = async (htmlContent, pdfPath) => {
   try {
     await page.setContent(htmlContent);
     await page.pdf({ path: pdfPath, format: 'Letter' });
-    // Save PDF to a file
 
   } finally {
     await browser.close();
