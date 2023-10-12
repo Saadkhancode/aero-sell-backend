@@ -78,8 +78,21 @@ const { print } = pkg;
 
 export const printReceipt = async (req, res) => {
   const { content } = req.body;
-  const pdfPath = `Receipt.pdf`;
+  // Get the directory name using import.met
+  const __filename = url.fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+
+  // Define the target directory for PDF files
+  const pdfDirectory = path.join(__dirname, 'tmp');
+
+  // Ensure the target directory exists or create it
+  if (!fs.existsSync(pdfDirectory)) {
+    fs.mkdirSync(pdfDirectory, { recursive: true });
+  }
+
+  const pdfPath = path.join(pdfDirectory, `${Date.now()}Receipt.pdf`);
   try {
+
     await generateReceiptPDF(content, pdfPath);
 
     await print(pdfPath);
@@ -89,20 +102,20 @@ export const printReceipt = async (req, res) => {
     console.log('Error while printing:', error);
     res.status(400).send("Error while printing");
   }
-  // finally{
-  //   fs.unlinkSync(pdfPath);
-  // }
+  finally{
+    fs.unlinkSync(pdfPath);
+  }
 };
 
 const generateReceiptPDF = async (htmlContent, pdfPath) => {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
- 
+
   try {
     await page.setContent(htmlContent);
-    await page.pdf({ path: pdfPath, format: 'Letter' }); 
-     // Save PDF to a file
-    
+    await page.pdf({ path: pdfPath, format: 'Letter' });
+    // Save PDF to a file
+
   } finally {
     await browser.close();
   }
