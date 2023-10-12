@@ -85,7 +85,6 @@ export const printReceipt = async (req, res) => {
   // Define the target directory for PDF files
   const pdfDirectory = path.join(__dirname, 'tmp');
 
-  // Ensure the target directory exists or create it
   if (!fs.existsSync(pdfDirectory)) {
     fs.mkdirSync(pdfDirectory, { recursive: true });
   }
