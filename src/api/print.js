@@ -108,7 +108,7 @@ export const printReceipt = async (req, res) => {
 //s
 const generateReceiptPDF = async (htmlContent, pdfPath) => {
   try {
-    const browser = await puppeteer.launch({ headless: 'new' });
+    const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.setContent(htmlContent);
     await page.pdf({ path: pdfPath, format: 'Letter' });
