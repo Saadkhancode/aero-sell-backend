@@ -78,7 +78,6 @@ const pdfPath = path.join(pdfDirectory, `${Date.now()}Receipt.pdf`);
 
     await generateReceiptPDF(content, pdfPath);
 
-    // Upload the PDF to AWS S3
     const s3Params = {
       Bucket: 'patronworks',
       Key: pdfFileName,
@@ -86,7 +85,6 @@ const pdfPath = path.join(pdfDirectory, `${Date.now()}Receipt.pdf`);
     };
     await s3.upload(s3Params).promise();
 
-    // Retrieve the PDF from AWS S3 and print it
     const s3GetObjectParams = {
       Bucket: 'patronworks',
       Key: pdfFileName,
@@ -99,7 +97,6 @@ const pdfPath = path.join(pdfDirectory, `${Date.now()}Receipt.pdf`);
 
     const pdfBuffer = s3Object.Body;
 
-    // Print the PDF
     await print(pdfBuffer);
 
     console.log('Print done');
@@ -112,7 +109,6 @@ const pdfPath = path.join(pdfDirectory, `${Date.now()}Receipt.pdf`);
   }
 };
 
-// Generate the PDF from HTML content
 const generateReceiptPDF = async (htmlContent, pdfPath) => {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
