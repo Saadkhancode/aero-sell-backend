@@ -61,20 +61,20 @@ const { print } = pkg;
 
 export const printReceipt = async (req, res) => {
   const { content } = req.body;
+  const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const pdfDirectory = path.join(__dirname, 'tmp');
+
+if (!fs.existsSync(pdfDirectory)) {
+fs.mkdirSync(pdfDirectory, { recursive: true });
+}
+const pdfFileName= `${Date.now()}Receipt.pdf`;
+const pdfPath = path.join(pdfDirectory, `${Date.now()}Receipt.pdf`);
 
   try {
     // Generate the PDF
     // const pdfFileName = `${Date.now()}Receipt.pdf`;
     // const pdfPath = `/tmp/${pdfFileName}`;
-      const __filename = url.fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
-  const pdfDirectory = path.join(__dirname, 'tmp');
-
-  if (!fs.existsSync(pdfDirectory)) {
-    fs.mkdirSync(pdfDirectory, { recursive: true });
-  }
-const pdfFileName= `${Date.now()}Receipt.pdf`;
-  const pdfPath = path.join(pdfDirectory, `${Date.now()}Receipt.pdf`);
 
     await generateReceiptPDF(content, pdfPath);
 
