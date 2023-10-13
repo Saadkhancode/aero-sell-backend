@@ -53,7 +53,9 @@
 import puppeteer from 'puppeteer';
 import AWS from 'aws-sdk';
 import pkg from 'pdf-to-printer';
-
+import url from 'url';
+import path from 'path';
+import fs from 'fs';
 const s3 = new AWS.S3();
 const { print } = pkg;
 
@@ -62,8 +64,18 @@ export const printReceipt = async (req, res) => {
 
   try {
     // Generate the PDF
-    const pdfFileName = `${Date.now()}Receipt.pdf`;
-    const pdfPath = `/tmp/${pdfFileName}`;
+    // const pdfFileName = `${Date.now()}Receipt.pdf`;
+    // const pdfPath = `/tmp/${pdfFileName}`;
+      const __filename = url.fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const pdfDirectory = path.join(__dirname, 'tmp');
+
+  if (!fs.existsSync(pdfDirectory)) {
+    fs.mkdirSync(pdfDirectory, { recursive: true });
+  }
+const pdfFileName= `${Date.now()}Receipt.pdf`;
+  const pdfPath = path.join(pdfDirectory, `${Date.now()}Receipt.pdf`);
+
     await generateReceiptPDF(content, pdfPath);
 
     // Upload the PDF to AWS S3
@@ -95,6 +107,8 @@ export const printReceipt = async (req, res) => {
   } catch (error) {
     console.error('Error while processing the request:', error);
     res.status(500).send('Internal Server Error');
+  }finally{
+    fs.unlinkSync(pdfPath);
   }
 };
 
