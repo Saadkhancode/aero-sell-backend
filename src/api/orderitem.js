@@ -58,8 +58,16 @@ export const postOrderItem = async (req, res) => {
         path: "ingredient",
         populate: { path: "ingredient.ingredientId", model: "ingredientsModel" }
       });
-      console.log('products: ', products);
-      await Product.findByIdAndUpdate({ _id: products._id }, { $set: { "totalQuantity": products.totalQuantity - item.quantity } })
+      // console.log('products: ', products);
+      // await Product.findByIdAndUpdate({ _id: products._id }, { $set: { "totalQuantity": products.totalQuantity - item.quantity } })
+      const totalQuantity = parseFloat(products.totalQuantity);
+      const quantity = parseFloat(item.quantity);
+      
+      if (!isNaN(totalQuantity) && !isNaN(quantity)) {
+        // Perform the subtraction only if both values are valid numbers
+        const updatedTotalQuantity = totalQuantity - quantity;
+        await Product.findByIdAndUpdate(item._id, { $set: { "totalQuantity": updatedTotalQuantity } });
+      }
       let filteredProductsName = []
       let userEmail = products.userId.email
       if (products.totalQuantity <= 5) {
