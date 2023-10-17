@@ -37,7 +37,6 @@ export const printReceipt = async (req, res) => {
       fs.unlinkSync(pdfPath);
     });
 };
-//s
 const generateReceiptPDF = async (htmlContent, pdfPath) => {
   try {
     const browser = await puppeteer.launch({ headless: true });
