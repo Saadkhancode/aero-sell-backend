@@ -18,11 +18,15 @@ const orderItemSchema = new mongoose.Schema({
         type: String,
         default: 'pending'
     },
-    OrderNo : {
-          type :  Number,
+    OrderNo: {
+        type: Number,
     },
     displayStatus: {
         type: [],
+    },
+    dropStatus: {
+        type: String,
+        default:'new'
     },
     split: {
         type: Object,
@@ -42,10 +46,10 @@ const orderItemSchema = new mongoose.Schema({
     },
     orderStatus: {
         type: String,
-        enum: ['physical', 'online','drivethru' , 'dinein' , 'takeout']
+        enum: ['physical', 'online', 'drivethru', 'dinein', 'takeout']
     },
-    recieptDiscount:{
-        type:Object
+    recieptDiscount: {
+        type: Object
     },
     tax: [{
         name: {
@@ -56,8 +60,8 @@ const orderItemSchema = new mongoose.Schema({
             type: Number
         }
     }],
-    taxfake:{
-           type:Number
+    taxfake: {
+        type: Number
     },
     productWithQty: [{
         productId: {
@@ -85,14 +89,14 @@ const orderItemSchema = new mongoose.Schema({
         discountTypePr: {
             type: Boolean
         },
-        userDate:{
-            type:String
+        userDate: {
+            type: String
         },
-        userendTime:{
-            type:String
+        userendTime: {
+            type: String
         },
-        userstartTime:{
-            type:String
+        userstartTime: {
+            type: String
 
         }
 
@@ -153,19 +157,19 @@ const orderItemSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    customername:{
-    type:String
+    customername: {
+        type: String
     },
-    vehicle:{
-        type:String
+    vehicle: {
+        type: String
     },
-    orderNo:{
-        type:Number
+    orderNo: {
+        type: Number
     },
-    Color:{
-        type:String
+    Color: {
+        type: String
     }
-   
+
 
 })
 const orderitem = mongoose.model('orderitem', orderItemSchema);

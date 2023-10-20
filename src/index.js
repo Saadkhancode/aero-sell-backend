@@ -51,6 +51,7 @@ import Ingredients from './api-routes/ingredients-route.js'
 import Ingredientcategory from './api-routes/ingredient-category-route.js'
 import StockWastage from './api-routes/stock-wastage-route.js'
 import Print from './api-routes/printer-route.js'
+import Site from './api-routes/sitemanagement-route.js'
 const app = express();
 dotenv.config();
 //middelwares
@@ -72,7 +73,7 @@ app.use('/api/v1/activate-account', userRegisterWithEmailVerification)
 //user forgot and reset-password Endpoints
 app.use('/api/v1/reset-password', passwordreset)
 //All APi's Endponits
-app.use('/api/v1', Auth, category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables, parentcategory, customer, Checkout, modifier, tableReservation, emailMarketing, smsMarketing, Loyaltyoffers, customization, logo, blog, contactus, employeTimeStamp, reciept, coupens, chatRoute, billdenomination,recieptExampt,camera,Supplier,Ingredients,Ingredientcategory,StockWastage,Print)
+app.use('/api/v1', Auth, category, check, device, display, employee, menu, mu, order, orderitem, paymentlist, product, role, tax, tables, parentcategory, customer, Checkout, modifier, tableReservation, emailMarketing, smsMarketing, Loyaltyoffers, customization, logo, blog, contactus, employeTimeStamp, reciept, coupens, chatRoute, billdenomination,recieptExampt,camera,Supplier,Ingredients,Ingredientcategory,StockWastage,Print,Site)
 let NODESERVER = null;
 //Port
 if (process.env.NODE_ENV === 'production') {
