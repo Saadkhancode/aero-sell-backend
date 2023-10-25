@@ -1,27 +1,27 @@
 import mongoose from 'mongoose'
 const siteManagementSchema=new mongoose.Schema({
-    SiteName:{
+    siteName:{
         type: String
     },
-    NumberOfTables:{
+    numberOfTables:{
         type:String
     },
-    BriefDescription:{
+    briefDescription:{
         type:String
     },
-    Tables:[{
+    tables:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'tables'
     }],
-    SiteImage:{
+    siteImage:{
         type:String
     },
-    UserId: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'user'
     },
-    IsActive:{
+    isActive:{
         type:String
     }
     
