@@ -5,6 +5,6 @@ const router=express.Router();
 router.get('/site',getSiteManagement)
 router.get('/site/:_id',getSiteManagementById)
 router.post('/site',awsupload.single('siteImage'), postSiteManagement)
-router.put('/site/:_id',siteManagementUpdate)
+router.put('/site/:_id', awsupload.single('siteImage'), siteManagementUpdate)
 router.delete('/site/:_id',siteDelete)
 export default router;

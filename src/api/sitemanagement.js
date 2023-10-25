@@ -36,7 +36,7 @@ export const postSiteManagement = async (req, res) => {
     })
 }
 export const siteManagementUpdate = async (req, res) => {
-    console.log('req: ',{numberOfTables:req.body.numberOfTables});
+    console.log('req: ',req.body);
     try {
         const siteImage = req.file ? req.file.location : null;
         const result = await siteModel.findByIdAndUpdate(
