@@ -91,7 +91,6 @@ export const postProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
     const { lavel, rows, cols, categoryParents, barCode, name, Product_pic, price, retailPrice, shortDescription, fullDescription, order, active, categoryId, hasPicture, productPictureId, totalQuantity, productId, productType, userId, unit,  } = req.body;
-    // let ingredientparse= JSON.parse(req.body.ingredient)
     let ingredientparse = req.body.ingredient ? JSON.parse(req.body.ingredient) : undefined;
     const courseDate1 = req.body.courseDate ? JSON.parse(req.body.courseDate) : undefined;
 
