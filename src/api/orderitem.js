@@ -41,8 +41,8 @@ export const getOrderItems = async (req, res) => {
 }
 
 export const postOrderItem = async (req, res) => {
-  const { orderId, table, product, selectedModifiers, loyalityOffer, couponOffer, ReservedTable, points, orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType, split, tax, Color, customername, vehicle, taxfake, OrderNo } = req.body;
-  const data = await new orderitem({ orderId, table, product, orderStatus, selectedModifiers, loyalityOffer, couponOffer, points, ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType, split, tax, Color, customername, vehicle, taxfake, OrderNo });
+  const { orderId, table, product, selectedModifiers, loyalityOffer, couponOffer, ReservedTable, points, orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType, split, tax, Color, customername, vehicle, taxfake, OrderNo,dropStatus } = req.body;
+  const data = await new orderitem({ orderId, table, product, orderStatus, selectedModifiers, loyalityOffer, couponOffer, points, ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType, split, tax, Color, customername, vehicle, taxfake, OrderNo,dropStatus });
   let prod = []
   let ingredientsData = []
   prod = product
@@ -58,8 +58,16 @@ export const postOrderItem = async (req, res) => {
         path: "ingredient",
         populate: { path: "ingredient.ingredientId", model: "ingredientsModel" }
       });
-      console.log('products: ', products);
-      await Product.findByIdAndUpdate({ _id: products._id }, { $set: { "totalQuantity": products.totalQuantity - item.quantity } })
+      // console.log('products: ', products);
+      // await Product.findByIdAndUpdate({ _id: products._id }, { $set: { "totalQuantity": products.totalQuantity - item.quantity } })
+      const totalQuantity = parseFloat(products.totalQuantity);
+      const quantity = parseFloat(item.quantity);
+      
+      if (!isNaN(totalQuantity) && !isNaN(quantity)) {
+        // Perform the subtraction only if both values are valid numbers
+        const updatedTotalQuantity = totalQuantity - quantity;
+        await Product.findByIdAndUpdate(item._id, { $set: { "totalQuantity": updatedTotalQuantity } });
+      }
       let filteredProductsName = []
       let userEmail = products.userId.email
       if (products.totalQuantity <= 5) {
@@ -190,6 +198,7 @@ export const postOrderItem = async (req, res) => {
         Color: result.Color,
         customername: result.customername,
         vehicle: result.vehicle,
+        dropStatus:result.dropStatus
       })
   }).catch(err => {
     res.status(400).send('unable to save database');

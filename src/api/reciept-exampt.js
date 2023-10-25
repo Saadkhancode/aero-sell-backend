@@ -32,7 +32,7 @@ export const sendRecieptViaMail = async (req, res) => {
 ////////////////////// courses email send //////////////////////////////
 export const sendcourseViaMail = async (req, res) => {
   const { email, recieptContent } = req.body;
-  console.log('email: ', email);
+  console.log('emailin reciept api : ', email);
   // Generate the PDF receipt from HTML content
   // const pdfBuffer = await generateReceiptPDF(recieptContent);
 
@@ -46,10 +46,10 @@ export const sendcourseViaMail = async (req, res) => {
   // await s3.upload(s3Params).promise();
 
   // Send the receipt PDF as an email attachment
-  // const emailSubject = 'Receipt';
+  const emailSubject = 'Receipt';
   // const attachments = [{ filename: 'Receipt.pdf', path: `https://patronworks.s3.us-west-2.amazonaws.com/${fileName}` }];
 
-  await sendMail(email,  recieptContent).then(res1 => {
+  await sendMail(email,emailSubject,recieptContent).then(res1 => {
     res.status(200).json({ message: 'Receipt sent successfully via email.'})
   }).catch(err => {
     console.error('Error sending email:', err);

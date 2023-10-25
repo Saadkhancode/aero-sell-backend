@@ -31,7 +31,7 @@ export const printReceipt = async (req, res) => {
     })
     .catch(error => {
       console.log('Error while printing:', error);
-      res.status(400).send(`Error while printing: ${error.message}`);
+      res.status(400).send(`Error while printing: ${error}`);
     })
     .finally(() => {
       fs.unlinkSync(pdfPath);
@@ -62,17 +62,16 @@ const generateReceiptPDF = async (htmlContent, pdfPath) => {
 // export const printReceipt = async (req, res) => {
 //   const { content } = req.body;
 //   const __filename = url.fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-// const pdfDirectory = path.join(__dirname, 'tmp');
+//   const __dirname = path.dirname(__filename);
+//   const pdfDirectory = path.join(__dirname, 'tmp');
 
-// if (!fs.existsSync(pdfDirectory)) {
-// fs.mkdirSync(pdfDirectory, { recursive: true });
-// }
-// const pdfFileName= `${Date.now()}Receipt.pdf`;
-// const pdfPath = path.join(pdfDirectory, `${Date.now()}Receipt.pdf`);
+//   if (!fs.existsSync(pdfDirectory)) {
+//     fs.mkdirSync(pdfDirectory, { recursive: true });
+//   }
+//   const pdfFileName = `${Date.now()}Receipt.pdf`;
+//   const pdfPath = path.join(pdfDirectory, `${Date.now()}Receipt.pdf`);
 
 //   try {
-//     // Generate the PDF
 //     // const pdfFileName = `${Date.now()}Receipt.pdf`;
 //     // const pdfPath = `/tmp/${pdfFileName}`;
 
@@ -102,9 +101,9 @@ const generateReceiptPDF = async (htmlContent, pdfPath) => {
 //     console.log('Print done');
 //     res.status(200).send('Print successful');
 //   } catch (error) {
-//     console.error('Error while processing the request:', error.message);
+//     console.error('Error while processing the request:', error);
 //     res.status(500).send('Internal Server Error');
-//   }finally{
+//   } finally {
 //     fs.unlinkSync(pdfPath);
 //   }
 // };
