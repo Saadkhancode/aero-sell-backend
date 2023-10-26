@@ -9,11 +9,11 @@ export const getSiteManagement = async (req, res) => {
         filter = { siteImage: req.query.siteImage.split(',') }
     }
 
-    let data = await siteModel.find(filter)
+    let data = await siteModel.find(filter).populate('tables')
     res.send(data)
 }
 export const getSiteManagementById = async (req, res) => {
-    let data = await siteModel.find(req.params)
+    let data = await siteModel.find(req.params).populate('tables')
     res.send(data)
 }
 
