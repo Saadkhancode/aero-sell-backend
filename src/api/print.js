@@ -89,7 +89,7 @@ export const printReceipt = async (req, res) => {
 
       generateReceiptPDF(content, pdfPath)
         .then(() => {
-          const printCommand = `lp ${pdfPath}`;
+          const printCommand = `lp -d HP-LaserJet-Professional-P1102 ${pdfPath}`;
           exec(printCommand, (error) => {
             if (error) {
               console.log('Error while printing:', error);
