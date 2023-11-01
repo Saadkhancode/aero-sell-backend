@@ -29,6 +29,11 @@ const tablesSchema = new mongoose.Schema({
         required:true,
         ref:'user'
     },
+    Status:{
+        type:String,
+        default:'available',
+        enum:['available','reserved']
+    },
     RecordDate: {
         type: Date,
         default: timeStamp
