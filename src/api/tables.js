@@ -51,6 +51,8 @@ export const updateTables = async (req, res) => {
 }
 //Search and update
 export const SearchUpdateTables = async (req, res) => {
+    const tableimg = req.file ? req.file.location : null
+
     const { tableNo, tableName } = req.query
     console.log(tableNo, tableName)
     let data = await tables.findOneAndUpdate(
@@ -60,7 +62,7 @@ export const SearchUpdateTables = async (req, res) => {
                 { tableName: { $regex: String(tableName) } },
             ]
         }, {
-        $set: req.body
+        $set: req.body,tableimg:tableimg
     }, { new: true })
     if (data) {
         res.json({ data, message: "posTable data update successfully" });

@@ -15,7 +15,7 @@ routes.get('/Tables/:_id', getTableById )
 
 routes.post('/Tables',awsupload.single('tableimg'), postTables )
 routes.put('/Tables/:_id',awsupload.single('tableimg'), updateTables )
-routes.put('/posTable',SearchUpdateTables)
+routes.put('/posTable',awsupload.single('tableimg'),SearchUpdateTables)
 routes.delete('/Tables/:_id', deleteTables )
 
 

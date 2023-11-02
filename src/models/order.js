@@ -10,6 +10,9 @@ const orderSchema = new mongoose.Schema({
     tableName: {
         type: String
     },
+    tableId:{
+        type:String
+    },
     orderNo: {
         type: Number
     },

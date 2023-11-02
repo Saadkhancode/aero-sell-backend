@@ -15,9 +15,9 @@ export const getOrder = async (req, res) => {
 }
 
 export const postOrder = async (req, res) => {
-    const { tableNo, tableName, currentOrderId, startDate, orderDate,orderValueExclTax, orderValueTax, orderValue, parentOrderNo, orderStatus, orderType, isHold, userId, operator, discount,loyalty,dueamount ,recieptId, distype , employeeId, customerId,Tips } = req.body;
+    const { tableNo, tableName,tableId ,currentOrderId, startDate, orderDate,orderValueExclTax, orderValueTax, orderValue, parentOrderNo, orderStatus, orderType, isHold, userId, operator, discount,loyalty,dueamount ,recieptId, distype , employeeId, customerId,Tips } = req.body;
 
-    const data = await new order({ tableNo, tableName, currentOrderId, startDate, orderDate,  orderValueExclTax, orderValueTax, orderValue, parentOrderNo, orderStatus, orderType, isHold, userId, operator,recieptId, discount,dueamount,loyalty, distype, employeeId, customerId,Tips });
+    const data = await new order({ tableNo, tableName,tableId, currentOrderId, startDate, orderDate,  orderValueExclTax, orderValueTax, orderValue, parentOrderNo, orderStatus, orderType, isHold, userId, operator,recieptId, discount,dueamount,loyalty, distype, employeeId, customerId,Tips });
     await data.save().then(async (result) => {
         const customerData = await customer.findById(customerId)
         if(customerData){
@@ -51,7 +51,8 @@ export const postOrder = async (req, res) => {
                 employeeId:result.employeeId,
                 customerId: result.customerId,
                 loyalty:result.loyalty,
-                Tips:result.Tips
+                Tips:result.Tips,
+                tableId:result.tableId
             })
         }else{
             res.json({
@@ -76,7 +77,8 @@ export const postOrder = async (req, res) => {
                 employeeId:result.employeeId,
                 customerId: result.customerId,
                 loyalty:result.loyalty,
-                Tips:result.Tips
+                Tips:result.Tips,
+                tableId:result.tableId
             })
             
         }

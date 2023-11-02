@@ -222,7 +222,6 @@ export const postOrderItem = async (req, res) => {
 }
 export const updateOrderItem = async (req, res) => {
 
-  console.log(req.params.id)
   let data = await orderitem.findByIdAndUpdate(
     { _id: req.params._id }, {
     $set: req.body
