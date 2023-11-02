@@ -136,6 +136,9 @@ const orderItemSchema = new mongoose.Schema({
     text: {
         type: String
     },
+    OrderNumber: {
+        type: String
+    },
     customerId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'customer'

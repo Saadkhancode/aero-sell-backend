@@ -42,7 +42,21 @@ export const getOrderItems = async (req, res) => {
 
 export const postOrderItem = async (req, res) => {
   const { orderId, table, product, selectedModifiers, loyalityOffer, couponOffer, ReservedTable, points, orderStatus, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType, split, tax, Color, customername, vehicle, taxfake, OrderNo,dropStatus } = req.body;
-  const data = await new orderitem({ orderId, table, product, orderStatus, selectedModifiers, loyalityOffer, couponOffer, points, ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType, split, tax, Color, customername, vehicle, taxfake, OrderNo,dropStatus });
+  const lastOrder = await orderitem.findOne({userId}, {}, { sort: { '_id': -1 } });
+  const lastOrderCount = lastOrder ? (lastOrder.OrderNumber || 0) : 0;
+  //   console.log("lastOrder ::::::  ",lastOrder)
+  // return  console.log("lastOrderCount ::::::  ",lastOrderCount)
+  let numericCount
+  if (lastOrderCount != 0) {
+
+      numericCount = parseInt(lastOrderCount.slice(2), 10) + 1;
+  } else {
+
+      numericCount = Number("00001")
+  }
+  const OrderNumber = `OR${numericCount.toString().padStart(4, '0')}`
+
+  const data = await new orderitem({ orderId, table, product, orderStatus, selectedModifiers, loyalityOffer, couponOffer, points, ReservedTable, taxValue, productWithQty, priceExclTax, lineValueExclTax, lineValueTax, lineValue, units, text, customerId, dueamount, createdAt, updatedAt, userId, paymentType, split, tax, Color, customername, vehicle, taxfake, OrderNo,dropStatus, OrderNumber });
   let prod = []
   let ingredientsData = []
   prod = product
@@ -170,6 +184,7 @@ export const postOrderItem = async (req, res) => {
       res.json({
         orderId: result.orderId,
         product: result.product,
+        orderNumber: result.orderNumber,
         dueamount: result.dueamount,
         displayStatus: result.displayStatus,
         loyalityOffer: result.loyalityOffer,
