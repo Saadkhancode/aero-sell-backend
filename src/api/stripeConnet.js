@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // Create a custom account for a new seller
 export const createSellerAccount = async (req, res) => {
-  const { userId } = req.query
+  const { userId} = req.query
   console.log('userId: ', userId);
   const userById = await User.findById(userId)
   console.log('userById: ', userById);
@@ -20,6 +20,10 @@ export const createSellerAccount = async (req, res) => {
   try {
     const account = await stripe.accounts.create({
       type: 'express',
+      capabilities: {
+        card_payments: { requested: true },
+        transfers: { requested: true },
+      },
     });
     console.log('account: ', account);
     const accountID = account.id;
