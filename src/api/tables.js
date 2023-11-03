@@ -35,11 +35,12 @@ export const postTables = async (req, res) => {
     });
 }
 export const updateTables = async (req, res) => {
-    const tableimg = req.file ? req.file.location : null
-    console.log(req.params)
+    console.log('req: ', req.body);
+    const tableimg = req.file ? req.file.location : req.body.tableimg
+    console.log('tableimg: ', tableimg);
     let data = await tables.findByIdAndUpdate(
         { _id: req.params._id }, {
-        $set: req.body, tableimg: tableimg
+        $set: req.body,tableimg:tableimg
     }, { new: true }
     );
     if (data) {
