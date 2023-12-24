@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
       const userId = generateRandomUserId();
       const token = jwt.sign({ userId, name, email, password, role }, process.env.JWT_SECRET, { expiresIn: '20min' })
       if (process.env.NODE_ENV === 'production') {
-        const link = `https://www.patronworks.net/auth/activate-account/${token}`;
+        const link = `https://aero-sell.netlify.app/auth/activate-account/${token}`;
         await sendMail(email, "Account Activation Link", `<html>
 
         <head>
@@ -162,7 +162,7 @@ font-size:12px
         </html>`)
 
       } else if (process.env.NODE_ENV === 'development') {
-        const link = `http://localhost:18020/auth/activate-account/${token}`;
+        const link = `http://localhost:18050/auth/activate-account/${token}`;
         await sendMail(email, "Account Activation Link", `<html>
 
         <head>
